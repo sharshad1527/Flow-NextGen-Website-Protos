@@ -1,0 +1,75 @@
+.shiny-btn {
+  position: relative;
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8A00 100%);
+  color: #FFFFFF;
+  padding: 0.9rem 1.95rem;
+  border-radius: 100px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: 0 8px 24px rgba(255, 107, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.shiny-text {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+.shiny-shimmer {
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 80%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.35),
+    transparent
+  );
+  transform: skewX(-25deg);
+  animation: shine-sweep 4s infinite ease-in-out;
+  z-index: 1;
+}
+
+.shiny-glow {
+  position: absolute;
+  inset: -1px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #FF8A00 0%, #FF6B00 100%);
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 0;
+}
+
+.shiny-btn:hover .shiny-glow {
+  opacity: 1;
+}
+
+.shiny-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 12px 30px rgba(255, 107, 0, 0.4), 0 0 0 4px rgba(255, 107, 0, 0.15);
+}
+
+.shiny-btn:active {
+  transform: translateY(0);
+}
+
+@keyframes shine-sweep {
+  0% { left: -150%; }
+  35% { left: 150%; }
+  100% { left: 150%; }
+}

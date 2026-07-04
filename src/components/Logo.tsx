@@ -1,0 +1,11 @@
+export function Logo({ className = "", width = 36, height = 36 }: { className?: string, width?: number, height?: number }) {
+  return (
+    <div className={className} style={{ width, height }}>
+      <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+        <path d="M 20 30 L 20 85 L 35 75 L 35 20 Z" fill="#E54D00" />
+        <path d="M 65 30 L 65 85 L 80 75 L 80 20 Z" fill="#FF8A00" />
+        <path d="M 35 45 L 65 30 L 65 45 L 35 60 Z" fill="#FFFFFF" />
+      </svg>
+    </div>
+  );
+}

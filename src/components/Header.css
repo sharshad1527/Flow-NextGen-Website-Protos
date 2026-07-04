@@ -1,0 +1,126 @@
+.header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 7.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 1.5rem;
+  z-index: 100;
+  pointer-events: none; /* Let clicks pass through the wrapper wrapper */
+  background: transparent;
+  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.header-wrapper.scrolled {
+  background: linear-gradient(to bottom, #0D0D0D 0%, rgba(13, 13, 13, 0.95) 35%, rgba(13, 13, 13, 0.6) 70%, transparent 100%);
+}
+
+.dynamic-island {
+  pointer-events: auto; /* Re-enable clicks on the island itself */
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  padding: 0.5rem 0.5rem 0.5rem 1.5rem;
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.12) 0%, rgba(13, 13, 13, 0.75) 50%, rgba(0, 230, 118, 0.12) 100%);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  box-shadow: 
+    0 12px 32px rgba(0, 0, 0, 0.4), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.15),
+    0 0 30px rgba(255, 107, 0, 0.05),
+    0 0 30px rgba(0, 230, 118, 0.05);
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.dynamic-island.scrolled {
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.18) 0%, rgba(13, 13, 13, 0.85) 50%, rgba(0, 230, 118, 0.18) 100%);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.6), 
+    inset 0 1px 0 rgba(255, 255, 255, 0.2),
+    0 0 35px rgba(255, 107, 0, 0.08),
+    0 0 35px rgba(0, 230, 118, 0.08);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.logo-text {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-high);
+  letter-spacing: -0.2px;
+}
+
+.nav {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.nav a {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: color 0.2s ease;
+}
+
+.nav a:hover {
+  color: var(--text-high);
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+}
+
+.island-btn {
+  padding: 0.6rem 1.25rem;
+  border-radius: 100px;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .nav {
+    display: none; /* Hide links on mobile to save space for the pill */
+  }
+  .dynamic-island {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .header-wrapper {
+    height: 5.625rem;
+    padding-top: 1rem;
+  }
+  .dynamic-island {
+    gap: 1rem;
+    padding: 0.4rem 0.4rem 0.4rem 1.25rem;
+  }
+  .logo-text {
+    font-size: 0.9rem;
+  }
+  .island-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .logo-text {
+    display: none;
+  }
+  .dynamic-island {
+    padding: 0.4rem 0.4rem 0.4rem 0.8rem;
+  }
+}
+

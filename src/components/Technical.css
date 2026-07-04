@@ -1,0 +1,133 @@
+.technical {
+  padding: 100px 0;
+  position: relative;
+}
+
+.technical-header {
+  text-align: center;
+  margin-bottom: 4rem;
+}
+
+.technical-header h2 {
+  font-size: 2.5rem;
+}
+
+.technical-header p {
+  color: var(--text-muted);
+  font-size: 1.125rem;
+}
+
+.technical-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.code-block {
+  background: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+
+.code-header {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.code-header .dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border);
+}
+
+.code-header .filename {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
+
+.code-block pre {
+  padding: 1.5rem;
+  overflow-x: auto;
+  font-family: 'Fira Code', 'Courier New', Courier, monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: #D4D4D4;
+}
+
+.code-block .keyword { color: #FF6B00; }
+.code-block .variable { color: #9CDCFE; }
+.code-block .string { color: #CE9178; }
+.code-block .comment { color: #6A9955; font-style: italic; }
+
+.tech-features {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.tech-item {
+  display: flex;
+  gap: 1.5rem;
+  padding: 1.5rem;
+  background: rgba(22, 22, 22, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.tech-item:hover {
+  transform: translateX(4px);
+  border-color: rgba(255, 107, 0, 0.2);
+}
+
+.tech-icon {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  background: rgba(255, 107, 0, 0.1);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.tech-item h4 {
+  font-size: 1.125rem;
+  margin-bottom: 0.5rem;
+}
+
+.tech-item p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 992px) {
+  .technical-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .tech-visual {
+    order: 2;
+  }
+  
+  .tech-features {
+    order: 1;
+  }
+}
