@@ -1,11 +1,11 @@
-import { Hero } from "../components/Hero";
+import { ScrollJourney } from "../components/ScrollJourney";
 import { Features } from "../components/Features";
 import { HowItWorks } from "../components/HowItWorks";
 
 export function Home() {
   return (
     <main>
-      <Hero />
+      <ScrollJourney />
       <Features />
       <HowItWorks />
     </main>
