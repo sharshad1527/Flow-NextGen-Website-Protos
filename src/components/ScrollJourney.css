@@ -1113,11 +1113,7 @@
     font-size: 1.15rem !important;
   }
 
-  /* Flow UI shell: center below the 7.5rem fixed header, constrain size */
-  .flow-ui-anchor {
-    /* Center in the space below the fixed header, not behind it */
-    top: calc(3.75rem + 50%) !important;
-  }
+
 
 
   /* Results hero: start below the fixed header */
