@@ -8,7 +8,6 @@ import {
 } from "motion/react";
 import { ArrowRight, Check, AlertTriangle } from "lucide-react";
 import { ShinyButton } from "./ShinyButton";
-import { TaskLedgerQueue } from "./TaskLedgerQueue";
 import { Logo } from "./Logo";
 import "./ScrollJourney.css";
 
@@ -46,6 +45,7 @@ function LogoIntroCanvas() {
     }
 
     function drawFrame(frameIndex: number) {
+      if (!ctx) return;
       const progress = (frameIndex % TOTAL_FRAMES) / TOTAL_FRAMES;
       ctx.clearRect(0, 0, W, H);
 
@@ -249,8 +249,47 @@ function LogoIntroCanvas() {
   return (
     <canvas
       ref={canvasRef}
-      style={{ width: 320, height: 320 }}
+      style={{ width: "100%", height: "100%", display: "block" }}
     />
+  );
+}
+
+/* -------------------------------------------------------
+   LOGO INTRO OVERLAY — plays automatically on mount,
+   then bloom-dissolves into the scroll journey hero
+------------------------------------------------------- */
+function LogoIntroOverlay() {
+  return (
+    <motion.div
+      className="logo-intro-overlay"
+      initial={{ opacity: 1 }}
+      exit={{
+        opacity: 0,
+        transition: { duration: 0.9, ease: [0.4, 0, 0.2, 1] },
+      }}
+    >
+      {/* Orange radial bloom that expands as logo dissolves */}
+      <motion.div
+        className="logo-bloom-glow"
+        initial={{ scale: 1, opacity: 0 }}
+        exit={{
+          scale: 3.5,
+          opacity: [0, 0.8, 0],
+          transition: { duration: 0.8, ease: "easeOut" },
+        }}
+      />
+      {/* Existing canvas animation — reused exactly as-is */}
+      <motion.div
+        className="logo-canvas-wrap"
+        exit={{
+          scale: 1.2,
+          opacity: 0,
+          transition: { duration: 0.5, ease: "easeIn" },
+        }}
+      >
+        <LogoIntroCanvas />
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -294,54 +333,61 @@ export function ScrollJourney() {
   // Spring — tight enough to feel scroll-linked, smooth enough to look good
   const smooth = useSpring(scrollYProgress, { stiffness: 160, damping: 38 });
 
-  // ---- SCENE TIMELINE ----
-  // 0.00–0.22  Scene 0: Logo animation
-  // 0.22–0.40  Scene 1: STATIC HERO — Flow UI at RIGHT, hero text at LEFT (user can pause here)
-  // 0.40–0.72  Scene 2: Flow UI slides to CENTER, holds at center, prompts sucked in, queue fills
-  // 0.72–1.00  Scene 3: Flow UI slides CENTER→LEFT, results hero slides in from RIGHT
+  // Reset scroll position on refresh
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+    window.scrollTo(0, 0);
+  }, []);
 
-  // LOGO — stays until 0.18, fades out by 0.26
-  const logoOpacity = useTransform(smooth, [0, 0.18, 0.26], [1, 1, 0]);
-  const logoScale   = useTransform(smooth, [0, 0.18, 0.26], [1, 1, 0.4]);
+  // Logo intro overlay — dismisses after the canvas animation finishes (~2.2s)
+  const [showIntro, setShowIntro] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setShowIntro(false), 2200);
+    return () => clearTimeout(t);
+  }, []);
 
-  // HERO LEFT TEXT
-  // Fades in as logo fades (0.20), stays static through whole Scene 1 (until 0.40),
-  // then fades out as Flow UI starts moving to center (0.40–0.50)
-  const heroLeftX       = useTransform(smooth, [0.18, 0.28, 0.40, 0.50], ["-8%", "0%", "0%", "-10%"]);
-  const heroLeftOpacity = useTransform(smooth, [0.18, 0.28, 0.42, 0.52], [0, 1, 1, 0]);
+  // ---- SCENE TIMELINE (400vh — logo removed, 3 scenes) ----
+  // 0.00–0.25  Scene 1: STATIC HERO — hero text visible, Flow UI slides in from right
+  // 0.25–0.62  Scene 2: Flow UI slides to CENTER, prompts sucked in, queue fills
+  // 0.62–1.00  Scene 3: Flow UI slides CENTER→LEFT, results hero slides in from RIGHT
 
-  // FLOW UI POSITION: RIGHT → (holds) → CENTER → LEFT
-  // 0.20–0.22: fade in at right
-  // 0.22–0.40: HOLDS at 72% — the static hero window
-  // 0.40–0.52: slides right→center
-  // 0.52–0.72: HOLDS at 50% — the wide center hold window
-  // 0.72–0.88: slides center→left
+  // HERO LEFT TEXT — immediately visible on load, fades out as Flow UI moves to center
+  const heroLeftX       = useTransform(smooth, [0.26, 0.38], ["0%", "-10%"]);
+  const heroLeftOpacity = useTransform(smooth, [0.26, 0.38], [1, 0]);
+
+  // FLOW UI POSITION: starts visible at 72% right, then moves CENTER → LEFT
+  // 0.00–0.28: HOLDS at 72% — the static hero window (visible on load)
+  // 0.28–0.40: slides right→center
+  // 0.40–0.62: HOLDS at 50% — the wide center hold window
+  // 0.62–0.80: slides center→left
   const flowUIX = useTransform(
     smooth,
-    [0.20, 0.22, 0.40, 0.52, 0.72, 0.88],
-    ["72%", "72%", "72%", "50%", "50%", "18%"]
+    [0.00, 0.28, 0.40, 0.62, 0.80],
+    ["72%", "72%", "50%", "50%", "18%"]
   );
-  const flowUIOpacity = useTransform(smooth, [0.18, 0.26, 0.90, 1.0], [0, 1, 1, 0.85]);
-  const flowUIScale   = useTransform(smooth, [0.72, 0.88], [1, 0.83]);
+  // Opacity: fully visible from scroll 0, only dims slightly at the very end
+  const flowUIOpacity = useTransform(smooth, [0.82, 0.95], [1, 0.85]);
+  const flowUIScale   = useTransform(smooth, [0.62, 0.80], [1, 0.83]);
 
   // BLACK-HOLE GLOW — visible when prompts are flying in (Scene 2)
-  const glowOpacity = useTransform(smooth, [0.40, 0.50, 0.68, 0.72], [0, 1, 0.4, 0]);
+  const glowOpacity = useTransform(smooth, [0.28, 0.40, 0.58, 0.64], [0, 1, 0.4, 0]);
 
   // PROMPT PARTICLES — appear in Scene 2 only
-  const promptsOpacity = useTransform(smooth, [0.40, 0.46, 0.68, 0.74], [0, 1, 1, 0]);
+  const promptsOpacity = useTransform(smooth, [0.28, 0.36, 0.60, 0.66], [0, 1, 1, 0]);
 
   // RESULTS HERO — slides in from right during Scene 3
-  const resultsX       = useTransform(smooth, [0.74, 0.88], ["8%", "0%"]);
-  const resultsOpacity = useTransform(smooth, [0.74, 0.88], [0, 1]);
+  const resultsX       = useTransform(smooth, [0.66, 0.82], ["8%", "0%"]);
+  const resultsOpacity = useTransform(smooth, [0.66, 0.82], [0, 1]);
 
-  // Phase indicator dots
+  // Phase indicator dots (3 phases — hero / prompts / results)
   const [phase, setPhase] = useState(0);
   useEffect(() => {
     return smooth.on("change", (v) => {
-      if (v < 0.22) setPhase(0);       // Logo
-      else if (v < 0.40) setPhase(1);  // Hero static
-      else if (v < 0.72) setPhase(2);  // Prompts / center
-      else setPhase(3);                // Results
+      if (v < 0.25) setPhase(0);       // Hero static
+      else if (v < 0.62) setPhase(1);  // Prompts / center
+      else setPhase(2);                // Results
     });
   }, [smooth]);
 
@@ -372,18 +418,14 @@ export function ScrollJourney() {
   }, []);
 
   return (
-    <div className="scroll-journey" ref={trackRef}>
-      <div className="journey-stage">
+    <>
+      {/* ---- LOGO INTRO OVERLAY (fixed, above header) ---- */}
+      <AnimatePresence>
+        {showIntro && <LogoIntroOverlay key="logo-intro" />}
+      </AnimatePresence>
 
-        {/* ---- SCENE 0: Logo Intro ---- */}
-        <motion.div
-          className="logo-intro-layer"
-          style={{ opacity: logoOpacity, scale: logoScale }}
-        >
-          <div className="logo-canvas-wrap">
-            <LogoIntroCanvas />
-          </div>
-        </motion.div>
+      <div className="scroll-journey" ref={trackRef}>
+        <div className="journey-stage">
 
         {/* ---- HERO LEFT TEXT ---- */}
         <motion.div
@@ -483,13 +525,7 @@ export function ScrollJourney() {
             </div>
 
             {/* Queue screen */}
-            <div
-              style={{
-                height: 330,
-                background: "#0D0D0D",
-                overflow: "hidden",
-              }}
-            >
+            <div className="mockup-queue-screen">
               <AnimatedQueue scrollProgress={smooth} />
             </div>
           </div>
@@ -557,20 +593,20 @@ export function ScrollJourney() {
 
         {/* ---- Phase Indicator ---- */}
         <div className="journey-phase-bar">
-          {[0, 1, 2, 3].map((p) => (
+          {[0, 1, 2].map((p) => (
             <div key={p} className={`phase-dot ${phase === p ? "active" : ""}`} />
           ))}
         </div>
 
-        {/* ---- Scroll Cue ---- */}
+        {/* ---- Scroll Cue — shows after intro exits ---- */}
         <AnimatePresence>
-          {phase === 0 && (
+          {phase === 0 && !showIntro && (
             <motion.div
               className="scroll-cue"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 0.5 }}
+              transition={{ delay: 0.6 }}
             >
               <span className="scroll-cue-label">Scroll</span>
               <div className="scroll-cue-arrow">
@@ -580,7 +616,8 @@ export function ScrollJourney() {
           )}
         </AnimatePresence>
       </div>
-    </div>
+      </div>
+    </>
   );
 }
 
@@ -597,12 +634,12 @@ interface PromptChipProps {
 function PromptChip({ pos, scrollProgress }: PromptChipProps) {
   const suckProgress = useTransform(
     scrollProgress,
-    [0.42 + pos.delay * 0.1, 0.58 + pos.delay * 0.04],
+    [0.30 + pos.delay * 0.1, 0.46 + pos.delay * 0.04],
     [0, 1]
   );
   const chipOpacity = useTransform(
     scrollProgress,
-    [0.38, 0.42 + pos.delay * 0.04, 0.58, 0.62],
+    [0.26, 0.30 + pos.delay * 0.04, 0.46, 0.52],
     [0, 1, 0.8, 0]
   );
   const chipScale = useTransform(suckProgress, [0, 0.7, 1], [1, 0.95, 0.4]);
@@ -640,11 +677,11 @@ function AnimatedQueue({ scrollProgress }: AnimatedQueueProps) {
 
   useEffect(() => {
     return scrollProgress.on("change", (v) => {
-      if (v < 0.42) setVisibleJobs(0);
-      else if (v < 0.48) setVisibleJobs(1);
-      else if (v < 0.54) setVisibleJobs(2);
-      else if (v < 0.60) setVisibleJobs(3);
-      else if (v < 0.66) setVisibleJobs(4);
+      if (v < 0.30) setVisibleJobs(0);
+      else if (v < 0.38) setVisibleJobs(1);
+      else if (v < 0.46) setVisibleJobs(2);
+      else if (v < 0.54) setVisibleJobs(3);
+      else if (v < 0.62) setVisibleJobs(4);
       else setVisibleJobs(5);
     });
   }, [scrollProgress]);

@@ -5,8 +5,8 @@
 /* ---- Scroll Track Container ---- */
 .scroll-journey {
   position: relative;
-  /* Height = scroll canvas. 5 * 100vh = 5 screens of scroll */
-  height: 500vh;
+  /* Height = scroll canvas. 4 * 100vh = 4 screens of scroll (logo scene removed) */
+  height: 400vh;
 }
 
 /* ---- Sticky Stage — everything animates inside here ---- */
@@ -23,16 +23,29 @@
 }
 
 /* =============================================
-   SCENE 0 — LOGO INTRO ANIMATION
+   SCENE 0 — LOGO INTRO OVERLAY (position: fixed)
    ============================================= */
-.logo-intro-layer {
-  position: absolute;
+.logo-intro-overlay {
+  position: fixed;
   inset: 0;
+  z-index: 9999;
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 20;
+  background: #000000;
+  will-change: opacity;
+}
+
+/* Orange radial bloom that expands on exit */
+.logo-bloom-glow {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 107, 0, 0.65) 0%, rgba(255, 85, 0, 0.25) 35%, transparent 70%);
+  filter: blur(48px);
   pointer-events: none;
+  will-change: transform, opacity;
 }
 
 .logo-canvas-wrap {
@@ -178,7 +191,7 @@
 }
 
 .flow-ui-shell {
-  width: 340px;
+  width: 310px;
   background: rgba(8, 8, 8, 0.92);
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -188,6 +201,12 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
   will-change: transform, box-shadow;
+}
+
+.mockup-queue-screen {
+  height: 520px;
+  background: #0D0D0D;
+  overflow: hidden;
 }
 
 /* Black hole glow behind UI */
@@ -522,7 +541,7 @@
     font-size: clamp(2.4rem, 5vw, 4.5rem);
   }
   .flow-ui-shell {
-    width: 340px;
+    width: 310px;
   }
   .hero-stat-strip {
     gap: 1.25rem;
@@ -716,6 +735,7 @@
 }
 
 /* 💻 14-Inch Laptop & Short Viewport Tweaks (height under 820px) */
+/* 💻 14-Inch Laptop & Short Viewport Tweaks (height under 820px) */
 @media (max-height: 820px) and (min-width: 769px) {
   .hero-left {
     padding-left: clamp(1.5rem, 3vw, 4rem);
@@ -745,9 +765,19 @@
     width: 290px !important;
     border-radius: 16px !important;
   }
+  .mockup-queue-screen {
+    height: 400px !important;
+  }
   .flow-ui-shell .task-ledger-queue {
     padding: 0.85rem !important;
     gap: 0.75rem !important;
+  }
+  .flow-ui-shell .queue-jobs-list {
+    max-height: 12.5rem !important; /* ~200px */
+  }
+  .flow-ui-shell .queue-log-console {
+    min-height: 3.5rem !important;
+    max-height: 4.5rem !important;
   }
   .flow-ui-shell .job-card-mockup {
     padding: 0.5rem 0.60rem !important;
@@ -777,5 +807,184 @@
   }
   .result-stat-value {
     font-size: 1.3rem !important;
+  }
+}
+
+/* 💻 Short displays (e.g. height under 720px) to prevent vertical overflow/cutoff */
+@media (max-height: 720px) and (min-width: 769px) {
+  .results-tag {
+    margin-bottom: 0.5rem !important;
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+  .results-headline {
+    font-size: clamp(1.6rem, 2.6vw, 2.2rem) !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .results-subtext {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+  }
+  .results-stats-grid {
+    gap: 0.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+  .result-stat-card {
+    padding: 0.5rem 0.65rem !important;
+    border-radius: 10px !important;
+  }
+  .result-stat-value {
+    font-size: 1.15rem !important;
+  }
+  .result-stat-label {
+    font-size: 0.6rem !important;
+  }
+  .mini-queue-demo {
+    padding: 0.6rem 0.75rem !important;
+    gap: 0.35rem !important;
+  }
+  .mini-job-row {
+    gap: 0.4rem !important;
+  }
+  .mini-job-text {
+    font-size: 0.6rem !important;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 0.5rem !important;
+  }
+  .hero-headline {
+    font-size: clamp(1.8rem, 2.8vw, 2.4rem) !important;
+    margin-bottom: 0.4rem !important;
+  }
+  .hero-subtext {
+    font-size: 0.85rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+  }
+  .hero-stat-strip {
+    margin-top: 1rem !important;
+    padding-top: 0.75rem !important;
+    gap: 1rem !important;
+  }
+  .hero-stat-num {
+    font-size: 1.25rem !important;
+  }
+}
+
+/* =============================================
+   SHORT VIEWPORT FIX (≤660px height, 14" laptops)
+   Header is 7.5rem fixed — push content below it
+   and compress everything aggressively to fit
+   ============================================= */
+@media (max-height: 660px) and (min-width: 769px) {
+  /* Hero left: start below the fixed header */
+  .hero-left {
+    justify-content: flex-start !important;
+    padding-top: 5.5rem !important;
+    padding-left: clamp(1.25rem, 3vw, 4rem) !important;
+  }
+  .hero-eyebrow {
+    margin-bottom: 0.4rem !important;
+    font-size: 0.65rem !important;
+  }
+  .hero-headline {
+    font-size: clamp(1.6rem, 2.4vw, 2rem) !important;
+    margin-bottom: 0.35rem !important;
+    line-height: 0.92 !important;
+  }
+  .hero-subtext {
+    font-size: 0.82rem !important;
+    margin-bottom: 0.75rem !important;
+    line-height: 1.4 !important;
+    max-width: 34ch !important;
+  }
+  .hero-cta-row {
+    gap: 0.6rem !important;
+  }
+  .hero-stat-strip {
+    margin-top: 0.75rem !important;
+    padding-top: 0.6rem !important;
+    gap: 1rem !important;
+  }
+  .hero-stat-num {
+    font-size: 1.15rem !important;
+  }
+
+  /* Flow UI shell: center below the 7.5rem fixed header, constrain size */
+  .flow-ui-anchor {
+    /* Center in the space below the fixed header, not behind it */
+    top: calc(3.75rem + 50%) !important;
+  }
+  .flow-ui-shell {
+    width: 290px !important;
+    border-radius: 14px !important;
+  }
+  .mockup-queue-screen {
+    height: 340px !important;
+  }
+  .flow-ui-shell .task-ledger-queue {
+    padding: 0.7rem !important;
+    gap: 0.6rem !important;
+  }
+  .flow-ui-shell .queue-jobs-list {
+    max-height: 9rem !important;
+  }
+  .flow-ui-shell .queue-log-console {
+    min-height: 3rem !important;
+    max-height: 3.5rem !important;
+  }
+  .flow-ui-shell .job-card-content {
+    padding: 0.4rem 0.6rem !important;
+  }
+  .flow-ui-shell .job-prompt {
+    font-size: 0.6rem !important;
+  }
+  .flow-ui-shell .queue-metrics-dashboard {
+    gap: 0.4rem !important;
+  }
+
+  /* Results hero: start below the fixed header */
+  .results-hero {
+    justify-content: flex-start !important;
+    padding-top: 5.5rem !important;
+    padding-right: clamp(1.25rem, 3vw, 4rem) !important;
+    padding-left: 1.5rem !important;
+  }
+  .results-tag {
+    margin-bottom: 0.5rem !important;
+    font-size: 0.62rem !important;
+    padding: 0.25rem 0.65rem !important;
+  }
+  .results-headline {
+    font-size: clamp(1.5rem, 2.2vw, 1.9rem) !important;
+    margin-bottom: 0.4rem !important;
+    line-height: 0.95 !important;
+  }
+  /* Hide subtext — too tall for short viewports */
+  .results-subtext {
+    display: none !important;
+  }
+  .results-stats-grid {
+    gap: 0.4rem !important;
+    margin-bottom: 0.6rem !important;
+  }
+  .result-stat-card {
+    padding: 0.45rem 0.55rem !important;
+    border-radius: 10px !important;
+  }
+  .result-stat-value {
+    font-size: 1rem !important;
+  }
+  .result-stat-label {
+    font-size: 0.55rem !important;
+  }
+  .mini-queue-demo {
+    padding: 0.45rem 0.6rem !important;
+    gap: 0.25rem !important;
+  }
+  .mini-job-text {
+    font-size: 0.58rem !important;
   }
 }
