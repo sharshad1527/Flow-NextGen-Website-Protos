@@ -1,28 +1,43 @@
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { Logo } from "./Logo";
 import "./Header.css";
 
 export function Header() {
   const { scrollY } = useScroll();
   const [isScrolled, setIsScrolled] = useState(false);
-  // Hidden during logo intro — show only after user scrolls past logo phase.
-  // Logo ends at ~20% of the 400vh scroll track → about 0.20 * 400vh = 80vh.
-  // Using 60 as a safe low threshold so the nav appears right as logo fades.
   const [isVisible, setIsVisible] = useState(false);
+  const location = useLocation();
+
+  const isHomePage = location.pathname === "/";
 
   useEffect(() => {
     const t = setTimeout(() => {
-      setIsVisible(true);
+      const currentScroll = window.scrollY;
+      const totalTrackScroll = 3 * window.innerHeight;
+      const p = currentScroll / totalTrackScroll;
+      
+      if (isHomePage && p >= 0.22 && p < 0.64) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
     }, 2200);
     return () => clearTimeout(t);
-  }, []);
+  }, [isHomePage]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
-    // Logo fades out at ~26% of 400vh journey ≈ 1× viewport height of scroll
-    if (latest > window.innerHeight * 0.95) {
+    if (isHomePage) {
+      const totalTrackScroll = 3 * window.innerHeight;
+      const p = latest / totalTrackScroll;
+      if (p >= 0.22 && p < 0.64) {
+        setIsVisible(false);
+      } else {
+        setIsVisible(true);
+      }
+    } else {
       setIsVisible(true);
     }
   });
