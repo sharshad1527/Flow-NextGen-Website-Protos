@@ -700,56 +700,98 @@
 
 /* Mobile: single-column stacked layout */
 @media (max-width: 768px) {
-  /* On mobile the stage flex-direction stacks — Flow UI on top, hero below */
   .journey-stage {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 5rem;
+    padding-top: 4rem;
     gap: 0;
   }
 
-  /* Hero-left: full width, bottom half of viewport */
+  /* Hero-left: centered at the bottom third of the viewport */
   .hero-left {
     position: absolute;
-    left: 0;
-    top: auto;
-    bottom: 0;
-    width: 100%;
-    height: 46%;
-    padding: 1rem 1.5rem 2rem;
-    align-items: center;
-    text-align: center;
-    justify-content: flex-start;
+    left: 0 !important;
+    right: 0 !important;
+    top: 68% !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: 32% !important;
+    padding: 0 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .hero-text-frame {
+    width: 100% !important;
+    max-width: 480px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .hero-eyebrow {
+    margin-bottom: 0.35rem !important;
+    font-size: 0.65rem !important;
   }
 
   .hero-headline {
-    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-size: 1.8rem !important;
+    line-height: 1.05 !important;
+    margin-bottom: 0.5rem !important;
     letter-spacing: -0.03em;
   }
 
-  .hero-subtext {
-    font-size: 0.9rem;
-    max-width: 100%;
+  .hero-subtext,
+  .hero-stat-strip,
+  .hero-cta-row .button-secondary {
+    display: none !important; /* Hide to prevent mobile overlapping */
   }
 
-  .hero-stat-strip {
-    gap: 1rem;
-    margin-top: 1.2rem;
-    padding-top: 1.2rem;
-    justify-content: center;
+  .hero-cta-row {
+    justify-content: center !important;
+    width: 100% !important;
   }
 
-  /* Flow UI: upper half, centered, no horizontal sliding on mobile */
+  /* Flow UI: centered in the upper two-thirds, no horizontal sliding */
   .flow-ui-anchor {
-    /* Override motion's left to force center on mobile */
     left: 50% !important;
-    top: 40% !important;
+    top: 36% !important;
+    width: 260px !important;
+    height: 350px !important;
   }
 
   .flow-ui-shell {
-    width: 300px;
-    border-radius: 16px;
+    width: 100% !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+    border-radius: 14px !important;
+  }
+
+  /* Scale mockup internals for mobile */
+  .flow-ui-shell .queue-pane {
+    gap: 4px !important;
+    padding: 6px !important;
+  }
+  .flow-ui-shell .active-tasks-list {
+    max-height: 70px !important;
+  }
+  .flow-ui-shell .log-console-wrap {
+    height: 45px !important;
+  }
+  .flow-ui-shell .task-row {
+    padding: 3px 5px !important;
+  }
+  .flow-ui-shell .task-desc {
+    font-size: 7.5px !important;
+  }
+  .flow-ui-shell .queue-status-dashboard {
+    gap: 1px !important;
   }
 
   /* Hide prompts on mobile — too cluttered */
@@ -757,30 +799,68 @@
     display: none;
   }
 
+  /* Results hero: stacked at bottom on Page 2 */
   .results-hero {
     position: absolute;
-    right: 0;
-    top: auto;
-    bottom: 0;
-    width: 100%;
-    height: 46%;
-    padding: 1rem 1.5rem 2rem;
-    align-items: center;
-    text-align: center;
-    justify-content: flex-start;
+    left: 0 !important;
+    right: 0 !important;
+    top: 68% !important;
+    bottom: auto !important;
+    width: 100% !important;
+    height: 32% !important;
+    padding: 0 1rem !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+  }
+
+  .results-text-frame {
+    width: 100% !important;
+    max-width: 480px !important;
+    padding: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    backdrop-filter: none !important;
+  }
+
+  .results-tag {
+    margin-bottom: 0.35rem !important;
+    font-size: 0.6rem !important;
+    padding: 0.15rem 0.5rem !important;
   }
 
   .results-headline {
-    font-size: clamp(2rem, 7vw, 2.6rem);
+    font-size: 1.8rem !important;
+    line-height: 1.05 !important;
+    margin-bottom: 0.5rem !important;
   }
 
+  .results-subtext,
   .results-stats-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.5rem;
+    display: none !important; /* Hide to prevent mobile clutter */
   }
 
-  .result-stat-value {
-    font-size: 1.5rem;
+  .image-results-showcase {
+    margin-top: 0.35rem !important;
+    padding: 0.4rem !important;
+    border-radius: 10px !important;
+    background: rgba(22, 22, 22, 0.6) !important;
+  }
+
+  .folder-label {
+    font-size: 0.55rem !important;
+  }
+
+  .download-all-btn {
+    font-size: 0.55rem !important;
+    padding: 0.15rem 0.4rem !important;
+  }
+
+  .image-showcase-grid {
+    gap: 0.35rem !important;
   }
 
   .journey-phase-bar {
@@ -793,8 +873,8 @@
 
   /* Logo canvas: smaller on mobile */
   .logo-canvas-wrap {
-    width: 220px;
-    height: 220px;
+    width: 200px;
+    height: 200px;
   }
 }
 
@@ -914,25 +994,23 @@
   .flow-ui-shell {
     border-radius: 16px !important;
   }
-  .flow-ui-shell .task-ledger-queue {
-    padding: 0.85rem !important;
-    gap: 0.75rem !important;
+  .flow-ui-shell .queue-pane {
+    gap: 6px !important;
   }
-  .flow-ui-shell .queue-jobs-list {
-    max-height: 12.5rem !important; /* ~200px */
+  .flow-ui-shell .active-tasks-list {
+    max-height: 90px !important;
   }
-  .flow-ui-shell .queue-log-console {
-    min-height: 3.5rem !important;
-    max-height: 4.5rem !important;
+  .flow-ui-shell .log-console-wrap {
+    height: 60px !important;
   }
-  .flow-ui-shell .job-card-mockup {
-    padding: 0.5rem 0.60rem !important;
+  .flow-ui-shell .task-row {
+    padding: 4px 6px !important;
   }
-  .flow-ui-shell .job-prompt {
-    font-size: 0.65rem !important;
+  .flow-ui-shell .task-desc {
+    font-size: 8px !important;
   }
-  .flow-ui-shell .queue-metrics-dashboard {
-    gap: 0.5rem !important;
+  .flow-ui-shell .queue-status-dashboard {
+    gap: 2px !important;
   }
 
   .results-hero {
@@ -1066,25 +1144,23 @@
   .flow-ui-shell {
     border-radius: 14px !important;
   }
-  .flow-ui-shell .task-ledger-queue {
-    padding: 0.7rem !important;
-    gap: 0.6rem !important;
+  .flow-ui-shell .queue-pane {
+    gap: 4px !important;
   }
-  .flow-ui-shell .queue-jobs-list {
-    max-height: 9rem !important;
+  .flow-ui-shell .active-tasks-list {
+    max-height: 70px !important;
   }
-  .flow-ui-shell .queue-log-console {
-    min-height: 3rem !important;
-    max-height: 3.5rem !important;
+  .flow-ui-shell .log-console-wrap {
+    height: 50px !important;
   }
-  .flow-ui-shell .job-card-content {
-    padding: 0.4rem 0.6rem !important;
+  .flow-ui-shell .task-row {
+    padding: 3px 5px !important;
   }
-  .flow-ui-shell .job-prompt {
-    font-size: 0.6rem !important;
+  .flow-ui-shell .task-desc {
+    font-size: 7.5px !important;
   }
-  .flow-ui-shell .queue-metrics-dashboard {
-    gap: 0.4rem !important;
+  .flow-ui-shell .queue-status-dashboard {
+    gap: 1px !important;
   }
 
   /* Results hero: start below the fixed header */

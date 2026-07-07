@@ -557,7 +557,9 @@ export function ScrollJourney() {
                 style={{ opacity: glowOpacity }}
               />
 
-              <ExtensionMockup phase={phase} />
+              <div className="flow-ui-shell">
+                <ExtensionMockup phase={phase} />
+              </div>
             </motion.div>
           </motion.div>
 
