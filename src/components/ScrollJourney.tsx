@@ -500,35 +500,44 @@ export function ScrollJourney() {
             scale: flowUIScale,
           }}
         >
-          {/* Black hole glow */}
+          {/* Spring-based entrance wrapper that slides in from offscreen right once the intro overlay exits */}
           <motion.div
-            className="flow-ui-glow"
-            style={{ opacity: glowOpacity }}
-          />
+            className="flow-ui-entrance-wrapper"
+            initial={{ x: "100vw", opacity: 0 }}
+            animate={!showIntro ? { x: 0, opacity: 1 } : { x: "100vw", opacity: 0 }}
+            transition={{ type: "spring", stiffness: 70, damping: 17, mass: 1 }}
+            style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
+          >
+            {/* Black hole glow */}
+            <motion.div
+              className="flow-ui-glow"
+              style={{ opacity: glowOpacity }}
+            />
 
-          <div className="flow-ui-shell glass-panel">
-            {/* App Header */}
-            <div className="mockup-app-header">
-              <div className="mockup-app-logo">
-                <Logo width={18} height={18} />
-                <div className="app-title-group">
-                  <span className="app-name">
-                    Flow<span className="accent-text">NextGen</span>
-                  </span>
-                  <span className="app-version">BY HARSHAD V0.10.0</span>
+            <div className="flow-ui-shell glass-panel">
+              {/* App Header */}
+              <div className="mockup-app-header">
+                <div className="mockup-app-logo">
+                  <Logo width={18} height={18} />
+                  <div className="app-title-group">
+                    <span className="app-name">
+                      Flow<span className="accent-text">NextGen</span>
+                    </span>
+                    <span className="app-version">BY HARSHAD V0.10.0</span>
+                  </div>
                 </div>
+                <span className="live-badge">
+                  <span className="live-dot" />
+                  LIVE
+                </span>
               </div>
-              <span className="live-badge">
-                <span className="live-dot" />
-                LIVE
-              </span>
-            </div>
 
-            {/* Queue screen */}
-            <div className="mockup-queue-screen">
-              <AnimatedQueue scrollProgress={smooth} />
+              {/* Queue screen */}
+              <div className="mockup-queue-screen">
+                <AnimatedQueue scrollProgress={smooth} />
+              </div>
             </div>
-          </div>
+          </motion.div>
         </motion.div>
 
         {/* ---- RESULTS HERO (RIGHT) ---- */}

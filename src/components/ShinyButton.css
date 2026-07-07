@@ -11,13 +11,49 @@
   align-items: center;
   justify-content: center;
   gap: 0.6rem;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+  border: 1px solid transparent; /* Set to transparent to let trace shine through */
   overflow: hidden;
   cursor: pointer;
   box-shadow: 0 8px 24px rgba(255, 85, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.25);
   transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, background-position, box-shadow;
 }
+
+/* Glowing border trace pseudo-elements */
+.shiny-btn::before {
+  content: '';
+  position: absolute;
+  width: 180%;
+  height: 350%;
+  left: -40%;
+  top: -125%;
+  background: conic-gradient(
+    from 0deg,
+    transparent 20%,
+    rgba(255, 138, 0, 0.9) 40%,
+    #ffffff 50%,
+    rgba(255, 138, 0, 0.9) 60%,
+    transparent 80%
+  );
+  animation: rotate-trace 3s linear infinite;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.shiny-btn::after {
+  content: '';
+  position: absolute;
+  inset: 1px;
+  border-radius: 100px;
+  background: linear-gradient(135deg, #FF5500 0%, #FF8A00 50%, #FF5500 100%);
+  background-size: 200% auto;
+  z-index: 1;
+  transition: background-position 0.4s ease;
+  pointer-events: none;
+}
+
 
 .shiny-text {
   position: relative;
@@ -60,13 +96,20 @@
 
 .shiny-btn:hover {
   transform: translateY(-2px) scale(1.025);
-  background-position: right center;
-  border-color: rgba(255, 255, 255, 0.5);
   box-shadow: 
     0 16px 36px rgba(255, 85, 0, 0.45), 
     0 0 0 5px rgba(255, 85, 0, 0.15),
     inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
+
+.shiny-btn:hover::before {
+  opacity: 1; /* Show rotating border trace on hover */
+}
+
+.shiny-btn:hover::after {
+  background-position: right center; /* Shifts gradient background inside the mask */
+}
+
 
 .shiny-btn:hover .shiny-glow {
   opacity: 1;
@@ -103,3 +146,13 @@
     opacity: 1;
   }
 }
+
+@keyframes rotate-trace {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+

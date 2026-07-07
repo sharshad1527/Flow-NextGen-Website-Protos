@@ -191,7 +191,13 @@
 }
 
 .flow-ui-shell {
-  width: 310px;
+  aspect-ratio: 10 / 16;
+  height: 60vh;
+  max-height: 520px;
+  min-height: 380px;
+  width: auto; /* width auto-calculates from height + aspect-ratio */
+  display: flex;
+  flex-direction: column;
   background: rgba(8, 8, 8, 0.92);
   border-radius: 22px;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -204,9 +210,12 @@
 }
 
 .mockup-queue-screen {
-  height: 520px;
+  flex: 1;
+  min-height: 0;
   background: #0D0D0D;
   overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Black hole glow behind UI */
@@ -541,7 +550,7 @@
     font-size: clamp(2.4rem, 5vw, 4.5rem);
   }
   .flow-ui-shell {
-    width: 310px;
+    /* inherits base 10:16 aspect ratio, width auto */
   }
   .hero-stat-strip {
     gap: 1.25rem;
@@ -762,11 +771,7 @@
   }
 
   .flow-ui-shell {
-    width: 290px !important;
     border-radius: 16px !important;
-  }
-  .mockup-queue-screen {
-    height: 400px !important;
   }
   .flow-ui-shell .task-ledger-queue {
     padding: 0.85rem !important;
@@ -918,11 +923,7 @@
     top: calc(3.75rem + 50%) !important;
   }
   .flow-ui-shell {
-    width: 290px !important;
     border-radius: 14px !important;
-  }
-  .mockup-queue-screen {
-    height: 340px !important;
   }
   .flow-ui-shell .task-ledger-queue {
     padding: 0.7rem !important;
