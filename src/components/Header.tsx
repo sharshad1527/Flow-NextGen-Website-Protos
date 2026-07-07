@@ -1,5 +1,5 @@
 import { motion, useScroll, useMotionValueEvent } from "motion/react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Logo } from "./Logo";
 import "./Header.css";
@@ -12,10 +12,19 @@ export function Header() {
   // Using 60 as a safe low threshold so the nav appears right as logo fades.
   const [isVisible, setIsVisible] = useState(false);
 
+  useEffect(() => {
+    const t = setTimeout(() => {
+      setIsVisible(true);
+    }, 2200);
+    return () => clearTimeout(t);
+  }, []);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     setIsScrolled(latest > 50);
     // Logo fades out at ~26% of 400vh journey ≈ 1× viewport height of scroll
-    setIsVisible(latest > window.innerHeight * 0.95);
+    if (latest > window.innerHeight * 0.95) {
+      setIsVisible(true);
+    }
   });
 
   return (
