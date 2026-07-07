@@ -240,11 +240,8 @@
 }
 
 .flow-ui-shell {
-  aspect-ratio: 10 / 16;
-  height: 60vh;
-  max-height: 520px;
-  min-height: 380px;
-  width: auto; /* width auto-calculates from height + aspect-ratio */
+  width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   background: rgba(8, 8, 8, 0.92);
@@ -991,27 +988,7 @@
     font-size: 1.5rem !important;
   }
 
-  .flow-ui-shell {
-    border-radius: 16px !important;
-  }
-  .flow-ui-shell .queue-pane {
-    gap: 6px !important;
-  }
-  .flow-ui-shell .active-tasks-list {
-    max-height: 90px !important;
-  }
-  .flow-ui-shell .log-console-wrap {
-    height: 60px !important;
-  }
-  .flow-ui-shell .task-row {
-    padding: 4px 6px !important;
-  }
-  .flow-ui-shell .task-desc {
-    font-size: 8px !important;
-  }
-  .flow-ui-shell .queue-status-dashboard {
-    gap: 2px !important;
-  }
+
 
   .results-hero {
     padding-right: clamp(1.5rem, 3vw, 4rem) !important;
@@ -1141,27 +1118,7 @@
     /* Center in the space below the fixed header, not behind it */
     top: calc(3.75rem + 50%) !important;
   }
-  .flow-ui-shell {
-    border-radius: 14px !important;
-  }
-  .flow-ui-shell .queue-pane {
-    gap: 4px !important;
-  }
-  .flow-ui-shell .active-tasks-list {
-    max-height: 70px !important;
-  }
-  .flow-ui-shell .log-console-wrap {
-    height: 50px !important;
-  }
-  .flow-ui-shell .task-row {
-    padding: 3px 5px !important;
-  }
-  .flow-ui-shell .task-desc {
-    font-size: 7.5px !important;
-  }
-  .flow-ui-shell .queue-status-dashboard {
-    gap: 1px !important;
-  }
+
 
   /* Results hero: start below the fixed header */
   .results-hero {
