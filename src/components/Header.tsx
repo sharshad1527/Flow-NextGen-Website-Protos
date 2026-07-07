@@ -43,16 +43,16 @@ export function Header() {
   });
 
   return (
-    <div className={`header-wrapper ${isScrolled ? 'scrolled' : ''}`}>
+    <div className={`header-wrapper ${isScrolled ? 'scrolled' : ''} ${!isVisible ? 'hidden-nav' : ''}`}>
       <motion.header
         className={`dynamic-island ${isScrolled ? 'scrolled' : ''}`}
         animate={{
-          y: isVisible ? 0 : -64,
+          y: isVisible ? 0 : -150,
           opacity: isVisible ? 1 : 0,
           scale: isVisible ? 1 : 0.92,
           pointerEvents: isVisible ? "auto" : "none",
         }}
-        initial={{ y: -64, opacity: 0, scale: 0.92 }}
+        initial={{ y: -150, opacity: 0, scale: 0.92 }}
         transition={{ duration: 0.45, type: "spring", stiffness: 220, damping: 26 }}
       >
         <Link to="/" className="logo">

@@ -11,11 +11,19 @@
   z-index: 10001; /* Above logo-intro-overlay (9999) and App.tsx overlay siblings */
   pointer-events: none; /* Let clicks pass through the wrapper wrapper */
   background: transparent;
-  transition: background 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(0);
+  opacity: 1;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), background 0.45s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .header-wrapper.scrolled {
   background: linear-gradient(to bottom, #0D0D0D 0%, rgba(13, 13, 13, 0.95) 35%, rgba(13, 13, 13, 0.6) 70%, transparent 100%);
+}
+
+.header-wrapper.hidden-nav {
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-100%);
 }
 
 .dynamic-island {
