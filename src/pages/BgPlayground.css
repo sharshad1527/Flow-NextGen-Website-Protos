@@ -74,6 +74,40 @@
   color: #fff;
 }
 
+.category-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem;
+  margin-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.85rem;
+}
+
+.category-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.55rem;
+  font-weight: 800;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  letter-spacing: 0.5px;
+}
+
+.category-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.category-btn.active {
+  background: #FF6B00;
+  border-color: #FF6B00;
+  color: #fff;
+  box-shadow: 0 0 8px rgba(255, 107, 0, 0.35);
+}
+
 .selector-list {
   display: flex;
   flex-direction: column;
@@ -401,6 +435,7 @@ input:checked + .checkbox-slider:before {
   border-radius: 50%;
   mix-blend-mode: screen;
   will-change: transform;
+  filter: blur(80px);
 }
 
 .aurora-orb-1 {
@@ -442,9 +477,9 @@ input:checked + .checkbox-slider:before {
 .aurora-glass {
   position: absolute;
   inset: 0;
-  backdrop-filter: blur(140px) saturate(180%);
-  -webkit-backdrop-filter: blur(140px) saturate(180%);
-  background: rgba(4, 4, 4, 0.2);
+  backdrop-filter: blur(40px) saturate(140%);
+  -webkit-backdrop-filter: blur(40px) saturate(140%);
+  background: rgba(4, 4, 4, 0.25);
   z-index: 2;
 }
 
@@ -508,4 +543,132 @@ input:checked + .checkbox-slider:before {
   .bento-grid-overlay {
     grid-template-columns: 1fr;
   }
+}
+
+/* =============================================
+   DIAGNOSTIC DASHBOARD STYLING
+   ============================================= */
+.diagnostic-dashboard {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  width: 280px;
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  padding: 0.85rem;
+  z-index: 100;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  font-family: monospace;
+}
+
+.diagnostic-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 0.45rem;
+  margin-bottom: 0.6rem;
+}
+
+.diagnostic-title {
+  font-size: 0.65rem;
+  font-weight: 850;
+  letter-spacing: 1px;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+.diagnostic-pulse {
+  font-size: 0.6rem;
+  color: #00E676;
+  font-weight: bold;
+  animation: pulse-diag 1.2s infinite;
+}
+
+@keyframes pulse-diag {
+  0% { opacity: 0.3; }
+  50% { opacity: 1; }
+  100% { opacity: 0.3; }
+}
+
+.diagnostic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.6rem;
+}
+
+.diag-cell {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 6px;
+  padding: 0.45rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.diag-lbl {
+  font-size: 0.5rem;
+  color: rgba(255, 255, 255, 0.35);
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.diag-val {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.fps-high {
+  color: #00E676 !important;
+}
+
+.fps-low {
+  color: #FF1744 !important;
+}
+
+.diagnostic-dpr-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 0.45rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.dpr-label {
+  font-size: 0.55rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: bold;
+}
+
+.dpr-buttons {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.dpr-btn {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.6);
+  font-family: monospace;
+  font-size: 0.55rem;
+  padding: 0.2rem 0.35rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.dpr-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+}
+
+.dpr-btn.active {
+  background: #FF6B00;
+  border-color: #FF6B00;
+  color: #fff;
+  box-shadow: 0 0 4px rgba(255, 107, 0, 0.4);
 }

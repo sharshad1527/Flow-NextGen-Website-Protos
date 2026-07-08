@@ -73,7 +73,7 @@ void main(){gl_Position=position;}`;
   }
 
   updateScale() {
-    const dpr = Math.min(1.0, window.devicePixelRatio);
+    const dpr = Math.min(2.0, window.devicePixelRatio || 1);
     const { innerWidth: width, innerHeight: height } = window;
     this.canvas.width = width * dpr;
     this.canvas.height = height * dpr;
