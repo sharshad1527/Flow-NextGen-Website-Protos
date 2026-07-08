@@ -1,15 +1,19 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { SmokeBackground } from "./components/SmokeBackground";
 import { Home } from "./pages/Home";
 import { PricingPage } from "./pages/PricingPage";
+import { BgPlayground } from "./pages/BgPlayground";
 import "./App.css";
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const showHeaderFooter = location.pathname !== "/bg-playground";
+
   return (
-    <BrowserRouter>
+    <>
       {/* Cinematic page-load reveal — fades from black to transparent once */}
       <motion.div
         initial={{ opacity: 1 }}
@@ -25,16 +29,27 @@ function App() {
       />
 
       {/* Dual-tone smoke background integrating with our theme */}
-      <SmokeBackground smokeColorLeft="#FF6B00" smokeColorRight="#00E676" opacity={0.6} />
+      {showHeaderFooter && (
+        <SmokeBackground smokeColorLeft="#FF6B00" smokeColorRight="#00E676" opacity={0.6} />
+      )}
 
       <div style={{ position: "relative", zIndex: 1 }}>
-        <Header />
+        {showHeaderFooter && <Header />}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<PricingPage />} />
+          <Route path="/bg-playground" element={<BgPlayground />} />
         </Routes>
-        <Footer />
+        {showHeaderFooter && <Footer />}
       </div>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
