@@ -12,7 +12,7 @@ interface ConceptSpec {
   id: number;
   title: string;
   category: "space" | "interactive" | "3d" | "cyberpunk" | "shaders";
-  bgType: "smoke" | "aurora" | "particles";
+  bgType: "smoke" | "aurora" | "particles" | "fluid";
   badge: string;
   visuals: string;
   interaction: string;
@@ -847,7 +847,14 @@ function TextureSmoke({ colorLeft, colorRight, monochrome, dynamicScroll, dprSca
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const gl = canvas.getContext("webgl2") as WebGL2RenderingContext;
+    const gl = canvas.getContext("webgl2", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    }) as WebGL2RenderingContext;
     if (!gl) return;
     glRef.current = gl;
 
@@ -977,7 +984,7 @@ function TextureSmoke({ colorLeft, colorRight, monochrome, dynamicScroll, dprSca
   }, []);
 
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", opacity: 0.85, willChange: "opacity" }}>
+    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>
       <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
     </div>
   );
@@ -1100,7 +1107,7 @@ function ConstellationParticles({
     // Trigger size update when dprScale changes
     const canvas = canvasRef.current;
     if (canvas) {
-      const ctx = canvas.getContext("2d");
+      const ctx = canvas.getContext("2d", { alpha: false });
       if (ctx) {
         const dpr = dprScale || Math.min(2.0, window.devicePixelRatio || 1);
         canvas.width = window.innerWidth * dpr;
@@ -1114,7 +1121,7 @@ function ConstellationParticles({
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    const ctx = canvas.getContext("2d");
+    const ctx = canvas.getContext("2d", { alpha: false });
     if (!ctx) return;
 
     const updateSize = () => {
@@ -1798,7 +1805,235 @@ function ConstellationParticles({
   }, []);
 
   return (
-    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", willChange: "transform" }}>
+    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>
+      <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------
+   OPTION 4: FLUID BUBBLE GLOW COMPONENT
+------------------------------------------------------- */
+interface FluidBubblesProps {
+  dprScale?: number;
+  onRenderMeasure?: (duration: number) => void;
+  dynamicScroll?: boolean;
+}
+
+interface Bubble {
+  x: number;
+  y: number;
+  vx: number;
+  vy: number;
+  radius: number;
+  baseColor: "orange" | "green" | "blue";
+  pulseSpeed: number;
+  pulsePhase: number;
+  wobbleSpeed: number;
+  wobblePhase: number;
+}
+
+function FluidBubbles({ dprScale, onRenderMeasure, dynamicScroll = true }: FluidBubblesProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const rafRef = useRef<number>(0);
+  const propsRef = useRef({ dprScale, onRenderMeasure, dynamicScroll });
+
+  useEffect(() => {
+    propsRef.current = { dprScale, onRenderMeasure, dynamicScroll };
+    
+    // Resize immediately if dprScale changes
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        const dpr = dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+        canvas.width = window.innerWidth * dpr;
+        canvas.height = window.innerHeight * dpr;
+        ctx.scale(dpr, dpr);
+      }
+    }
+  }, [dprScale, onRenderMeasure, dynamicScroll]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d", { alpha: false });
+    if (!ctx) return;
+
+    const updateSize = () => {
+      const dpr = propsRef.current.dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      ctx.scale(dpr, dpr);
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
+    // Initialize bubble particles
+    const bubbleCount = 28;
+    const bubbles: Bubble[] = [];
+    const colorOptions: ("orange" | "green" | "blue")[] = ["orange", "green", "blue"];
+
+    for (let i = 0; i < bubbleCount; i++) {
+      bubbles.push({
+        x: Math.random() * window.innerWidth,
+        y: Math.random() * window.innerHeight + window.innerHeight, // Spawn from/below screen
+        vx: (Math.random() - 0.5) * 0.35,
+        vy: -(Math.random() * 0.45 + 0.25), // Drifts upward
+        radius: Math.random() * 30 + 15,
+        baseColor: colorOptions[i % 3],
+        pulseSpeed: Math.random() * 0.002 + 0.001,
+        pulsePhase: Math.random() * Math.PI * 2,
+        wobbleSpeed: Math.random() * 0.003 + 0.001,
+        wobblePhase: Math.random() * Math.PI * 2
+      });
+    }
+
+    // Large background fluid blob coordinates
+    const blobs = [
+      { x: 0, y: 0, rx: 200, ry: 150, tx: 0.1, ty: 0.15, speed: 0.0004, color: "orange" },
+      { x: 0, y: 0, rx: 240, ry: 210, tx: 0.5, ty: 0.3, speed: 0.0003, color: "green" },
+      { x: 0, y: 0, rx: 280, ry: 250, tx: 0.8, ty: 0.7, speed: 0.0005, color: "blue" }
+    ];
+
+    const render = (time: number) => {
+      const start = performance.now();
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      const config = propsRef.current;
+
+      // Calculate scroll progress for dynamic color transitions
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrollProgress = docHeight > 0 ? scrollTop / docHeight : 0;
+      const clampedScroll = Math.min(1.0, Math.max(0.0, scrollProgress));
+
+      // 1. Draw solid dark background to clear frame
+      ctx.fillStyle = "#050505";
+      ctx.fillRect(0, 0, w, h);
+
+      // 2. Draw soft, flowing background fluid globs (Orbs)
+      ctx.globalCompositeOperation = "screen";
+
+      blobs.forEach((blob) => {
+        // Compute circular orbiting positions based on time
+        const cx = w * blob.tx + Math.cos(time * blob.speed) * (w * 0.12);
+        const cy = h * blob.ty + Math.sin(time * blob.speed * 1.3) * (h * 0.1);
+        
+        let colorString = "";
+        if (blob.color === "orange") {
+          // Dynamic scroll transition: Orange (255, 107, 0) to Ocean Blue (0, 140, 255)
+          const r = Math.round(255 - clampedScroll * 255);
+          const g = Math.round(107 + clampedScroll * 33);
+          const b = Math.round(0 + clampedScroll * 255);
+          colorString = `rgba(${r}, ${g}, ${b}, 0.18)`;
+        } else if (blob.color === "green") {
+          colorString = "rgba(0, 230, 118, 0.12)";
+        } else {
+          colorString = "rgba(0, 140, 255, 0.15)";
+        }
+
+        // Create fluid gradient glowing orb
+        const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, Math.max(blob.rx, blob.ry) * 1.5);
+        grad.addColorStop(0, colorString);
+        grad.addColorStop(0.5, colorString.replace("0.18", "0.06").replace("0.12", "0.04").replace("0.15", "0.05"));
+        grad.addColorStop(1, "rgba(0,0,0,0)");
+
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(cx, cy, Math.max(blob.rx, blob.ry) * 1.5, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      // 3. Draw and update bubbles
+      ctx.globalCompositeOperation = "source-over";
+      
+      bubbles.forEach((b) => {
+        // Update positions
+        b.y += b.vy;
+        b.x += b.vx + Math.sin(time * b.wobbleSpeed + b.wobblePhase) * 0.2;
+
+        // Apply scroll-parallax vertical offset
+        const renderY = b.y - (scrollTop * 0.15);
+
+        // Wrap around boundaries
+        if (b.y + b.radius < -100) {
+          b.y = h + b.radius + 100;
+          b.x = Math.random() * w;
+        }
+        if (b.x - b.radius > w + 100) b.x = -b.radius;
+        if (b.x + b.radius < -100) b.x = w + b.radius;
+
+        // Dynamic size pulsing
+        const pulse = Math.sin(time * b.pulseSpeed + b.pulsePhase) * 2.5;
+        const currentRadius = Math.max(5, b.radius + pulse);
+
+        // Compute color based on bubble type and scroll progress
+        let colorString = "";
+        let borderString = "";
+
+        if (b.baseColor === "orange") {
+          // Dynamic scroll transition: Orange to Ocean Blue
+          const r = Math.round(255 - clampedScroll * 255);
+          const g = Math.round(107 + clampedScroll * 33);
+          const bVal = Math.round(0 + clampedScroll * 255);
+          colorString = `rgba(${r}, ${g}, ${bVal}, 0.08)`;
+          borderString = `rgba(${r}, ${g}, ${bVal}, 0.35)`;
+        } else if (b.baseColor === "green") {
+          colorString = "rgba(0, 230, 118, 0.06)";
+          borderString = "rgba(0, 230, 118, 0.28)";
+        } else {
+          colorString = "rgba(0, 140, 255, 0.07)";
+          borderString = "rgba(0, 140, 255, 0.32)";
+        }
+
+        // Draw soft bubble filling gradient
+        const bubbleGrad = ctx.createRadialGradient(
+          b.x - currentRadius * 0.3, 
+          renderY - currentRadius * 0.3, 
+          currentRadius * 0.05, 
+          b.x, 
+          renderY, 
+          currentRadius
+        );
+        bubbleGrad.addColorStop(0, "rgba(255, 255, 255, 0.15)");
+        bubbleGrad.addColorStop(0.3, colorString);
+        bubbleGrad.addColorStop(0.85, "rgba(0, 0, 0, 0)");
+        bubbleGrad.addColorStop(1, borderString);
+
+        ctx.fillStyle = bubbleGrad;
+        ctx.strokeStyle = borderString;
+        ctx.lineWidth = 0.85;
+
+        // Draw bubble paths
+        ctx.beginPath();
+        ctx.arc(b.x, renderY, currentRadius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        // Highlighting highlight orb reflection
+        ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
+        ctx.beginPath();
+        ctx.arc(b.x - currentRadius * 0.35, renderY - currentRadius * 0.35, currentRadius * 0.1, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      const duration = performance.now() - start;
+      if (config.onRenderMeasure) config.onRenderMeasure(duration);
+
+      rafRef.current = requestAnimationFrame(render);
+    };
+
+    rafRef.current = requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("resize", updateSize);
+      cancelAnimationFrame(rafRef.current);
+    };
+  }, []);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>
       <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
     </div>
   );
@@ -1809,7 +2044,7 @@ function ConstellationParticles({
 ------------------------------------------------------- */
 export function BgPlayground() {
   const [activeTab, setActiveTab] = useState<"prototypes" | "concepts">("prototypes");
-  const [bgType, setBgType] = useState<"smoke" | "aurora" | "particles">("smoke");
+  const [bgType, setBgType] = useState<"smoke" | "aurora" | "particles" | "fluid">("smoke");
   const [selectedConcept, setSelectedConcept] = useState<ConceptSpec>(CONCEPTS[0]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showBento, setShowBento] = useState(false);
@@ -1920,6 +2155,8 @@ export function BgPlayground() {
         return `Option 2 (Aurora Orbs) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
       case "particles":
         return `Option 3 (Constellation) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+      case "fluid":
+        return `Option 4 (Fluid Bubbles) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
     }
   }, [bgType, activeTab, selectedConcept]);
 
@@ -1960,6 +2197,13 @@ export function BgPlayground() {
           drawTorus={particlesProps.drawTorus}
           dprScale={dprScale}
           onRenderMeasure={handleRenderMeasure}
+        />
+      )}
+      {bgType === "fluid" && (
+        <FluidBubbles 
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
+          dynamicScroll={activeTab === "prototypes"}
         />
       )}
 
@@ -2047,6 +2291,14 @@ export function BgPlayground() {
             >
               <span className="btn-title">3. Constellation Particles</span>
               <span className="btn-desc">Interactive canvas net tracking pointer coordinates</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "fluid" ? "active" : ""}`}
+              onClick={() => setBgType("fluid")}
+            >
+              <span className="btn-title">4. Fluid Bubble Glow</span>
+              <span className="btn-desc">Interactive liquid flow with rising neon bubbles</span>
             </button>
           </div>
         )}
