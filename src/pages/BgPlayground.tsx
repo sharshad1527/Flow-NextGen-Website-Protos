@@ -3,6 +3,8 @@ import { Compass, Sparkles, Wand2, ArrowLeft, Layers } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import { ExtensionMockup } from "../components/ExtensionMockup";
+import { SmokeBackground } from "../components/SmokeBackground";
+import NeuralBackground from "@/components/ui/flow-field-background";
 import "./BgPlayground.css";
 
 /* -------------------------------------------------------
@@ -12,7 +14,7 @@ interface ConceptSpec {
   id: number;
   title: string;
   category: "space" | "interactive" | "3d" | "cyberpunk" | "shaders";
-  bgType: "smoke" | "aurora" | "particles" | "fluid";
+  bgType: "smoke" | "aurora" | "particles" | "fluid" | "flow-field" | "silk" | "drift" | "original-smoke";
   badge: string;
   visuals: string;
   interaction: string;
@@ -805,6 +807,512 @@ void main(){
 
   O = vec4(col, 1.0);
 }`;
+
+const silkVertexShaderSource = `
+  attribute vec2 position;
+  void main() {
+    gl_Position = vec4(position, 0.0, 1.0);
+  }
+`;
+
+const silkFragmentShaderSource = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+uniform vec3 u_colors[8];
+uniform vec4 u_scene;      // resolution.xy, time, colour count
+uniform vec4 u_shape;      // scale, intensity, paramA, warp
+uniform vec4 u_surface;    // detail, contrast, brightness, saturation
+uniform vec4 u_finish;     // hue, vignette, blur, grain
+uniform vec4 u_transform;  // seed, rotation, drift, OKLab toggle
+uniform vec4 u_space;      // offset.xy, pointer.xy
+uniform vec4 u_cursor;
+
+#define u_resolution u_scene.xy
+#define u_time u_scene.z
+#define u_colorCount u_scene.w
+#define u_scale u_shape.x
+#define u_intensity u_shape.y
+#define u_paramA u_shape.z
+#define u_warp u_shape.w
+#define u_detail u_surface.x
+#define u_contrast u_surface.y
+#define u_brightness u_surface.z
+#define u_saturation u_surface.w
+#define u_hue u_finish.x
+#define u_vignette u_finish.y
+#define u_blur u_finish.z
+#define u_grain u_finish.w
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define u_seed u_transform.x
+#else
+// Keep hash inputs inside mediump's guaranteed ±2^14 range.
+#define u_seed mod(u_transform.x, 31.0)
+#endif
+#define u_rotate u_transform.y
+#define u_drift u_transform.z
+#define u_oklab u_transform.w
+#define u_offset u_space.xy
+#define u_mouse u_space.zw
+#define u_cursorPresence u_cursor.x
+#define u_cursorEffect u_cursor.y
+#define u_cursorStrength u_cursor.z
+#define u_cursorRadius u_cursor.w
+
+float hash21(vec2 p) {
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+  p = mod(p, 31.0);
+#endif
+  p = fract(p * vec2(234.34, 435.345));
+  p += dot(p, p + 34.23);
+  return fract(p.x * p.y);
+}
+
+float grainHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+  p = mod(p, 31.0);
+#endif
+  float n = sin(dot(p, vec2(41.0, 289.0)));
+  return fract(vec2(15731.743, 7892.321) * n);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash21(i), hash21(i + vec2(1.0, 0.0)), u.x),
+    mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x),
+    u.y);
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * noise(p);
+    p = p * 2.03 + vec2(17.0, 9.2);
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 srgbToLinear(vec3 c) {
+  return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)),
+    step(0.04045, c));
+}
+vec3 linearToSrgb(vec3 c) {
+  return mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(1.0 / 2.4)) - 0.055,
+    step(0.0031308, c));
+}
+vec3 linToOklab(vec3 c) {
+  float l = 0.4122214708 * c.r + 0.5363325363 * c.g + 0.0514459929 * c.b;
+  float m = 0.2119034982 * c.r + 0.6806995451 * c.g + 0.1073969566 * c.b;
+  float s = 0.0883024619 * c.r + 0.2817188376 * c.g + 0.6299787005 * c.b;
+  l = pow(max(l, 0.0), 1.0 / 3.0);
+  m = pow(max(m, 0.0), 1.0 / 3.0);
+  s = pow(max(s, 0.0), 1.0 / 3.0);
+  return vec3(
+    0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s);
+}
+vec3 oklabToLin(vec3 c) {
+  float l = c.x + 0.3963377774 * c.y + 0.2158037573 * c.z;
+  float m = c.x - 0.1055613458 * c.y - 0.0638541728 * c.z;
+  float s = c.x - 0.0894841775 * c.y - 1.2914855480 * c.z;
+  l = l * l * l; m = m * m * m; s = s * s * s;
+  return vec3(
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s);
+}
+vec3 mixColour(vec3 a, vec3 b, float t) {
+  if (u_oklab > 0.5) {
+    vec3 la = linToOklab(srgbToLinear(a));
+    vec3 lb = linToOklab(srgbToLinear(b));
+    return clamp(linearToSrgb(oklabToLin(mix(la, lb, t))), 0.0, 1.0);
+  }
+  return mix(a, b, t);
+}
+
+vec3 palette(float x) {
+  float n = max(u_colorCount - 1.0, 1.0);
+  float f = clamp(x, 0.0, 1.0) * n;
+  vec3 col = u_colors[0];
+  for (int i = 0; i < 7; i++) {
+    if (float(i) < n)
+      col = mixColour(col, u_colors[i + 1],
+        smoothstep(0.0, 1.0, clamp(f - float(i), 0.0, 1.0)));
+  }
+  return col;
+}
+
+vec3 hueRotate(vec3 col, float a) {
+  const mat3 toYIQ = mat3(0.299, 0.596, 0.211,
+                          0.587, -0.274, -0.523,
+                          0.114, -0.322, 0.312);
+  const mat3 toRGB = mat3(1.0, 1.0, 1.0,
+                          0.956, -0.272, -1.106,
+                          0.621, -0.647, 1.703);
+  vec3 yiq = toYIQ * col;
+  float ca = cos(a), sa = sin(a);
+  yiq = vec3(yiq.x, yiq.y * ca - yiq.z * sa, yiq.y * sa + yiq.z * ca);
+  return toRGB * yiq;
+}
+
+vec3 shade(vec2 uv, vec2 p, float t) {
+  vec2 q = p * 1.6;
+  float amp = 0.25 + u_intensity * 0.85;
+  for (float i = 1.0; i < 5.0; i += 1.0) {
+    q.x += amp / i * cos(i * 2.4 * q.y + t * 0.8 + u_seed);
+    q.y += amp / i * cos(i * 1.7 * q.x + t * 0.6);
+  }
+  return palette(0.5 + 0.5 * sin(q.x + q.y));
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  vec2 screenUv = uv;
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution.xy)
+    / min(u_resolution.x, u_resolution.y);
+  float cursorMask = 0.0;
+
+  if (u_cursorPresence > 0.001) {
+    vec2 cursor = (0.5 * u_mouse * u_resolution.xy)
+      / min(u_resolution.x, u_resolution.y);
+    vec2 cursorDelta = p - cursor;
+    if (u_cursorEffect < 0.5) {
+      p += cursor * u_cursorPresence * u_cursorStrength * 0.55;
+    } else {
+      float cursorDistance = length(cursorDelta);
+      vec2 cursorDirection = cursorDelta / max(cursorDistance, 0.0001);
+      cursorMask = u_cursorPresence
+        * (1.0 - smoothstep(0.0, u_cursorRadius, cursorDistance));
+      if (u_cursorEffect < 1.5) {
+        p -= cursorDirection * cursorMask * u_cursorStrength * 0.24;
+      } else if (u_cursorEffect < 2.5) {
+        float cursorAngle = cursorMask * u_cursorStrength * 2.2;
+        float cc = cos(cursorAngle), cs = sin(cursorAngle);
+        p = cursor + mat2(cc, -cs, cs, cc) * cursorDelta;
+      } else if (u_cursorEffect < 3.5) {
+        float ripple = sin(
+          cursorDistance / max(u_cursorRadius, 0.001) * 18.0 - u_time * 5.0);
+        p -= cursorDirection * ripple * cursorMask * u_cursorStrength * 0.07;
+      }
+    }
+  }
+
+  uv = p * min(u_resolution.x, u_resolution.y) / u_resolution.xy + 0.5;
+  p *= u_scale;
+  if (abs(u_rotate) > 0.0001) {
+    float cr = cos(u_rotate), sr = sin(u_rotate);
+    p = mat2(cr, -sr, sr, cr) * p;
+  }
+  p += u_offset;
+  if (u_drift > 0.0001)
+    p += u_drift * vec2(sin(u_time * 0.31), cos(u_time * 0.23));
+  if (u_warp > 0.0) {
+    p += u_warp * (vec2(
+      fbm(p * u_detail + u_seed),
+      fbm(p * u_detail + vec2(5.2, 1.3))) - 0.5);
+  }
+  vec3 col;
+  if (u_blur > 0.0) {
+    float e = u_blur;
+    float pe = e * u_scale;
+    vec2 uvE = vec2(e) * min(u_resolution.x, u_resolution.y) / u_resolution.xy;
+    col  = shade(uv, p, u_time) * 0.36;
+    col += shade(uv + vec2(uvE.x, 0.0), p + vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv - vec2(uvE.x, 0.0), p - vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv + vec2(0.0, uvE.y), p + vec2(0.0, pe), u_time) * 0.16;
+    col += shade(uv - vec2(0.0, uvE.y), p - vec2(0.0, pe), u_time) * 0.16;
+  } else {
+    col = shade(uv, p, u_time);
+  }
+  if (abs(u_contrast - 1.0) > 0.0001)
+    col = (col - 0.5) * u_contrast + 0.5;
+  if (abs(u_saturation - 1.0) > 0.0001) {
+    float luma = dot(col, vec3(0.299, 0.587, 0.114));
+    col = mix(vec3(luma), col, u_saturation);
+  }
+  if (abs(u_hue) > 0.0001)
+    col = hueRotate(col, u_hue);
+  if (abs(u_brightness) > 0.0001)
+    col += u_brightness;
+  if (u_vignette > 0.0001) {
+    float vd = length(screenUv - 0.5) * 1.41421356;
+    col *= 1.0 - u_vignette * smoothstep(0.35, 1.0, vd);
+  }
+  if (u_cursorPresence > 0.001 && u_cursorEffect > 3.5)
+    col += (vec3(0.18) + col * 0.12) * cursorMask * u_cursorStrength;
+  if (u_grain > 0.0001)
+    col += (grainHash(
+      gl_FragCoord.xy + vec2(u_seed * 17.0, u_seed * 31.0)) - 0.5) * u_grain;
+  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
+
+const driftFragmentShaderSource = `
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+uniform vec3 u_colors[8];
+uniform vec4 u_scene;      // resolution.xy, time, colour count
+uniform vec4 u_shape;      // scale, intensity, paramA, warp
+uniform vec4 u_surface;    // detail, contrast, brightness, saturation
+uniform vec4 u_finish;     // hue, vignette, blur, grain
+uniform vec4 u_transform;  // seed, rotation, drift, OKLab toggle
+uniform vec4 u_space;      // offset.xy, pointer.xy
+uniform vec4 u_cursor;
+
+#define u_resolution u_scene.xy
+#define u_time u_scene.z
+#define u_colorCount u_scene.w
+#define u_scale u_shape.x
+#define u_intensity u_shape.y
+#define u_paramA u_shape.z
+#define u_warp u_shape.w
+#define u_detail u_surface.x
+#define u_contrast u_surface.y
+#define u_brightness u_surface.z
+#define u_saturation u_surface.w
+#define u_hue u_finish.x
+#define u_vignette u_finish.y
+#define u_blur u_finish.z
+#define u_grain u_finish.w
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+#define u_seed u_transform.x
+#else
+#define u_seed mod(u_transform.x, 31.0)
+#endif
+#define u_rotate u_transform.y
+#define u_drift u_transform.z
+#define u_oklab u_transform.w
+#define u_offset u_space.xy
+#define u_mouse u_space.zw
+#define u_cursorPresence u_cursor.x
+#define u_cursorEffect u_cursor.y
+#define u_cursorStrength u_cursor.z
+#define u_cursorRadius u_cursor.w
+
+float hash21(vec2 p) {
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+  p = mod(p, 31.0);
+#endif
+  p = fract(p * vec2(234.34, 435.345));
+  p += dot(p, p + 34.23);
+  return fract(p.x * p.y);
+}
+
+float grainHash(vec2 p) {
+  vec3 p3 = fract(vec3(p.xyx) * 0.1031);
+  p3 += dot(p3, p3.yzx + 33.33);
+  return fract((p3.x + p3.y) * p3.z);
+}
+
+vec2 hash22(vec2 p) {
+#ifndef GL_FRAGMENT_PRECISION_HIGH
+  p = mod(p, 31.0);
+#endif
+  float n = sin(dot(p, vec2(41.0, 289.0)));
+  return fract(vec2(15731.743, 7892.321) * n);
+}
+
+float noise(vec2 p) {
+  vec2 i = floor(p);
+  vec2 f = fract(p);
+  vec2 u = f * f * (3.0 - 2.0 * f);
+  return mix(
+    mix(hash21(i), hash21(i + vec2(1.0, 0.0)), u.x),
+    mix(hash21(i + vec2(0.0, 1.0)), hash21(i + vec2(1.0, 1.0)), u.x),
+    u.y);
+}
+
+float fbm(vec2 p) {
+  float v = 0.0;
+  float a = 0.5;
+  for (int i = 0; i < 5; i++) {
+    v += a * noise(p);
+    p = p * 2.03 + vec2(17.0, 9.2);
+    a *= 0.5;
+  }
+  return v;
+}
+
+vec3 srgbToLinear(vec3 c) {
+  return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)),
+    step(0.04045, c));
+}
+vec3 linearToSrgb(vec3 c) {
+  return mix(c * 12.92, 1.055 * pow(max(c, vec3(0.0)), vec3(1.0 / 2.4)) - 0.055,
+    step(0.0031308, c));
+}
+vec3 linToOklab(vec3 c) {
+  float l = 0.4122214708 * c.r + 0.5363325363 * c.g + 0.0514459929 * c.b;
+  float m = 0.2119034982 * c.r + 0.6806995451 * c.g + 0.1073969566 * c.b;
+  float s = 0.0883024619 * c.r + 0.2817188376 * c.g + 0.6299787005 * c.b;
+  l = pow(max(l, 0.0), 1.0 / 3.0);
+  m = pow(max(m, 0.0), 1.0 / 3.0);
+  s = pow(max(s, 0.0), 1.0 / 3.0);
+  return vec3(
+    0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
+    1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
+    0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s);
+}
+vec3 oklabToLin(vec3 c) {
+  float l = c.x + 0.3963377774 * c.y + 0.2158037573 * c.z;
+  float m = c.x - 0.1055613458 * c.y - 0.0638541728 * c.z;
+  float s = c.x - 0.0894841775 * c.y - 1.2914855480 * c.z;
+  l = l * l * l; m = m * m * m; s = s * s * s;
+  return vec3(
+    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
+    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
+    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s);
+}
+vec3 mixColour(vec3 a, vec3 b, float t) {
+  if (u_oklab > 0.5) {
+    vec3 la = linToOklab(srgbToLinear(a));
+    vec3 lb = linToOklab(srgbToLinear(b));
+    return clamp(linearToSrgb(oklabToLin(mix(la, lb, t))), 0.0, 1.0);
+  }
+  return mix(a, b, t);
+}
+
+vec3 palette(float x) {
+  float n = max(u_colorCount - 1.0, 1.0);
+  float f = clamp(x, 0.0, 1.0) * n;
+  vec3 col = u_colors[0];
+  for (int i = 0; i < 7; i++) {
+    if (float(i) < n)
+      col = mixColour(col, u_colors[i + 1],
+        smoothstep(0.0, 1.0, clamp(f - float(i), 0.0, 1.0)));
+  }
+  return col;
+}
+
+vec3 hueRotate(vec3 col, float a) {
+  const mat3 toYIQ = mat3(0.299, 0.596, 0.211,
+                          0.587, -0.274, -0.523,
+                          0.114, -0.322, 0.312);
+  const mat3 toRGB = mat3(1.0, 1.0, 1.0,
+                          0.956, -0.272, -1.106,
+                          0.621, -0.647, 1.703);
+  vec3 yiq = toYIQ * col;
+  float ca = cos(a), sa = sin(a);
+  yiq = vec3(yiq.x, yiq.y * ca - yiq.z * sa, yiq.y * sa + yiq.z * ca);
+  return toRGB * yiq;
+}
+
+vec3 shade(vec2 uv, vec2 p, float t) {
+  vec3 acc = u_colors[0] * 0.15;
+  float total = 0.15;
+  for (int i = 0; i < 8; i++) {
+    if (float(i) >= u_colorCount) break;
+    float fi = float(i);
+    vec2 c = vec2(
+      sin(t * (0.21 + fi * 0.071) + fi * 2.4 + u_seed),
+      cos(t * (0.17 + fi * 0.093) + fi * 1.7)) * (0.45 + u_intensity * 0.35);
+    float w = exp(-dot(p - c, p - c) * 6.0);
+    acc += u_colors[i] * w;
+    total += w;
+  }
+  return acc / total;
+}
+
+void main() {
+  vec2 uv = gl_FragCoord.xy / u_resolution.xy;
+  vec2 screenUv = uv;
+  vec2 p = (gl_FragCoord.xy - 0.5 * u_resolution.xy)
+    / min(u_resolution.x, u_resolution.y);
+  float cursorMask = 0.0;
+
+  if (u_cursorPresence > 0.001) {
+    vec2 cursor = (0.5 * u_mouse * u_resolution.xy)
+      / min(u_resolution.x, u_resolution.y);
+    vec2 cursorDelta = p - cursor;
+    if (u_cursorEffect < 0.5) {
+      p += cursor * u_cursorPresence * u_cursorStrength * 0.55;
+    } else {
+      float cursorDistance = length(cursorDelta);
+      vec2 cursorDirection = cursorDelta / max(cursorDistance, 0.0001);
+      cursorMask = u_cursorPresence
+        * (1.0 - smoothstep(0.0, u_cursorRadius, cursorDistance));
+      if (u_cursorEffect < 1.5) {
+        p -= cursorDirection * cursorMask * u_cursorStrength * 0.24;
+      } else if (u_cursorEffect < 2.5) {
+        float cursorAngle = cursorMask * u_cursorStrength * 2.2;
+        float cc = cos(cursorAngle), cs = sin(cursorAngle);
+        p = cursor + mat2(cc, -cs, cs, cc) * cursorDelta;
+      } else if (u_cursorEffect < 3.5) {
+        float ripple = sin(
+          cursorDistance / max(u_cursorRadius, 0.001) * 18.0 - u_time * 5.0);
+        p -= cursorDirection * ripple * cursorMask * u_cursorStrength * 0.07;
+      }
+    }
+  }
+
+  uv = p * min(u_resolution.x, u_resolution.y) / u_resolution.xy + 0.5;
+  p *= u_scale;
+  if (abs(u_rotate) > 0.0001) {
+    float cr = cos(u_rotate), sr = sin(u_rotate);
+    p = mat2(cr, -sr, sr, cr) * p;
+  }
+  p += u_offset;
+  if (u_drift > 0.0001)
+    p += u_drift * vec2(sin(u_time * 0.31), cos(u_time * 0.23));
+  if (u_warp > 0.0) {
+    p += u_warp * (vec2(
+      fbm(p * u_detail + u_seed),
+      fbm(p * u_detail + vec2(5.2, 1.3))) - 0.5);
+  }
+  vec3 col;
+  if (u_blur > 0.0) {
+    float e = u_blur;
+    float pe = e * u_scale;
+    vec2 uvE = vec2(e) * min(u_resolution.x, u_resolution.y) / u_resolution.xy;
+    col  = shade(uv, p, u_time) * 0.36;
+    col += shade(uv + vec2(uvE.x, 0.0), p + vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv - vec2(uvE.x, 0.0), p - vec2(pe, 0.0), u_time) * 0.16;
+    col += shade(uv + vec2(0.0, uvE.y), p + vec2(0.0, pe), u_time) * 0.16;
+    col += shade(uv - vec2(0.0, uvE.y), p - vec2(0.0, pe), u_time) * 0.16;
+  } else {
+    col = shade(uv, p, u_time);
+  }
+  if (abs(u_contrast - 1.0) > 0.0001)
+    col = (col - 0.5) * u_contrast + 0.5;
+  if (abs(u_saturation - 1.0) > 0.0001) {
+    float luma = dot(col, vec3(0.299, 0.587, 0.114));
+    col = mix(vec3(luma), col, u_saturation);
+  }
+  if (abs(u_hue) > 0.0001)
+    col = hueRotate(col, u_hue);
+  if (abs(u_brightness) > 0.0001)
+    col += u_brightness;
+  if (u_vignette > 0.0001) {
+    float vd = length(screenUv - 0.5) * 1.41421356;
+    col *= 1.0 - u_vignette * smoothstep(0.35, 1.0, vd);
+  }
+  if (u_cursorPresence > 0.001 && u_cursorEffect > 3.5)
+    col += (vec3(0.18) + col * 0.12) * cursorMask * u_cursorStrength;
+  if (u_grain > 0.0001)
+    col += (grainHash(
+      gl_FragCoord.xy + vec2(u_seed * 17.0, u_seed * 31.0)) - 0.5) * u_grain;
+  gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);
+}
+`;
 
 /* -------------------------------------------------------
    OPTION 1: TEXTURE SMOKE COMPONENT
@@ -2040,11 +2548,466 @@ function FluidBubbles({ dprScale, onRenderMeasure, dynamicScroll = true }: Fluid
 }
 
 /* -------------------------------------------------------
+   SILK FLOW SHADER COMPONENT
+------------------------------------------------------- */
+interface SilkShaderBackgroundProps {
+  dprScale?: number;
+  onRenderMeasure?: (duration: number) => void;
+}
+
+function compileSilkShader(gl: WebGLRenderingContext, source: string, type: number): WebGLShader | null {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error("Shader compilation error:", gl.getShaderInfoLog(shader));
+    gl.deleteShader(shader);
+    return null;
+  }
+  return shader;
+}
+
+function createSilkWebGLProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string): WebGLProgram | null {
+  const vs = compileSilkShader(gl, vsSource, gl.VERTEX_SHADER);
+  const fs = compileSilkShader(gl, fsSource, gl.FRAGMENT_SHADER);
+  if (!vs || !fs) return null;
+  const program = gl.createProgram();
+  if (!program) return null;
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error("Program link error:", gl.getProgramInfoLog(program));
+    gl.deleteProgram(program);
+    return null;
+  }
+  return program;
+}
+
+function SilkShaderBackground({ dprScale, onRenderMeasure }: SilkShaderBackgroundProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const glRef = useRef<WebGLRenderingContext | null>(null);
+  const programRef = useRef<WebGLProgram | null>(null);
+  const bufferRef = useRef<WebGLBuffer | null>(null);
+
+  const uniformsRef = useRef({ dprScale, onRenderMeasure });
+  
+  useEffect(() => {
+    uniformsRef.current = { dprScale, onRenderMeasure };
+    const canvas = canvasRef.current;
+    if (canvas && glRef.current) {
+      const gl = glRef.current;
+      const dpr = dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+  }, [dprScale, onRenderMeasure]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    }) || canvas.getContext("experimental-webgl", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    }) as WebGLRenderingContext;
+
+    if (!gl) {
+      console.error("WebGL1 not supported");
+      return;
+    }
+    glRef.current = gl;
+
+    const updateSize = () => {
+      const dpr = uniformsRef.current.dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
+    // Fullscreen triangle vertices: (-1, -1), (3, -1), (-1, 3)
+    const vertices = new Float32Array([
+      -1.0, -1.0,
+       3.0, -1.0,
+      -1.0,  3.0
+    ]);
+
+    const program = createSilkWebGLProgram(gl, silkVertexShaderSource, silkFragmentShaderSource);
+    if (!program) return;
+    programRef.current = program;
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    bufferRef.current = buffer;
+
+    const position = gl.getAttribLocation(program, "position");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    // Uniform locations
+    const uColors = gl.getUniformLocation(program, "u_colors");
+    const uScene = gl.getUniformLocation(program, "u_scene");
+    const uShape = gl.getUniformLocation(program, "u_shape");
+    const uSurface = gl.getUniformLocation(program, "u_surface");
+    const uFinish = gl.getUniformLocation(program, "u_finish");
+    const uTransform = gl.getUniformLocation(program, "u_transform");
+    const uSpace = gl.getUniformLocation(program, "u_space");
+    const uCursor = gl.getUniformLocation(program, "u_cursor");
+
+    const colorsData = new Float32Array([
+      0.051, 0.051, 0.051, // #0D0D0D (Obsidian Black base)
+      0.000, 0.360, 0.184, // #005A2F (Subtle Emerald Green)
+      0.700, 0.380, 0.000, // #B26000 (Subtle International Orange - corrected ratio)
+      0.086, 0.086, 0.086, // #161616 (Onyx surface base)
+      0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0,
+      0.0, 0.0, 0.0
+    ]);
+
+    let active = true;
+    let rafId = 0;
+
+    const render = (now: number) => {
+      if (!active) return;
+      const start = performance.now();
+
+      gl.useProgram(program);
+
+      // Bind attributes
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+      // Set uniforms
+      gl.uniform3fv(uColors, colorsData);
+      gl.uniform4f(uScene, canvas.width, canvas.height, (now * 0.001) * 0.84, 4.0);
+      gl.uniform4f(uShape, 1.28, 0.47, 0.50, 0.00);
+      gl.uniform4f(uSurface, 2.40, 0.98, -0.06, 1.00);
+      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, 0.01);
+      gl.uniform4f(uTransform, 707.0, 0.00, 0.00, 0.0);
+      gl.uniform4f(uSpace, 0.00, 0.00, 0.00, 0.00);
+      gl.uniform4f(uCursor, 0.0, 2.0, 0.65, 0.46);
+
+      // Clear & Draw fullscreen triangle
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      const duration = performance.now() - start;
+      if (uniformsRef.current.onRenderMeasure) {
+        uniformsRef.current.onRenderMeasure(duration);
+      }
+
+      rafId = requestAnimationFrame(render);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        active = false;
+        cancelAnimationFrame(rafId);
+      } else {
+        if (!active) {
+          active = true;
+          rafId = requestAnimationFrame(render);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    rafId = requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("resize", updateSize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      cancelAnimationFrame(rafId);
+      if (glRef.current && programRef.current) {
+        const glInstance = glRef.current;
+        glInstance.deleteProgram(programRef.current);
+        glInstance.deleteBuffer(bufferRef.current);
+      }
+    };
+  }, []);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>
+      <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------
+   DRIFT MESH BLOB SHADER COMPONENT
+------------------------------------------------------- */
+interface DriftShaderBackgroundProps {
+  variant?: "theme" | "ocean";
+  blobCount?: number;
+  dprScale?: number;
+  onRenderMeasure?: (duration: number) => void;
+}
+
+function compileDriftShader(gl: WebGLRenderingContext, source: string, type: number): WebGLShader | null {
+  const shader = gl.createShader(type);
+  if (!shader) return null;
+  gl.shaderSource(shader, source);
+  gl.compileShader(shader);
+  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+    console.error("Drift shader compilation error:", gl.getShaderInfoLog(shader));
+    gl.deleteShader(shader);
+    return null;
+  }
+  return shader;
+}
+
+function createDriftWebGLProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string): WebGLProgram | null {
+  const vs = compileDriftShader(gl, vsSource, gl.VERTEX_SHADER);
+  const fs = compileDriftShader(gl, fsSource, gl.FRAGMENT_SHADER);
+  if (!vs || !fs) return null;
+  const program = gl.createProgram();
+  if (!program) return null;
+  gl.attachShader(program, vs);
+  gl.attachShader(program, fs);
+  gl.linkProgram(program);
+  if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+    console.error("Drift program link error:", gl.getProgramInfoLog(program));
+    gl.deleteProgram(program);
+    return null;
+  }
+  return program;
+}
+
+function DriftShaderBackground({ variant = "theme", blobCount = 4, dprScale, onRenderMeasure }: DriftShaderBackgroundProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const glRef = useRef<WebGLRenderingContext | null>(null);
+  const programRef = useRef<WebGLProgram | null>(null);
+  const bufferRef = useRef<WebGLBuffer | null>(null);
+
+  const uniformsRef = useRef({ dprScale, onRenderMeasure });
+  
+  useEffect(() => {
+    uniformsRef.current = { dprScale, onRenderMeasure };
+    const canvas = canvasRef.current;
+    if (canvas && glRef.current) {
+      const gl = glRef.current;
+      const dpr = dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    }
+  }, [dprScale, onRenderMeasure]);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const gl = canvas.getContext("webgl", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    }) || canvas.getContext("experimental-webgl", {
+      alpha: false,
+      antialias: false,
+      depth: false,
+      stencil: false,
+      powerPreference: "high-performance",
+      preserveDrawingBuffer: false
+    }) as WebGLRenderingContext;
+
+    if (!gl) {
+      console.error("WebGL1 not supported for Drift");
+      return;
+    }
+    glRef.current = gl;
+
+    const updateSize = () => {
+      const dpr = uniformsRef.current.dprScale || Math.min(2.0, window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * dpr;
+      canvas.height = window.innerHeight * dpr;
+      gl.viewport(0, 0, canvas.width, canvas.height);
+    };
+    updateSize();
+    window.addEventListener("resize", updateSize);
+
+    // Fullscreen triangle vertices: (-1, -1), (3, -1), (-1, 3)
+    const vertices = new Float32Array([
+      -1.0, -1.0,
+       3.0, -1.0,
+      -1.0,  3.0
+    ]);
+
+    const program = createDriftWebGLProgram(gl, silkVertexShaderSource, driftFragmentShaderSource);
+    if (!program) return;
+    programRef.current = program;
+
+    const buffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+    bufferRef.current = buffer;
+
+    const position = gl.getAttribLocation(program, "position");
+    gl.enableVertexAttribArray(position);
+    gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+    // Uniform locations
+    const uColors = gl.getUniformLocation(program, "u_colors");
+    const uScene = gl.getUniformLocation(program, "u_scene");
+    const uShape = gl.getUniformLocation(program, "u_shape");
+    const uSurface = gl.getUniformLocation(program, "u_surface");
+    const uFinish = gl.getUniformLocation(program, "u_finish");
+    const uTransform = gl.getUniformLocation(program, "u_transform");
+    const uSpace = gl.getUniformLocation(program, "u_space");
+    const uCursor = gl.getUniformLocation(program, "u_cursor");
+
+    // Colors adjusted to blend with user theme
+    const isOcean = variant === "ocean";
+    let colorsData: Float32Array;
+
+    if (isOcean) {
+      if (blobCount === 3) {
+        colorsData = new Float32Array([
+          0.039, 0.180, 0.361, // #0A2E5C (Deep Ocean Blue)
+          0.000, 0.451, 0.502, // #007380 (Subtle Aqua/Cyan)
+          0.000, 0.502, 0.350, // #008059 (Subtle Teal)
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0
+        ]);
+      } else {
+        colorsData = new Float32Array([
+          0.051, 0.051, 0.051, // #0D0D0D (Obsidian Black base)
+          0.039, 0.180, 0.361, // #0A2E5C (Deep Ocean Blue)
+          0.000, 0.451, 0.502, // #007380 (Subtle Aqua/Cyan)
+          0.086, 0.086, 0.086, // #161616 (Onyx surface base)
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0
+        ]);
+      }
+    } else {
+      if (blobCount === 3) {
+        colorsData = new Float32Array([
+          0.000, 0.360, 0.184, // #005A2F (Subtle Emerald Green)
+          0.700, 0.380, 0.000, // #B26000 (Subtle International Orange)
+          0.700, 0.480, 0.000, // #B27A00 (Subtle Amber Flare)
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0
+        ]);
+      } else {
+        colorsData = new Float32Array([
+          0.051, 0.051, 0.051, // #0D0D0D (Obsidian Black base)
+          0.000, 0.360, 0.184, // #005A2F (Subtle Emerald Green)
+          0.700, 0.380, 0.000, // #B26000 (Subtle International Orange)
+          0.086, 0.086, 0.086, // #161616 (Onyx surface base)
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0,
+          0.0, 0.0, 0.0
+        ]);
+      }
+    }
+
+    let active = true;
+    let rafId = 0;
+
+    const render = (now: number) => {
+      if (!active) return;
+      const start = performance.now();
+
+      gl.useProgram(program);
+
+      // Bind attributes
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.enableVertexAttribArray(position);
+      gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
+
+      // Set uniforms - Mesh Drift parameters
+      gl.uniform3fv(uColors, colorsData);
+      gl.uniform4f(uScene, canvas.width, canvas.height, (now * 0.001) * 0.73, blobCount * 1.0);
+      gl.uniform4f(uShape, 1.16, 0.34, 0.50, 0.00);
+      gl.uniform4f(uSurface, 2.40, 1.16, -0.06, 1.00); // detail, contrast, brightness=-0.06, saturation
+      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, 0.03);   // hue, vignette, blur, grain=0.03
+      gl.uniform4f(uTransform, 1453.0, 0.00, 0.00, 0.0);
+      gl.uniform4f(uSpace, 0.00, 0.00, 0.00, 0.00);
+      gl.uniform4f(uCursor, 0.0, 2.0, 0.65, 0.46);
+
+      // Clear & Draw fullscreen triangle
+      gl.clearColor(0.0, 0.0, 0.0, 1.0);
+      gl.clear(gl.COLOR_BUFFER_BIT);
+      gl.drawArrays(gl.TRIANGLES, 0, 3);
+
+      const duration = performance.now() - start;
+      if (uniformsRef.current.onRenderMeasure) {
+        uniformsRef.current.onRenderMeasure(duration);
+      }
+
+      rafId = requestAnimationFrame(render);
+    };
+
+    const handleVisibility = () => {
+      if (document.hidden) {
+        active = false;
+        cancelAnimationFrame(rafId);
+      } else {
+        if (!active) {
+          active = true;
+          rafId = requestAnimationFrame(render);
+        }
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibility);
+    rafId = requestAnimationFrame(render);
+
+    return () => {
+      window.removeEventListener("resize", updateSize);
+      document.removeEventListener("visibilitychange", handleVisibility);
+      cancelAnimationFrame(rafId);
+      if (glRef.current && programRef.current) {
+        const glInstance = glRef.current;
+        glInstance.deleteProgram(programRef.current);
+        glInstance.deleteBuffer(bufferRef.current);
+      }
+    };
+  }, [variant, blobCount]);
+
+  return (
+    <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>
+      <canvas ref={canvasRef} style={{ width: "100%", height: "100%", display: "block" }} />
+    </div>
+  );
+}
+
+/* -------------------------------------------------------
    MAIN PLAYGROUND PAGE
 ------------------------------------------------------- */
 export function BgPlayground() {
   const [activeTab, setActiveTab] = useState<"prototypes" | "concepts">("prototypes");
-  const [bgType, setBgType] = useState<"smoke" | "aurora" | "particles" | "fluid">("smoke");
+  const [bgType, setBgType] = useState<"smoke" | "aurora" | "particles" | "fluid" | "flow-field" | "silk" | "drift" | "original-smoke" | "ocean-drift" | "drift-3">("flow-field");
   const [selectedConcept, setSelectedConcept] = useState<ConceptSpec>(CONCEPTS[0]);
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [showBento, setShowBento] = useState(false);
@@ -2149,14 +3112,26 @@ export function BgPlayground() {
 
   const bgDescription = useMemo(() => {
     switch (bgType) {
+      case "flow-field":
+        return `Option 1 (Neural Flow Field) — Flow field background with orange-to-green blended particles`;
       case "smoke":
-        return `Option 1 (Texture Smoke) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+        return `Option 2 (Texture Smoke) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
       case "aurora":
-        return `Option 2 (Aurora Orbs) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+        return `Option 3 (Aurora Orbs) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
       case "particles":
-        return `Option 3 (Constellation) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+        return `Option 4 (Constellation) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
       case "fluid":
-        return `Option 4 (Fluid Bubbles) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+        return `Option 5 (Fluid Bubbles) — ${activeTab === "concepts" ? `Rendering Specs Mockup for concept #${selectedConcept.id}` : "Standard Preset"}`;
+      case "silk":
+        return `Option 6 (Silk Flow Shader) — An animated WebGL1 shader background styled like silk`;
+      case "drift":
+        return `Option 7 (Mesh Drift Blobs) — WebGL1 procedural mesh drift blobs shader background`;
+      case "original-smoke":
+        return `Option 8 (Original Smoke) — WebGL2 procedural dual-tone smoke background (legacy homepage background)`;
+      case "ocean-drift":
+        return `Option 9 (Ocean Drift Blobs) — WebGL1 procedural mesh drift blobs shader background in ocean blue & aqua`;
+      case "drift-3":
+        return `Option 10 (3-Blob Drift) — WebGL1 procedural mesh drift blobs shader background with 3 brand color blobs`;
     }
   }, [bgType, activeTab, selectedConcept]);
 
@@ -2204,6 +3179,51 @@ export function BgPlayground() {
           dprScale={dprScale}
           onRenderMeasure={handleRenderMeasure}
           dynamicScroll={activeTab === "prototypes"}
+        />
+      )}
+      {bgType === "flow-field" && (
+        <NeuralBackground 
+          color="#6366f1"
+          trailOpacity={0.1}
+          particleCount={700}
+          speed={0.8}
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
+        />
+      )}
+      {bgType === "silk" && (
+        <SilkShaderBackground 
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
+        />
+      )}
+      {bgType === "drift" && (
+        <DriftShaderBackground 
+          variant="theme"
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
+        />
+      )}
+      {bgType === "original-smoke" && (
+        <SmokeBackground 
+          smokeColorLeft="#FF6B00" 
+          smokeColorRight="#00E676" 
+          opacity={0.6} 
+        />
+      )}
+      {bgType === "ocean-drift" && (
+        <DriftShaderBackground 
+          variant="ocean"
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
+        />
+      )}
+      {bgType === "drift-3" && (
+        <DriftShaderBackground 
+          variant="theme"
+          blobCount={3}
+          dprScale={dprScale}
+          onRenderMeasure={handleRenderMeasure}
         />
       )}
 
@@ -2270,10 +3290,18 @@ export function BgPlayground() {
         {activeTab === "prototypes" && (
           <div className="selector-list">
             <button 
+              className={`selector-btn ${bgType === "flow-field" ? "active" : ""}`}
+              onClick={() => setBgType("flow-field")}
+            >
+              <span className="btn-title">1. Neural Flow Field</span>
+              <span className="btn-desc">Flow field with smooth blended orange-indigo-green trails</span>
+            </button>
+
+            <button 
               className={`selector-btn ${bgType === "smoke" ? "active" : ""}`}
               onClick={() => setBgType("smoke")}
             >
-              <span className="btn-title">1. Texture Noise Smoke</span>
+              <span className="btn-title">2. Texture Noise Smoke</span>
               <span className="btn-desc">Fast WebGL samplers with chromatic aberration</span>
             </button>
             
@@ -2281,7 +3309,7 @@ export function BgPlayground() {
               className={`selector-btn ${bgType === "aurora" ? "active" : ""}`}
               onClick={() => setBgType("aurora")}
             >
-              <span className="btn-title">2. Glassmorphic Aurora Orbs</span>
+              <span className="btn-title">3. Glassmorphic Aurora Orbs</span>
               <span className="btn-desc">Pure CSS compositor gradient mesh & paper grain</span>
             </button>
 
@@ -2289,7 +3317,7 @@ export function BgPlayground() {
               className={`selector-btn ${bgType === "particles" ? "active" : ""}`}
               onClick={() => setBgType("particles")}
             >
-              <span className="btn-title">3. Constellation Particles</span>
+              <span className="btn-title">4. Constellation Particles</span>
               <span className="btn-desc">Interactive canvas net tracking pointer coordinates</span>
             </button>
 
@@ -2297,8 +3325,48 @@ export function BgPlayground() {
               className={`selector-btn ${bgType === "fluid" ? "active" : ""}`}
               onClick={() => setBgType("fluid")}
             >
-              <span className="btn-title">4. Fluid Bubble Glow</span>
+              <span className="btn-title">5. Fluid Bubble Glow</span>
               <span className="btn-desc">Interactive liquid flow with rising neon bubbles</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "silk" ? "active" : ""}`}
+              onClick={() => setBgType("silk")}
+            >
+              <span className="btn-title">6. Silk (Flow Shader)</span>
+              <span className="btn-desc">WebGL1 procedural flow shader background by 21st.dev</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "drift" ? "active" : ""}`}
+              onClick={() => setBgType("drift")}
+            >
+              <span className="btn-title">7. Mesh Drift (Blobs)</span>
+              <span className="btn-desc">WebGL1 procedural mesh blobs shader by 21st.dev</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "original-smoke" ? "active" : ""}`}
+              onClick={() => setBgType("original-smoke")}
+            >
+              <span className="btn-title">8. Original Site Smoke</span>
+              <span className="btn-desc">WebGL2 legacy procedural dual-tone smoke background</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "ocean-drift" ? "active" : ""}`}
+              onClick={() => setBgType("ocean-drift")}
+            >
+              <span className="btn-title">9. Ocean Drift (Blobs)</span>
+              <span className="btn-desc">WebGL1 procedural mesh blobs shader in ocean blue & aqua</span>
+            </button>
+
+            <button 
+              className={`selector-btn ${bgType === "drift-3" ? "active" : ""}`}
+              onClick={() => setBgType("drift-3")}
+            >
+              <span className="btn-title">10. Mesh Drift (3 Blobs)</span>
+              <span className="btn-desc">WebGL1 procedural mesh blobs with 3 brand color blobs</span>
             </button>
           </div>
         )}
@@ -2373,7 +3441,9 @@ export function BgPlayground() {
         <div className="perf-stats">
           <div className="stat-row">
             <span className="stat-lbl">Render Mode:</span>
-            <span className="stat-val">{bgType === "aurora" ? "CSS Compositor" : bgType === "smoke" ? "WebGL 2.0" : "Canvas 2D"}</span>
+            <span className="stat-val">
+              {bgType === "aurora" ? "CSS Compositor" : (bgType === "smoke" || bgType === "original-smoke") ? "WebGL 2.0" : (bgType === "silk" || bgType === "drift" || bgType === "ocean-drift" || bgType === "drift-3") ? "WebGL 1.0" : "Canvas 2D"}
+            </span>
           </div>
           <div className="stat-row">
             <span className="stat-lbl">Realtime FPS:</span>

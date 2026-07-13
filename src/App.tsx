@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { motion } from "motion/react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { SmokeBackground } from "./components/SmokeBackground";
+import { DriftBackground } from "./components/DriftBackground";
 import { Home } from "./pages/Home";
 import { PricingPage } from "./pages/PricingPage";
 import { BgPlayground } from "./pages/BgPlayground";
@@ -28,9 +28,9 @@ function AppContent() {
         }}
       />
 
-      {/* Dual-tone smoke background integrating with our theme */}
+      {/* Mesh Drift WebGL1 background integrating with our theme */}
       {showHeaderFooter && (
-        <SmokeBackground smokeColorLeft="#FF6B00" smokeColorRight="#00E676" opacity={0.6} />
+        <DriftBackground />
       )}
 
       <div style={{ position: "relative", zIndex: 1 }}>
