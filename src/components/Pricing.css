@@ -1,5 +1,5 @@
 .pricing-page-container {
-  padding: 160px 0 100px;
+  padding: clamp(5rem, 8vh, 10rem) 0 clamp(3.5rem, 5vh, 6.5rem);
   position: relative;
   z-index: 2;
   min-height: 80vh;
@@ -11,21 +11,22 @@
 }
 
 .pricing-header h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 2vw + 1rem, 3.5rem);
   letter-spacing: -0.02em;
 }
 
 .pricing-header p {
   color: var(--text-muted);
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 0.5vw + 0.7rem, 1.25rem);
   margin-top: 0.5rem;
 }
 
 .pricing-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 2rem;
-  max-width: 900px;
+  gap: clamp(1.5rem, 2vw, 3rem);
+  width: 100%;
+  max-width: clamp(55rem, 60vw, 72rem);
   margin: 0 auto;
 }
 
@@ -72,7 +73,7 @@
 }
 
 .amount {
-  font-size: 3.5rem;
+  font-size: clamp(2.8rem, 4vw, 4rem);
   font-weight: 800;
   letter-spacing: -0.04em;
   color: #fff;
@@ -108,7 +109,7 @@
   display: flex;
   align-items: center;
   gap: 0.75rem;
-  font-size: 0.95rem;
+  font-size: clamp(0.85rem, 0.3vw + 0.65rem, 1rem);
   color: var(--text-high);
 }
 

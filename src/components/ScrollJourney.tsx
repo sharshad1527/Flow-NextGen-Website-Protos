@@ -345,6 +345,15 @@ const itemVariants = {
 export function ScrollJourney() {
   const trackRef = useRef<HTMLDivElement>(null);
 
+  const [isMobile, setIsMobile] = useState(() => {
+    return typeof window !== "undefined" ? window.innerWidth <= 768 : false;
+  });
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   // Scroll progress across the full track
   const { scrollYProgress } = useScroll({
     target: trackRef,
@@ -379,23 +388,26 @@ export function ScrollJourney() {
   const heroLeftOpacity = useTransform(smooth, [0.22, 0.34], [1, 0]);
 
   // FLOW UI POSITION: Right (75%) -> Center (50%) -> Right (75%)
+  // Shifted dynamically relative to static left: 0% in wrapper width
   const flowUIX = useTransform(
     smooth,
     [0.00, 0.22, 0.34, 0.64, 0.76, 1.00],
-    ["75%", "75%", "50%", "50%", "75%", "75%"]
+    isMobile
+      ? ["50%", "50%", "50%", "50%", "50%", "50%"]
+      : ["70%", "70%", "50%", "50%", "70%", "70%"]
   );
 
   const flowUIScale = useTransform(
     smooth,
     [0.00, 0.22, 0.34, 0.64, 0.76, 1.00],
-    [1, 1, 1.08, 1.08, 0.95, 0.95]
+    [1, 1, 1.08, 1.08, 0.98, 0.98]
   );
 
   // 3D Tilt rotation mapping for scroll depth
   const flowUIRotateY = useTransform(
     smooth,
     [0.00, 0.22, 0.34, 0.64, 0.76, 1.00],
-    [-15, -15, 0, 0, 15, 15]
+    [-10, -10, 0, 0, 10, 10]
   );
   
   const flowUIRotateX = useTransform(
@@ -479,37 +491,37 @@ export function ScrollJourney() {
 
               <motion.h1 className="hero-headline" variants={itemVariants}>
                 <span className="title-row text-light-gradient">You Slept.</span>
-                <span className="title-row text-light-gradient">It Ran</span>
+                <span className="title-row text-light-gradient">Flow Ran.</span>
                 <span className="title-row text-accent-gradient">127 Prompts.</span>
               </motion.h1>
 
               <motion.p className="hero-subtext" variants={itemVariants}>
-                Flow NextGen automates your entire Google Flow AI generation queue.
-                <strong> Import prompts. Hit start. Walk away.</strong> No more
-                babysitting. No more manual saves.
+                Every prompt you run manually is time you're not creating.
+                <strong> Flow NextGen takes over your entire queue</strong> — imports,
+                runs, retries, downloads — while you sleep, work, or just live your life.
               </motion.p>
 
               <motion.div className="hero-cta-row" variants={itemVariants}>
                 <ShinyButton>
-                  Install Free Extension <ArrowRight size={16} />
+                  Start Your First Queue Free <ArrowRight size={16} />
                 </ShinyButton>
                 <a href="#how-it-works" className="button-secondary glass-card" style={{ cursor: "pointer" }}>
-                  See how it works
+                  Watch It Run
                 </a>
               </motion.div>
 
               <motion.div className="hero-stat-strip" variants={itemVariants}>
                 <div className="hero-stat">
-                  <span className="hero-stat-num">100+</span>
-                  <span className="hero-stat-label">Prompts / run</span>
+                  <span className="hero-stat-num">127+</span>
+                  <span className="hero-stat-label">Prompts per run</span>
                 </div>
                 <div className="hero-stat">
                   <span className="hero-stat-num">0</span>
-                  <span className="hero-stat-label">Clicks needed</span>
+                  <span className="hero-stat-label">Clicks required</span>
                 </div>
                 <div className="hero-stat">
                   <span className="hero-stat-num">98%</span>
-                  <span className="hero-stat-label">Success rate</span>
+                  <span className="hero-stat-label">Queue success rate</span>
                 </div>
               </motion.div>
             </div>
@@ -529,37 +541,43 @@ export function ScrollJourney() {
             ))}
           </motion.div>
 
-          {/* ---- FLOW UI (STICKY CENTER/LEFT) ---- */}
+          {/* ---- FLOW UI WRAPPER (GPU horizontal position tracking) ---- */}
           <motion.div
-            className="flow-ui-anchor"
+            className="flow-ui-anchor-wrapper"
             style={{
-              left: flowUIX,
-              translateX: "-50%",
-              translateY: "-50%",
-              scale: flowUIScale,
-              rotateY: flowUIRotateY,
-              rotateX: flowUIRotateX,
-              transformPerspective: 1000,
-              transformStyle: "preserve-3d",
+              x: flowUIX,
             }}
           >
-            {/* Entrance wrapper slides in from offscreen right once overlay finishes */}
             <motion.div
-              className="flow-ui-entrance-wrapper"
-              initial={{ x: "100vw", opacity: 0 }}
-              animate={!showIntro ? { x: 0, opacity: 1 } : { x: "100vw", opacity: 0 }}
-              transition={{ type: "spring", stiffness: 70, damping: 17, mass: 1 }}
-              style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
+              className="flow-ui-anchor"
+              style={{
+                translateX: "-50%",
+                translateY: "-50%",
+                scale: flowUIScale,
+                rotateY: flowUIRotateY,
+                rotateX: flowUIRotateX,
+                transformPerspective: 1400,
+                transformStyle: "preserve-3d",
+              }}
             >
-              {/* Black hole glow */}
+              {/* Entrance wrapper slides in from offscreen right once overlay finishes */}
               <motion.div
-                className="flow-ui-glow"
-                style={{ opacity: glowOpacity }}
-              />
+                className="flow-ui-entrance-wrapper"
+                initial={{ x: "100vw", opacity: 0 }}
+                animate={!showIntro ? { x: 0, opacity: 1 } : { x: "100vw", opacity: 0 }}
+                transition={{ type: "spring", stiffness: 70, damping: 17, mass: 1 }}
+                style={{ width: "100%", height: "100%", display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
+              >
+                {/* Black hole glow */}
+                <motion.div
+                  className="flow-ui-glow"
+                  style={{ opacity: glowOpacity }}
+                />
 
-              <div className="flow-ui-shell">
-                <ExtensionMockup phase={phase} />
-              </div>
+                <div className="flow-ui-shell">
+                  <ExtensionMockup phase={phase} />
+                </div>
+              </motion.div>
             </motion.div>
           </motion.div>
 
@@ -574,7 +592,7 @@ export function ScrollJourney() {
             <div className="results-text-frame glass-panel">
               <div className="results-tag">
                 <span className="results-tag-dot" />
-                Queue Finished · Sync OK
+                Queue Complete · All Downloads Synced
               </div>
 
               <h2 className="results-headline">
@@ -583,26 +601,26 @@ export function ScrollJourney() {
               </h2>
 
               <p className="results-subtext">
-                Flow processed your entire queue overnight. Downloads sorted.
-                Fails retried. You just woke up to a full folder.
+                127 generations. Zero babysitting. Every file downloaded, sorted,
+                and named. This is what AI automation is supposed to feel like.
               </p>
 
               <div className="results-stats-grid">
                 <div className="result-stat-card highlight">
                   <span className="result-stat-value green">127</span>
-                  <span className="result-stat-label">Generated</span>
+                  <span className="result-stat-label">Assets generated</span>
                 </div>
                 <div className="result-stat-card">
                   <span className="result-stat-value orange">100%</span>
-                  <span className="result-stat-label">Success rate</span>
+                  <span className="result-stat-label">Queue success</span>
                 </div>
                 <div className="result-stat-card">
                   <span className="result-stat-value">18.4s</span>
-                  <span className="result-stat-label">Avg per task</span>
+                  <span className="result-stat-label">Avg generation</span>
                 </div>
                 <div className="result-stat-card">
                   <span className="result-stat-value">0</span>
-                  <span className="result-stat-label">Fails</span>
+                  <span className="result-stat-label">Manual actions</span>
                 </div>
               </div>
 
@@ -703,23 +721,21 @@ function PromptChip({ pos, scrollProgress }: PromptChipProps) {
   const chipX = useTransform(suckProgress, (t: number) => {
     const currentR = r * (1 - t);
     const currentTheta = theta + t * Math.PI * 3.4; // 1.7 full swirl turns
-    return `${50 + currentR * Math.cos(currentTheta)}%`;
+    return `calc(-50% + ${currentR * Math.cos(currentTheta)}vw)`;
   });
 
   const chipY = useTransform(suckProgress, (t: number) => {
     const currentR = r * (1 - t);
     const currentTheta = theta + t * Math.PI * 3.4;
-    return `${50 + currentR * Math.sin(currentTheta)}%`;
+    return `calc(-50% + ${currentR * Math.sin(currentTheta)}vh)`;
   });
 
   return (
     <motion.div
       className="prompt-chip"
       style={{
-        left: chipX,
-        top: chipY,
-        translateX: "-50%",
-        translateY: "-50%",
+        x: chipX,
+        y: chipY,
         opacity: chipOpacity,
         scale: chipScale,
         rotate: chipRotate,

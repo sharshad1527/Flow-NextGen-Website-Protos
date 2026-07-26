@@ -12,8 +12,8 @@ export function Pricing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2>Simple, <span className="gradient-text">Transparent</span> Pricing</h2>
-            <p>Choose the automation engine that fits your workflow.</p>
+            <h2>Buy Back Your <span className="gradient-text">Creative Hours</span></h2>
+            <p>Simple, transparent plans to stop babysitting generation queues.</p>
           </motion.div>
         </div>
 
@@ -31,22 +31,22 @@ export function Pricing() {
                 <span className="amount">$0</span>
                 <span className="period">/forever</span>
               </div>
-              <p>For casual creators testing the waters.</p>
+              <p>Test the waters and try background automation.</p>
             </div>
             
             <div className="divider"></div>
 
             <ul className="feature-list">
               <li><Check size={16} className="accent-text" /> DOM Simulation Mode</li>
-              <li><Check size={16} className="accent-text" /> Limited Queue (Up to 10 prompts)</li>
+              <li><Check size={16} className="accent-text" /> Up to 10 prompts per queue</li>
               <li><Check size={16} className="accent-text" /> Basic Gallery Management</li>
-              <li className="disabled-feature"><X size={16} /> API-First Generation</li>
-              <li className="disabled-feature"><X size={16} /> Auto-Recovery Engine</li>
+              <li className="disabled-feature"><X size={16} /> API-First Acceleration</li>
+              <li className="disabled-feature"><X size={16} /> Self-Healing Cooldown Loop</li>
               <li className="disabled-feature"><X size={16} /> Unlimited Batching</li>
               <li className="disabled-feature"><X size={16} /> Priority Support</li>
             </ul>
 
-            <button className="button-secondary full-width">Current Plan</button>
+            <button className="button-secondary full-width">Start Free Trial</button>
           </motion.div>
 
           {/* Pro Tier */}
@@ -56,29 +56,29 @@ export function Pricing() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            <div className="pro-badge">RECOMMENDED</div>
+            <div className="pro-badge">POPULAR</div>
             <div className="tier-header">
               <h3>Pro</h3>
               <div className="price">
                 <span className="amount">$9.99</span>
                 <span className="period">/month</span>
               </div>
-              <p>For power-users demanding full automation.</p>
+              <p>For power creators and agencies scaling production.</p>
             </div>
             
             <div className="divider"></div>
 
             <ul className="feature-list">
-              <li><Check size={16} className="success-text" /> API-First Generation Mode</li>
-              <li><Check size={16} className="success-text" /> Unlimited Batch Queue</li>
-              <li><Check size={16} className="success-text" /> Auto-Recovery Engine</li>
-              <li><Check size={16} className="success-text" /> Background Downloading</li>
-              <li><Check size={16} className="success-text" /> Advanced Gallery & Metadata</li>
-              <li><Check size={16} className="success-text" /> Scene Builder Access</li>
-              <li><Check size={16} className="success-text" /> Priority Support</li>
+              <li><Check size={16} className="success-text" /> API Mode & DOM Simulation Toggle</li>
+              <li><Check size={16} className="success-text" /> Unlimited Background Queues</li>
+              <li><Check size={16} className="success-text" /> Self-Healing Cooldown (Zero failed runs)</li>
+              <li><Check size={16} className="success-text" /> Instant Auto-Download & Renaming</li>
+              <li><Check size={16} className="success-text" /> Advanced Gallery & Metadata Export</li>
+              <li><Check size={16} className="success-text" /> Scene Builder access</li>
+              <li><Check size={16} className="success-text" /> Priority Developer Support</li>
             </ul>
 
-            <button className="button-primary full-width btn-glow">Upgrade to Pro</button>
+            <button className="button-primary full-width btn-glow">Unlock Autopilot Generation</button>
           </motion.div>
         </div>
       </div>

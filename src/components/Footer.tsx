@@ -13,13 +13,18 @@ export function Footer() {
               </div>
               <span className="logo-text">Flow NextGen</span>
             </div>
-            <p>The ultimate automation engine for AI artists.</p>
+            <p>Autopilot generation queue engine for modern creative teams.</p>
           </div>
           <div className="footer-links">
             <div className="link-group">
               <h4>Product</h4>
               <a href="#features">Features</a>
               <a href="/pricing">Pricing</a>
+            </div>
+            <div className="link-group">
+              <h4>Resources</h4>
+              <a href="#how-it-works">How It Works</a>
+              <a href="#">Support Hub</a>
             </div>
             <div className="link-group">
               <h4>Legal</h4>

@@ -39,8 +39,8 @@
 /* Orange radial bloom that expands on exit */
 .logo-bloom-glow {
   position: absolute;
-  width: 320px;
-  height: 320px;
+  width: 20rem;
+  height: 20rem;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(255, 107, 0, 0.65) 0%, rgba(255, 85, 0, 0.25) 35%, transparent 70%);
   filter: blur(48px);
@@ -49,8 +49,8 @@
 }
 
 .logo-canvas-wrap {
-  width: 320px;
-  height: 320px;
+  width: 20rem;
+  height: 20rem;
   position: relative;
   will-change: transform, opacity;
 }
@@ -64,12 +64,12 @@
   position: absolute;
   left: 0;
   top: 50%;
-  width: 45%;
+  width: 50%;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 0 0 clamp(2rem, 5vw, 7rem);
+  padding: 0 0 0 clamp(2rem, 2rem + 1vw, 7rem);
   z-index: 5;
   will-change: transform, opacity;
 }
@@ -104,7 +104,7 @@
 
 .hero-headline {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.8rem, 4.8vw, 5.4rem);
+  font-size: clamp(3.5rem, 3.8rem + 1.2vw, 6.5rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: -0.05em;
@@ -170,11 +170,11 @@
 
 .hero-subtext {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(0.95rem, 1.1vw, 1.05rem);
+  font-size: clamp(0.9rem, 0.6vw + 0.5rem, 1.15rem);
   font-weight: 400;
   color: rgba(245, 245, 245, 0.5);
   line-height: 1.65;
-  max-width: 38ch;
+  max-width: 42ch;
   margin-bottom: 1.5rem;
 }
 
@@ -206,7 +206,7 @@
 
 .hero-stat-num {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.8rem;
+  font-size: clamp(1.5rem, 1.8vw, 2.4rem);
   font-weight: 800;
   color: #fff;
   letter-spacing: -0.02em;
@@ -224,14 +224,25 @@
 /* =============================================
    FLOW UI — Sticky Center Piece
    ============================================= */
-.flow-ui-anchor {
+.flow-ui-anchor-wrapper {
   position: absolute;
   top: 50%;
-  width: 330px;
-  height: 480px;
-  /* No CSS transform here — Motion owns translateX and translateY both */
-  will-change: transform, opacity;
+  left: 0;
+  width: 100%;
+  height: 0;
   z-index: 10;
+  will-change: transform;
+}
+
+.flow-ui-anchor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  /* Viewport-aware sizing: stays ~380-480px wide across 1024-1920px desktop range */
+  width: clamp(22rem, 25vw, 32rem);
+  height: clamp(32rem, 38vw, 48rem);
+  /* No CSS transform here — Motion owns translateX and translateY both */
+  will-change: transform;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -252,7 +263,7 @@
     0 0 0 1px rgba(255, 107, 0, 0.08),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
   overflow: hidden;
-  will-change: transform, box-shadow;
+  will-change: transform;
 }
 
 .mockup-queue-screen {
@@ -287,6 +298,8 @@
 
 .prompt-chip {
   position: absolute;
+  left: 50%;
+  top: 50%;
   padding: 0.35rem 0.75rem;
   border-radius: 100px;
   background: rgba(12, 12, 12, 0.95);
@@ -296,7 +309,7 @@
   font-weight: 500;
   color: rgba(245, 245, 245, 0.85);
   white-space: nowrap;
-  will-change: transform, opacity;
+  will-change: transform;
   box-shadow: 0 0 12px rgba(255, 107, 0, 0.1);
 }
 
@@ -335,12 +348,12 @@
   position: absolute;
   left: 0;
   top: 50%;
-  width: 45%;
+  width: 50%;
   height: auto;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 0 0 clamp(2rem, 5vw, 7rem);
+  padding: 0 0 0 clamp(2rem, 2rem + 1vw, 7rem);
   z-index: 5;
   will-change: transform, opacity;
 }
@@ -378,7 +391,7 @@
 
 .results-headline {
   font-family: 'Outfit', sans-serif;
-  font-size: clamp(2.4rem, 4vw, 4.4rem);
+  font-size: clamp(3rem, 3.4rem + 1.2vw, 5.5rem);
   font-weight: 900;
   line-height: 0.95;
   letter-spacing: -0.05em;
@@ -388,10 +401,10 @@
 
 .results-subtext {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-size: clamp(0.9rem, 0.6vw + 0.5rem, 1.1rem);
   color: rgba(245, 245, 245, 0.5);
   line-height: 1.55;
-  max-width: 42ch;
+  max-width: 44ch;
   margin-bottom: 1.25rem;
 }
 
@@ -424,7 +437,7 @@
 
 .result-stat-value {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.3rem;
+  font-size: clamp(1.1rem, 1.3vw, 1.8rem);
   font-weight: 800;
   line-height: 1.1;
   color: #fff;
@@ -440,7 +453,7 @@
 }
 
 .result-stat-label {
-  font-size: 0.55rem;
+  font-size: clamp(0.55rem, 0.5vw, 0.75rem);
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -579,7 +592,7 @@
   -webkit-backdrop-filter: blur(32px) saturate(220%);
   border: 1px solid rgba(255, 255, 255, 0.05);
   border-radius: 24px;
-  padding: clamp(1.25rem, 2.5vw, 2.4rem);
+  padding: clamp(1.25rem, 1.25rem + 0.5vw, 2.4rem);
   box-shadow: 
     0 30px 80px rgba(0, 0, 0, 0.65),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
@@ -587,7 +600,7 @@
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  max-width: 520px;
+  max-width: clamp(34rem, 40vw, 50rem);
   box-sizing: border-box;
 }
 
@@ -686,8 +699,9 @@
   .results-headline {
     font-size: clamp(2.4rem, 5vw, 4.5rem);
   }
-  .flow-ui-shell {
-    /* inherits base 10:16 aspect ratio, width auto */
+  .flow-ui-anchor {
+    width: clamp(20rem, 28vw, 28rem);
+    height: clamp(30rem, 42vw, 42rem);
   }
   .hero-stat-strip {
     gap: 1.25rem;
@@ -723,7 +737,7 @@
 
   .hero-text-frame {
     width: 100% !important;
-    max-width: 480px !important;
+    max-width: 30rem !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -754,12 +768,16 @@
     width: 100% !important;
   }
 
+  .flow-ui-anchor-wrapper {
+    top: 36% !important;
+  }
+
   /* Flow UI: centered in the upper two-thirds, no horizontal sliding */
   .flow-ui-anchor {
-    left: 50% !important;
-    top: 36% !important;
-    width: 260px !important;
-    height: 350px !important;
+    left: 0 !important;
+    top: 0 !important;
+    width: 16.25rem !important;
+    height: 21.875rem !important;
   }
 
   .flow-ui-shell {
@@ -814,7 +832,7 @@
 
   .results-text-frame {
     width: 100% !important;
-    max-width: 480px !important;
+    max-width: 30rem !important;
     padding: 0 !important;
     background: transparent !important;
     border: none !important;
@@ -962,16 +980,16 @@
 
 /* 💻 14-Inch Laptop & Short Viewport Tweaks (height under 820px) */
 /* 💻 14-Inch Laptop & Short Viewport Tweaks (height under 820px) */
-@media (max-height: 820px) and (min-width: 769px) {
+@media (max-height: 940px) and (min-width: 769px) {
   .hero-left {
     padding-left: clamp(1.5rem, 3vw, 4rem);
   }
   .hero-headline {
-    font-size: clamp(2rem, 3.2vw, 3.2rem) !important;
+    font-size: clamp(2.8rem, 3.6vw, 4.2rem) !important;
     margin-bottom: 0.75rem !important;
   }
   .hero-subtext {
-    font-size: 0.9rem !important;
+    font-size: 0.95rem !important;
     margin-bottom: 1.2rem !important;
     line-height: 1.5 !important;
   }
@@ -984,21 +1002,20 @@
     gap: 1.25rem !important;
   }
   .hero-stat-num {
-    font-size: 1.5rem !important;
+    font-size: 1.6rem !important;
   }
-
-
 
   .results-hero {
     padding-right: clamp(1.5rem, 3vw, 4rem) !important;
     padding-left: 1.5rem !important;
+    width: 50% !important;
   }
   .results-headline {
-    font-size: clamp(1.8rem, 3vw, 2.8rem) !important;
+    font-size: clamp(2.4rem, 3.4vw, 3.6rem) !important;
     margin-bottom: 0.75rem !important;
   }
   .results-subtext {
-    font-size: 0.9rem !important;
+    font-size: 0.95rem !important;
     margin-bottom: 1.2rem !important;
     line-height: 1.5 !important;
   }
@@ -1006,12 +1023,12 @@
     padding: 0.75rem 0.85rem !important;
   }
   .result-stat-value {
-    font-size: 1.3rem !important;
+    font-size: 1.4rem !important;
   }
 }
 
 /* 💻 Short displays (e.g. height under 720px) to prevent vertical overflow/cutoff */
-@media (max-height: 720px) and (min-width: 769px) {
+@media (max-height: 820px) and (min-width: 769px) {
   .results-tag {
     margin-bottom: 0.5rem !important;
     font-size: 0.65rem !important;
@@ -1078,7 +1095,7 @@
    Header is 7.5rem fixed — push content below it
    and compress everything aggressively to fit
    ============================================= */
-@media (max-height: 660px) and (min-width: 769px) {
+@media (max-height: 720px) and (min-width: 769px) {
   /* Hero left: start below the fixed header */
   .hero-left {
     justify-content: flex-start !important;

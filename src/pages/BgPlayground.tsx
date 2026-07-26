@@ -654,6 +654,80 @@ const CONCEPTS: ConceptSpec[] = [
     stack: "Converging grid rendering math with coordinates display.",
     perf: "Uses static cache structures for vector lines rendering.",
     props: { canvasMode: "grid", lineColor: "rgba(255, 255, 255, 0.08)", speedMultiplier: 0.5 }
+  },
+
+  /* ── NEW PREMIUM CONCEPTS (₹1L SITE TIER) ── */
+  {
+    id: 51,
+    title: "Linear-Style Gradient Beam Sweep",
+    category: "shaders",
+    bgType: "smoke",
+    badge: "₹1L Tier — Minimal Beam",
+    visuals: "Dead-black canvas with a single ultra-thin diagonal gradient beam slowly sweeping across — like a lighthouse rotating in void. The beam catches the orange accent at its tip and fades to absolute zero. Borrowed from Linear.app's iconic hero treatment but tuned to our palette.",
+    interaction: "Cursor proximity bends the beam angle toward it with a 400ms spring lag. The trailing edge brightens momentarily on mouse-stop.",
+    stack: "Single WebGL fullscreen quad. Beam computed as a signed distance function (SDF) to a line segment in UV space. No textures needed.",
+    perf: "Zero texture lookups — pure math in the fragment shader. Renders at 60fps even on integrated graphics.",
+    props: { colorLeft: [0.055, 0.027, 0.0], colorRight: [1.0, 0.42, 0.0], monochrome: false }
+  },
+  {
+    id: 52,
+    title: "Vercel-Style Noise Gradient Orbs",
+    category: "shaders",
+    bgType: "smoke",
+    badge: "₹1L Tier — Noise Orbs",
+    visuals: "Two massive, extremely soft radial blobs — one deep orange, one near-black emerald — slowly morphing their shapes using low-frequency simplex noise. The blobs overlap in the center creating an iridescent mix zone. Background is #050505. Looks exactly like the Vercel homepage orb treatment but in our brand colors.",
+    interaction: "Mouse pushes the nearest orb away with a rubber-band spring. On release, the orb slowly drifts back to its resting position.",
+    stack: "WebGL fragment shader with 2 animated SDF circles warped by FBM noise. Mix-blend-mode: screen layer for the overlap region.",
+    perf: "Two blobs with 3-octave FBM is well within fragment shader budget. Runs at full resolution on any modern GPU.",
+    props: { colorLeft: [1.0, 0.38, 0.0], colorRight: [0.0, 0.22, 0.12], monochrome: false }
+  },
+  {
+    id: 53,
+    title: "Raycast-Style Floating Mesh Grid",
+    category: "interactive",
+    bgType: "particles",
+    badge: "₹1L Tier — Floating Grid",
+    visuals: "A perfectly spaced constellation of ~200 tiny dots on a black canvas, connected by razor-thin lines when within proximity — forming an organic mesh that looks like a 3D surface viewed from above. Dots drift imperceptibly slow (0.15× speed). The overall effect is a breathing, living architecture diagram.",
+    interaction: "Mouse acts as a repeller: dots within 120px smoothly push away with inverse-square falloff, then spring back. Creates a beautiful parting-water effect.",
+    stack: "Canvas 2D API. Dot positions stored in typed Float32Array. Connection lines drawn only for pairs within 90px to cap draw calls.",
+    perf: "Spatial hashing grid for O(n) proximity checks instead of O(n²). Locked at 60fps with requestAnimationFrame + visibility API pause.",
+    props: { canvasMode: "constellation", lineColor: "rgba(255, 107, 0, 0.12)", particleColor: "rgba(255, 255, 255, 0.45)", connectDistance: 90, speedMultiplier: 0.15, particleCount: 190 }
+  },
+  {
+    id: 54,
+    title: "Resend-Style Ink Diffusion Field",
+    category: "shaders",
+    bgType: "smoke",
+    badge: "₹1L Tier — Ink Diffusion",
+    visuals: "Obsidian black canvas with slow ink-drop diffusion patterns in deep orange and near-white. Each 'drop' expands using reaction-diffusion math, creating organic blob shapes that never look the same twice. The motion is glacially slow — barely perceptible, like a lava lamp but darker and more precise.",
+    interaction: "Click anywhere to inject a new ink drop at cursor position. It blooms outward for 3 seconds then slowly merges into the ambient field.",
+    stack: "Ping-pong WebGL2 framebuffers running a Gray-Scott reaction-diffusion shader at 512×512 resolution, upscaled with bilinear filtering.",
+    perf: "Simulation runs at 512×512. Display canvas is full viewport. Upscale pass is a single blit — no multi-pass overhead.",
+    props: { colorLeft: [0.08, 0.04, 0.0], colorRight: [1.0, 0.55, 0.15], monochrome: false }
+  },
+  {
+    id: 55,
+    title: "Arc-Style Soft Aurora Curtain",
+    category: "space",
+    bgType: "aurora",
+    badge: "₹1L Tier — Aurora Curtain",
+    visuals: "Three horizontal bands of extremely soft, slow-moving aurora light — deep orange at top, dark emerald in the middle, obsidian at the bottom. The bands have subtle vertical waviness like fabric curtains in a breeze. The entire thing is so low-contrast it feels like the darkness itself is alive. Inspired by Arc Browser's ambient background and Linear's dark mode hero.",
+    interaction: "Scroll speed ripples the curtain bands — faster scrolling creates more pronounced vertical waves that slowly dampen back to still.",
+    stack: "CSS custom properties animated by a tiny JS scroll listener. Each band is a div with a radial-gradient and a CSS sinusoidal animation offset by phase.",
+    perf: "Pure CSS compositor path. Zero layout recalculations. GPU handles all transform animations.",
+    props: { orbColor1: "rgba(255, 80, 0, 0.08)", orbColor2: "rgba(0, 180, 80, 0.06)" }
+  },
+  {
+    id: 56,
+    title: "Loom-Style Chromatic Depth Haze",
+    category: "3d",
+    bgType: "smoke",
+    badge: "₹1L Tier — Chromatic Haze",
+    visuals: "A background that looks like light leaking through a high-end optical lens — soft chromatic aberration halos of orange, white, and deep teal bleed at the edges while the center stays razor sharp and near-black. The halos breathe in and out with a 6-second sine cycle. Extremely expensive-looking but built from a single fragment shader pass.",
+    interaction: "Mouse position shifts the chromatic aberration axis — moving left/right splits the red and blue channels apart. Moving to center collapses them back to perfect focus.",
+    stack: "WebGL fragment shader with per-channel UV offset (red, green, blue sampled at slightly different UV coordinates). Vignette overlay sharpens the center.",
+    perf: "3 texture samples per fragment (one per channel). Well within fillrate budget. Anti-aliased via temporal accumulation buffer.",
+    props: { colorLeft: [0.04, 0.02, 0.0], colorRight: [0.0, 0.12, 0.18], monochrome: false }
   }
 ];
 

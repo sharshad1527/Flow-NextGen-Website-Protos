@@ -91,8 +91,8 @@ export function Features() {
     <section id="features" className="features">
       <div className="container">
         <div className="features-header">
-          <h2>Built for <span className="gradient-text">Creators, Agencies, and Power Users</span></h2>
-          <p>Play with the interactive simulator below to see how Flow NextGen does the heavy lifting for you.</p>
+          <h2>Engineered for <span className="gradient-text">Uninterrupted Scale</span></h2>
+          <p>Play with the interactive simulators below to see how Flow automates the heavy lifting.</p>
         </div>
         
         <div className="bento-grid">
@@ -132,8 +132,8 @@ export function Features() {
               </div>
             </div>
             <div className="bento-content">
-              <h3><ListChecks size={20} className="accent-text" /> 100+ Bulk Prompt Queue</h3>
-              <p>Stop copy-pasting one-by-one. Import spreadsheets, inject dynamic variables, reorder on the fly, and run massive queues in the background while you focus on real work.</p>
+              <h3><ListChecks size={20} className="accent-text" /> 100+ Bulk Prompt Queues</h3>
+              <p>Stop wasting hours copy-pasting prompts one-by-one. Import spreadsheets, inject dynamic variables, reorder on the fly, and let the background queue run while you focus on high-value creative work.</p>
             </div>
           </motion.div>
 
@@ -193,7 +193,7 @@ export function Features() {
             </div>
             <div className="bento-content">
               <h3><TerminalSquare size={20} className="accent-text" /> Hybrid API + DOM Simulation</h3>
-              <p>Run at lightning speed via API, or toggle DOM Simulation to mimic real human behavior (typing, clicking, hovering) to bypass bot detection, rate limits, and platform bans.</p>
+              <p>Generate at hyper-speed via direct API integration, or toggle DOM Simulation to simulate realistic user typing and mouse clicks — bypassing bot detection and platform limits effortlessly.</p>
             </div>
           </motion.div>
 
@@ -220,11 +220,11 @@ export function Features() {
                     >
                       <AlertTriangle size={32} className="alert-text pulse-animation" />
                       <div className="healing-info">
-                        <h4>ERROR 429</h4>
-                        <p>Rate limit reached on target site</p>
+                        <h4>LIMIT REACHED</h4>
+                        <p>Rate limits hit on generation target</p>
                       </div>
                       <button onClick={handleRecover} className="heal-action-btn">
-                        <RotateCcw size={12} /> Auto-Resume
+                        <RotateCcw size={12} /> Auto-Recover
                       </button>
                     </motion.div>
                   )}
@@ -239,7 +239,7 @@ export function Features() {
                     >
                       <RefreshCw size={32} className="accent-text rotate-animation" />
                       <div className="healing-info">
-                        <h4>AUTO-RECOVERY ACTIVE</h4>
+                        <h4>RECOVERY ACTIVE</h4>
                         <p>Cooling down 2.0s & rotating proxies</p>
                       </div>
                     </motion.div>
@@ -256,7 +256,7 @@ export function Features() {
                       <CheckCircle2 size={32} className="success-text" />
                       <div className="healing-info">
                         <h4>QUEUE RESUMED</h4>
-                        <p>Processing next prompts seamlessly</p>
+                        <p>Continuing prompt queue smoothly</p>
                       </div>
                       <button onClick={() => setHealingState("error")} className="heal-reset-btn">Reset</button>
                     </motion.div>
@@ -265,8 +265,8 @@ export function Features() {
               </div>
             </div>
             <div className="bento-content">
-              <h3>Self-Healing Error Recovery</h3>
-              <p>No more babysitting. When Runway or ImageFX throws a 429 rate limit or network error, Flow automatically pauses, cools down, rotates parameters, and resumes without losing your spot.</p>
+              <h3><AlertTriangle size={20} className="accent-text" /> Self-Healing Error Recovery</h3>
+              <p>Never wake up to a broken queue. If a target site throws a 429 rate limit or network exception, Flow pauses, cools down, rotates proxy endpoints, and resumes without losing your progress.</p>
             </div>
           </motion.div>
 
@@ -284,7 +284,7 @@ export function Features() {
                 
                 <div className="downloader-header">
                   <button onClick={startDownloads} disabled={downloading} className="download-trigger-btn btn-glow">
-                    {downloading ? "Downloading Batch..." : "Simulate Batch Download"}
+                    {downloading ? "Downloading..." : "Simulate Auto-Download"}
                   </button>
                 </div>
 
@@ -313,8 +313,8 @@ export function Features() {
               </div>
             </div>
             <div className="bento-content">
-              <h3><FolderDown size={20} className="accent-text" /> Zero-Click Downloads & Auto-Renaming</h3>
-              <p>No more "Download" exhaustion. The extension automatically saves generations as they finish, utilizing custom formulas to rename files cleanly using your prompt keywords and variables.</p>
+              <h3><FolderDown size={20} className="accent-text" /> Auto-Download & Clean Renaming</h3>
+              <p>Eliminate download exhaustion. Finished media is downloaded instantly and renamed using custom formulas matching your prompt keywords, keeping your output directory perfectly structured.</p>
             </div>
           </motion.div>
         </div>

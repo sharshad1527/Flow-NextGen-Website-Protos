@@ -10,7 +10,7 @@
   --success: #00E676;
   --alert: #FFAB00;
 
-  font-size: clamp(13px, 0.9vw + 10px, 17px);
+  font-size: clamp(13px, 0.5vw + 7px, 36px);
   font-family: 'Plus Jakarta Sans', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;

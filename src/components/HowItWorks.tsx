@@ -20,53 +20,53 @@ export function HowItWorks() {
     {
       id: 1,
       icon: <ListChecks size={24} />,
-      title: "1. Load Bulk Prompts",
-      subtitle: "Import Spreadsheets & Variables",
-      description: "Import your prompt sheet directly. Inject dynamic variables and formulas to generate hundreds of highly-targeted variations with a single paste.",
+      title: "1. Upload Your Prompt Sheet",
+      subtitle: "Import Sheets & Dynamic Variables",
+      description: "Paste your raw prompts or drag in a CSV/Excel sheet. Inject dynamic variables like {keyword} or {subject} to auto-generate hundreds of unique prompt permutations instantly.",
       colorClass: "accent-text",
       detailsList: [
-        "One-click CSV & Excel import",
-        "Dynamic variable injection ({keyword})",
-        "Bulk text copy-paste parsing",
+        "Instant CSV & Excel file upload",
+        "Multi-variable dynamic replacement",
+        "Raw copy-paste plain text parsing",
       ]
     },
     {
       id: 2,
       icon: <Settings size={24} />,
-      title: "2. Define Your Output Rules",
-      subtitle: "Select Models & Modes",
-      description: "Select your preferred generation models, enforce strict character seeds for absolute visual consistency, and choose API mode or human-like DOM simulation.",
+      title: "2. Set Your Output Specifications",
+      subtitle: "Lock seeds, models, and modes",
+      description: "Specify your desired models, lock strict character seeds to ensure visual continuity across your series, and choose between API acceleration or humanized DOM simulation.",
       colorClass: "accent-text",
       detailsList: [
-        "Cross-model override toggles",
-        "Hybrid API & DOM mode triggers",
-        "Strict character seed locking",
+        "Cross-platform seed locking",
+        "API speed vs. DOM stealth toggle",
+        "Aspect ratio & upscale presets",
       ]
     },
     {
       id: 3,
       icon: <Play size={24} />,
-      title: "3. Run on Autopilot",
+      title: "3. Run on Total Autopilot",
       subtitle: "Background Automation Engine",
-      description: "Hit start and switch tabs. The background extension logs in, processes the queue, handles site re-authentications, and manages rate limits entirely hands-free.",
+      description: "Hit start and let the extension do the rest. It logs in, handles rate limit cooldowns, rotates proxy details, and processes the queue in a background tab while you work elsewhere.",
       colorClass: "accent-text",
       detailsList: [
-        "Humanized click & typing delays",
-        "Auto-recovery for 429 rate limits",
-        "Tab-independent background execution",
+        "Humanized mouse/key simulation",
+        "Active proxy-rotation security",
+        "Tab-independent background work",
       ]
     },
     {
       id: 4,
       icon: <DownloadCloud size={24} />,
-      title: "4. Auto-Download & Clean Renaming",
+      title: "4. Auto-Download & Rename Output",
       subtitle: "Zero Manual File Management",
-      description: "Generated videos and images are auto-downloaded to your computer on completion, automatically renamed based on prompt metadata so you never have messy folder names.",
+      description: "Every generated image or video downloads automatically as it finishes. Files are instantly renamed using your prompt variables and formulas for perfectly organized output.",
       colorClass: "success-text",
       detailsList: [
-        "Zero-click background download routing",
-        "Custom naming formulas (using prompt vars)",
-        "Clean format tags and index organization",
+        "Zero-click background downloading",
+        "Keyword-based smart renaming",
+        "Time-stamped folder structures",
       ]
     }
   ];

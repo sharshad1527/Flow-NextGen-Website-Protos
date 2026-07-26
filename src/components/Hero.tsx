@@ -1,11 +1,10 @@
 import { useRef, useState, useEffect } from "react";
 import { motion, useScroll, useTransform, useMotionValue, useSpring, AnimatePresence } from "motion/react";
 import { 
-  ArrowRight, Sparkles, List, Zap, LayoutGrid, Settings, HelpCircle
+  ArrowRight, Sparkles, LayoutGrid, Settings, HelpCircle, List, Zap
 } from "lucide-react";
-import { Logo } from "./Logo";
 import { ShinyButton } from "./ShinyButton";
-import { TaskLedgerQueue } from "./TaskLedgerQueue";
+import { ExtensionMockup } from "./ExtensionMockup";
 import "./Hero.css";
 
 type TabType = "control" | "gallery" | "queue" | "settings";
@@ -20,27 +19,27 @@ interface Hotspot {
 
 const hotspotsData: Record<TabType, Hotspot[]> = {
   control: [
-    { x: "50%", y: "22%", title: "Automation Engine", text: "Choose between Image, Video, Frame, or recipe-based multi-stage generation chains." },
-    { x: "50%", y: "42%", title: "Structured Steps", text: "Configure bulk prompts, seeds, and character references without touch coordinates." },
-    { x: "74%", y: "58%", title: "Model Override", text: "Instantly swap base models across target generation platforms directly in-extension." },
-    { x: "50%", y: "78%", title: "Prompt & Characters", text: "Inject dynamic variables and character profiles to keep visual assets on-brand." }
+    { x: "50%", y: "15%", title: "Automation Engine", text: "Choose between Image, Video, Frame, or recipe-based multi-stage generation chains." },
+    { x: "50%", y: "30%", title: "Structured Steps", text: "Configure bulk prompts, seeds, and character references without touch coordinates." },
+    { x: "74%", y: "45%", title: "Model Override", text: "Instantly swap base models across target generation platforms directly in-extension." },
+    { x: "50%", y: "65%", title: "Prompt & Characters", text: "Inject dynamic variables and character profiles to keep visual assets on-brand." }
   ],
   gallery: [
-    { x: "50%", y: "12%", title: "Studio Gallery", text: "Search and manage all generated visual assets in one localized workspace." },
-    { x: "28%", y: "30%", title: "Format Filters", text: "Filter by Videos, Images, or currently Generating tasks." },
-    { x: "50%", y: "42%", title: "Instant Search", text: "Search prompts, tags, or IDs with instant DOM indexing." },
-    { x: "74%", y: "68%", title: "Grid Previews", text: "Hover to play video drafts or see aspect ratios (16:9, 1:1) in high resolution." }
+    { x: "50%", y: "10%", title: "Studio Gallery", text: "Search and manage all generated visual assets in one localized workspace." },
+    { x: "28%", y: "24%", title: "Format Filters", text: "Filter by Videos, Images, or currently Generating tasks." },
+    { x: "50%", y: "35%", title: "Instant Search", text: "Search prompts, tags, or IDs with instant DOM indexing." },
+    { x: "74%", y: "62%", title: "Grid Previews", text: "Hover to play video drafts or see aspect ratios (16:9, 1:1) in high resolution." }
   ],
   queue: [
-    { x: "25%", y: "24%", title: "Live Analytics", text: "Monitor generation throughput, execution times, and status counts live." },
-    { x: "75%", y: "36%", title: "Global Pause", text: "Pause and edit pending prompts on the fly without breaking your execution flow.", align: "left" },
-    { x: "50%", y: "52%", title: "Queue Actions", text: "One-click retry for failed tasks, clean error logs, or export execution histories." },
-    { x: "50%", y: "74%", title: "Granular Status", text: "Track real-time progress, rate-limit cooldown timers, and auto-retry sequences." }
+    { x: "25%", y: "18%", title: "Live Analytics", text: "Monitor generation throughput, execution times, and status counts live." },
+    { x: "75%", y: "30%", title: "Global Pause", text: "Pause and edit pending prompts on the fly without breaking your execution flow.", align: "left" },
+    { x: "50%", y: "42%", title: "Queue Actions", text: "One-click retry for failed tasks, clean error logs, or export execution histories." },
+    { x: "50%", y: "64%", title: "Granular Status", text: "Track real-time progress, rate-limit cooldown timers, and auto-retry sequences." }
   ],
   settings: [
-    { x: "50%", y: "30%", title: "Config Hub", text: "Fine-tune download paths, DOM delays, error recovery thresholds, and API keys." },
-    { x: "50%", y: "52%", title: "Active Subscription", text: "Unlock unlimited parallel queues, custom renaming templates, and priority generation speeds." },
-    { x: "50%", y: "80%", title: "Subscription Manager", text: "Direct portal to manage invoices, billing history, and active license keys." }
+    { x: "50%", y: "22%", title: "Config Hub", text: "Fine-tune download paths, DOM delays, error recovery thresholds, and API keys." },
+    { x: "50%", y: "42%", title: "Active Subscription", text: "Unlock unlimited parallel queues, custom renaming templates, and priority generation speeds." },
+    { x: "50%", y: "70%", title: "Subscription Manager", text: "Direct portal to manage invoices, billing history, and active license keys." }
   ]
 };
 
@@ -87,9 +86,9 @@ export function Hero() {
       const width = window.innerWidth;
       const height = window.innerHeight;
       
-      // Map coordinates to range [-12, 12] degrees
-      const xDeg = ((clientY / height) - 0.5) * -24;
-      const yDeg = ((clientX / width) - 0.5) * 24;
+      // Map coordinates to range [-10, 10] degrees
+      const xDeg = ((clientY / height) - 0.5) * -20;
+      const yDeg = ((clientX / width) - 0.5) * 20;
 
       rotateXVal.set(xDeg);
       rotateYVal.set(yDeg);
@@ -109,12 +108,7 @@ export function Hero() {
   const textOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
   const scaleMockup = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
 
-  const tabImageMap: Record<TabType, string> = {
-    control: "/inextensionss_2.png",
-    gallery: "/inextensionss_3.png",
-    queue: "/inextensionss_4.png",
-    settings: "/inextensionss_1.png"
-  };
+  const activePhase = activeTab === "control" ? 0 : activeTab === "queue" ? 1 : activeTab === "gallery" ? 2 : 3;
 
   return (
     <section className="hero centered-hero" ref={containerRef}>
@@ -172,120 +166,84 @@ export function Hero() {
                 repeatType: "reverse",
                 ease: "easeInOut"
               }}
-              style={{ willChange: "transform", width: "100%" }}
+              style={{ willChange: "transform", width: "100%", position: "relative" }}
             >
-              <div className="mockup-window glass-panel hero-centered-mockup">
-              {/* Top Bar matching extension */}
-              <div className="mockup-app-header">
-                <div className="mockup-app-logo">
-                  <Logo width={20} height={20} />
-                  <div className="app-title-group">
-                    <span className="app-name">Flow<span className="accent-text">NextGen</span></span>
-                    <span className="app-version">BY HARSHAD V0.10.0</span>
-                  </div>
-                </div>
-                <div className="app-actions">
-                  <span className="live-badge"><span className="live-dot"></span> LIVE</span>
-                </div>
-              </div>
-
-              {/* Main content area */}
-              <div className="mockup-screen-container" style={{ position: "relative", overflow: "hidden", minHeight: "440px", background: "#0D0D0D" }}>
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeTab}
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                    style={{ width: "100%", height: "100%" }}
+              <div className="mockup-window hero-centered-mockup" style={{ minHeight: "480px", position: "relative" }}>
+                <ExtensionMockup phase={activePhase} />
+                
+                {/* Interactive Hotspots Overlaid on the Mockup */}
+                {hotspotsData[activeTab].map((hotspot, idx) => (
+                  <div 
+                    key={idx} 
+                    style={{ 
+                      position: "absolute", 
+                      top: hotspot.y, 
+                      left: hotspot.x,
+                      transform: "translate(-50%, -50%)",
+                      zIndex: 10,
+                      cursor: "pointer"
+                    }}
+                    onMouseEnter={() => setHoveredHotspot({ tab: activeTab, index: idx })}
+                    onMouseLeave={() => setHoveredHotspot(null)}
                   >
-                    {/* Recreated Task Ledger Queue Screen OR Tab Screenshot */}
-                    {activeTab === "queue" ? (
-                      <TaskLedgerQueue />
-                    ) : (
-                      <img 
-                        src={tabImageMap[activeTab]} 
-                        alt={`Flow NextGen ${activeTab}`} 
-                        style={{ width: "100%", display: "block", objectFit: "contain", pointerEvents: "none" }} 
-                      />
-                    )}
+                    <motion.div
+                      className="hotspot-pulse"
+                      animate={{ scale: [1, 1.3, 1] }}
+                      transition={{ duration: 2, repeat: Infinity }}
+                      style={{
+                        width: "18px",
+                        height: "18px",
+                        borderRadius: "50%",
+                        background: "rgba(255, 107, 0, 0.45)",
+                        border: "2px solid #FF6B00",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center"
+                      }}
+                    >
+                      <HelpCircle size={9} style={{ color: "#FFF" }} />
+                    </motion.div>
 
-                    {/* Interactive Hotspots */}
-                    {hotspotsData[activeTab].map((hotspot, idx) => (
-                      <div 
-                        key={idx} 
-                        style={{ 
-                          position: "absolute", 
-                          top: hotspot.y, 
-                          left: hotspot.x,
-                          transform: "translate(-50%, -50%)",
-                          zIndex: 10,
-                          cursor: "pointer"
-                        }}
-                        onMouseEnter={() => setHoveredHotspot({ tab: activeTab, index: idx })}
-                        onMouseLeave={() => setHoveredHotspot(null)}
-                      >
+                    {/* Hotspot Tooltip */}
+                    <AnimatePresence>
+                      {hoveredHotspot?.tab === activeTab && hoveredHotspot?.index === idx && (
                         <motion.div
-                          className="hotspot-pulse"
-                          animate={{ scale: [1, 1.3, 1] }}
-                          transition={{ duration: 2, repeat: Infinity }}
+                          className="hotspot-tooltip glass-card"
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: -8, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.15 }}
                           style={{
-                            width: "18px",
-                            height: "18px",
-                            borderRadius: "50%",
-                            background: "rgba(255, 107, 0, 0.45)",
-                            border: "2px solid #FF6B00",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center"
+                            position: "absolute",
+                            bottom: "100%",
+                            left: hotspot.align === "left" ? "auto" : "50%",
+                            right: hotspot.align === "left" ? "0" : "auto",
+                            transform: hotspot.align === "left" ? "translateX(20%)" : "translateX(-50%)",
+                            width: "180px",
+                            padding: "0.6rem",
+                            borderRadius: "8px",
+                            background: "rgba(13, 13, 13, 0.95)",
+                            border: "1px solid rgba(255, 107, 0, 0.3)",
+                            boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
+                            zIndex: 100,
+                            pointerEvents: "none"
                           }}
                         >
-                          <HelpCircle size={9} style={{ color: "#FFF" }} />
+                          <h4 style={{ margin: "0 0 0.2rem 0", color: "#FF6B00", fontSize: "0.7rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.5px" }}>
+                            {hotspot.title}
+                          </h4>
+                          <p style={{ margin: 0, color: "#CCCCCC", fontSize: "0.65rem", lineHeight: "1.3" }}>
+                            {hotspot.text}
+                          </p>
                         </motion.div>
-
-                        {/* Hotspot Tooltip */}
-                        <AnimatePresence>
-                          {hoveredHotspot?.tab === activeTab && hoveredHotspot?.index === idx && (
-                            <motion.div
-                              className="hotspot-tooltip glass-card"
-                              initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                              animate={{ opacity: 1, y: -8, scale: 1 }}
-                              exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                              transition={{ duration: 0.15 }}
-                              style={{
-                                position: "absolute",
-                                bottom: "100%",
-                                left: hotspot.align === "left" ? "auto" : "50%",
-                                right: hotspot.align === "left" ? "0" : "auto",
-                                transform: hotspot.align === "left" ? "translateX(20%)" : "translateX(-50%)",
-                                width: "180px",
-                                padding: "0.6rem",
-                                borderRadius: "8px",
-                                background: "rgba(13, 13, 13, 0.95)",
-                                border: "1px solid rgba(255, 107, 0, 0.3)",
-                                boxShadow: "0 10px 30px rgba(0,0,0,0.8)",
-                                zIndex: 100,
-                                pointerEvents: "none"
-                              }}
-                            >
-                              <h4 style={{ margin: "0 0 0.2rem 0", color: "#FF6B00", fontSize: "0.7rem", fontWeight: "800", textTransform: "uppercase", letterSpacing: "0.5px" }}>
-                                {hotspot.title}
-                              </h4>
-                              <p style={{ margin: 0, color: "#CCCCCC", fontSize: "0.65rem", lineHeight: "1.3" }}>
-                                {hotspot.text}
-                              </p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ))}
               </div>
 
-              {/* Bottom Nav Pill matching extension */}
-              <div className="bottom-nav-container" style={{ position: "relative", bottom: "0", margin: "1rem 0" }}>
+              {/* Bottom Nav Tab Controller linked directly to activePhase */}
+              <div className="bottom-nav-container" style={{ position: "relative", bottom: "0", margin: "1.5rem 0 0.5rem" }}>
                 <div className="bottom-nav glass-card" style={{ background: "rgba(22, 22, 22, 0.8)", border: "1px solid rgba(255, 255, 255, 0.08)", padding: "0.4rem 1.2rem", borderRadius: "100px", display: "flex", gap: "1.25rem", justifyContent: "center" }}>
                   <button 
                     className={`nav-btn ${activeTab === "control" ? "active" : ""}`}
@@ -325,9 +283,8 @@ export function Hero() {
                   </button>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </motion.div>
-        </motion.div>
         </div>
       </div>
     </section>

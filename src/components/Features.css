@@ -10,13 +10,13 @@
 }
 
 .features-header h2 {
-  font-size: 2.5rem;
+  font-size: clamp(2rem, 2vw + 1rem, 3.5rem);
   letter-spacing: -0.02em;
 }
 
 .features-header p {
   color: var(--text-muted);
-  font-size: 1.125rem;
+  font-size: clamp(1rem, 0.5vw + 0.7rem, 1.25rem);
 }
 
 /* Bento Box Grid Layout */
@@ -24,7 +24,10 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: minmax(20rem, auto) minmax(20rem, auto);
-  gap: 1.5rem;
+  gap: clamp(1rem, 1.5vw, 2rem);
+  max-width: 1560px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .bento-item {
@@ -84,7 +87,7 @@
 }
 
 .bento-content h3 {
-  font-size: 1.15rem;
+  font-size: clamp(1rem, 0.8vw + 0.5rem, 1.35rem);
   font-weight: 700;
   color: #fff;
   display: flex;
@@ -95,8 +98,8 @@
 
 .bento-content p {
   color: var(--text-muted);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: clamp(0.85rem, 0.4vw + 0.6rem, 1rem);
+  line-height: 1.55;
 }
 
 /* Interactive Badges */
