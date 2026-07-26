@@ -9,6 +9,7 @@ import { BgPlayground } from "./pages/BgPlayground";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { Refund } from "./pages/Refund";
+import { ScrollToTop } from "./components/ScrollToTop";
 import "./App.css";
 
 function AppContent() {
@@ -55,6 +56,7 @@ function AppContent() {
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <AppContent />
     </BrowserRouter>
   );
