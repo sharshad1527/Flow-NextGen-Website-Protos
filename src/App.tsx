@@ -6,6 +6,9 @@ import { DriftBackground } from "./components/DriftBackground";
 import { Home } from "./pages/Home";
 import { PricingPage } from "./pages/PricingPage";
 import { BgPlayground } from "./pages/BgPlayground";
+import { Privacy } from "./pages/Privacy";
+import { Terms } from "./pages/Terms";
+import { Refund } from "./pages/Refund";
 import "./App.css";
 
 function AppContent() {
@@ -39,6 +42,9 @@ function AppContent() {
           <Route path="/" element={<Home />} />
           <Route path="/pricing" element={<PricingPage />} />
           <Route path="/bg-playground" element={<BgPlayground />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/refund" element={<Refund />} />
         </Routes>
         {showHeaderFooter && <Footer />}
       </div>
