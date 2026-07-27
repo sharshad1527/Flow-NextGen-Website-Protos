@@ -81,7 +81,7 @@ export function Hero() {
   const springRotateY = useSpring(rotateYVal, { stiffness: 100, damping: 20 });
 
   useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       const { clientX, clientY } = e;
       const width = window.innerWidth;
       const height = window.innerHeight;
@@ -94,8 +94,8 @@ export function Hero() {
       rotateYVal.set(yDeg);
     };
 
-    window.addEventListener("mousemove", handleMouseMove);
-    return () => window.removeEventListener("mousemove", handleMouseMove);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    return () => window.removeEventListener("pointermove", handlePointerMove);
   }, [rotateXVal, rotateYVal]);
 
   // Scroll Parallax for Mockup

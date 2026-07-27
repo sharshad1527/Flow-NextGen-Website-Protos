@@ -245,13 +245,13 @@ export default function NeuralBackground({
       init();
     };
 
-    const handleMouseMove = (e: MouseEvent) => {
+    const handlePointerMove = (e: PointerEvent) => {
       const rect = canvas.getBoundingClientRect();
       mouse.x = e.clientX - rect.left;
       mouse.y = e.clientY - rect.top;
     };
 
-    const handleMouseLeave = () => {
+    const handlePointerLeave = () => {
         mouse.x = -1000;
         mouse.y = -1000;
     };
@@ -261,13 +261,13 @@ export default function NeuralBackground({
     animate();
 
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
-    window.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("pointermove", handlePointerMove, { passive: true });
+    window.addEventListener("pointerleave", handlePointerLeave);
 
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("pointermove", handlePointerMove);
+      window.removeEventListener("pointerleave", handlePointerLeave);
       cancelAnimationFrame(animationFrameId);
     };
   }, [particleCount, dprScale]);
