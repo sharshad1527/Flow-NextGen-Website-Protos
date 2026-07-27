@@ -702,7 +702,7 @@ export function ScrollJourney() {
                     { title: "Astronaut", prompt: "astronaut in colorful nebula space", src: "/result_space.jpg" }
                   ].map((img, idx) => (
                     <div key={idx} className="image-card glass-card">
-                      <img src={img.src} alt={img.title} className="showcase-img" />
+                      <img src={img.src} alt={img.title} className="showcase-img" loading="lazy" />
                       <div className="image-card-overlay">
                         <span className="img-title">{img.title}</span>
                         <span className="img-prompt">{img.prompt}</span>

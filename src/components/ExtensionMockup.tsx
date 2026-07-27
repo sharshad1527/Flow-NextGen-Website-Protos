@@ -582,7 +582,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
               <div className="gallery-media-grid">
                 {/* Item 1: Samurai Video (16:9 6s) */}
                 <div className="gallery-item-wrapper video-item">
-                  <img src="/result_samurai.jpg" alt="Samurai Mockup" className="gallery-img" />
+                  <img src="/result_samurai.jpg" alt="Samurai Mockup" className="gallery-img" loading="lazy" />
                   <div className="media-play-overlay">
                     <Play size={16} fill="currentColor" className="play-icon-svg" />
                   </div>
@@ -597,7 +597,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
 
                 {/* Item 2: Character 1 (1:1) */}
                 <div className="gallery-item-wrapper">
-                  <img src="/result_anime.jpg" alt="Anime Art Mockup" className="gallery-img" />
+                  <img src="/result_anime.jpg" alt="Anime Art Mockup" className="gallery-img" loading="lazy" />
                   <div className="badge-row-top">
                     <span className="aspect-badge">1:1</span>
                   </div>
@@ -609,7 +609,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
                 {/* Item 3: Character 2 (1:1) */}
                 {(phase === 2 || galleryFilter !== "generating") && (
                   <div className="gallery-item-wrapper">
-                    <img src="/result_city.jpg" alt="City Timelapse Mockup" className="gallery-img" />
+                    <img src="/result_city.jpg" alt="City Timelapse Mockup" className="gallery-img" loading="lazy" />
                     <div className="badge-row-top">
                       <span className="aspect-badge">1:1</span>
                     </div>
@@ -622,7 +622,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
                 {/* Item 4: Character 3 (1:1) */}
                 {(phase === 2 || galleryFilter !== "generating") && (
                   <div className="gallery-item-wrapper">
-                    <img src="/result_space.jpg" alt="Astronaut Nebula Mockup" className="gallery-img" />
+                    <img src="/result_space.jpg" alt="Astronaut Nebula Mockup" className="gallery-img" loading="lazy" />
                     <div className="badge-row-top">
                       <span className="aspect-badge">1:1</span>
                     </div>
