@@ -135,7 +135,7 @@ export function Guide() {
                 <tr><td><strong>Shared Ref Upload</strong></td><td>All prompts share the same reference images</td></tr>
                 <tr><td><strong>1:1 Batch Upload</strong></td><td>Prompt line 1 → image 1, prompt line 2 → image 2, etc.</td></tr>
                 <tr><td><strong>Auto Match</strong></td><td>Fuzzy-match prompt keywords to reference filenames</td></tr>
-                <tr><td><strong>Repeat 1st Prompt</strong></td><td>First prompt is the source, all others are chained</td></tr>
+                <tr><td><strong>Repeat 1st Prompt</strong></td><td>First prompt's text is reused for all image slots</td></tr>
               </tbody>
             </table>
           </div>
@@ -316,8 +316,7 @@ export function Guide() {
                 <tr><td><strong>Retry Failed</strong></td><td>Re-submit all failed/blocked tasks</td></tr>
                 <tr><td><strong>Clear Failed</strong></td><td>Remove all failed tasks from the list</td></tr>
                 <tr><td><strong>Clear Done</strong></td><td>Remove all completed tasks</td></tr>
-                <tr><td><strong>Clear All</strong> (red)</td><td>Remove everything (stops the queue)</td></tr>
-                <tr><td><strong>Stop All</strong></td><td>Stop and delete all queued tasks</td></tr>
+                <tr><td><strong>Clear All</strong> (red)</td><td>Stop and delete all queued tasks</td></tr>
               </tbody>
             </table>
           </div>
@@ -587,7 +586,7 @@ export function Guide() {
               <thead><tr><th>Feature</th><th>Detail</th></tr></thead>
               <tbody>
                 <tr><td><strong>Cost</strong></td><td>$0</td></tr>
-                <tr><td><strong>Prompt limit</strong></td><td>30 prompts per 6-hour window</td></tr>
+                <tr><td><strong>Prompt limit</strong></td><td>30 prompts per day</td></tr>
                 <tr><td><strong>Quota reset</strong></td><td>Daily at 06:00 UTC</td></tr>
                 <tr><td><strong>Available modes</strong></td><td>All 4 modes (T2I, T2V, I2V, Ingredients)</td></tr>
                 <tr><td><strong>Submit route</strong></td><td>DOM (Simulated Clicks)</td></tr>
@@ -600,7 +599,7 @@ export function Guide() {
 
           <p><strong>How quota works:</strong></p>
           <ul>
-            <li>30 prompts per 6-hour window (configured limit, resets at 06:00 UTC).</li>
+            <li>30 prompts per day (resets at 06:00 UTC).</li>
             <li>The Control view shows a quota bar with used/total.</li>
             <li>At 75% usage, a soft warning toast appears.</li>
             <li>If you try to launch more prompts than remaining, an upgrade modal blocks the launch.</li>
@@ -642,7 +641,7 @@ export function Guide() {
             <table>
               <thead><tr><th>Capability</th><th>Free</th><th>Pro ($9.99/mo)</th></tr></thead>
               <tbody>
-                <tr><td><strong>Generations</strong></td><td>30 prompts / 6hr</td><td>Unlimited</td></tr>
+                <tr><td><strong>Generations</strong></td><td>30 prompts / day</td><td>Unlimited</td></tr>
                 <tr><td><strong>All 4 modes</strong></td><td>✅</td><td>✅</td></tr>
                 <tr><td><strong>API submit route</strong></td><td>❌ (DOM only)</td><td>✅</td></tr>
                 <tr><td><strong>1K images / 720p video</strong></td><td>✅</td><td>✅</td></tr>
@@ -665,7 +664,7 @@ export function Guide() {
           </div>
 
           <div className="guide-highlight">
-            <p><strong>Note on disabled features:</strong> The Character @handle system is disabled in the current UI (re-enabled pending a future release). Auto Flow Packet import is also disabled. Everything described above works in the current extension version.</p>
+            <p><strong>Note on disabled features:</strong> The Character @handle system is disabled in the current UI (re-enabled pending a future release). Auto Flow Packet import starts collapsed by default but is fully functional — tap the toggle to import packet JSON. Everything described above works in the current extension version.</p>
           </div>
         </section>
 
