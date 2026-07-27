@@ -540,6 +540,30 @@ export function ScrollJourney() {
                   </svg>
                   Install Extension - Free
                 </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-secondary review-btn"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.7rem 1.2rem',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    borderRadius: '12px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    background: 'rgba(255,255,255,0.05)',
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  Leave a Review
+                </a>
               </motion.div>
 
             </div>
