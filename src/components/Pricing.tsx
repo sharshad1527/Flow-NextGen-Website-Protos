@@ -80,6 +80,24 @@ export function Pricing() {
             <a href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond" target="_blank" rel="noopener noreferrer" className="button-primary full-width btn-glow" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>Get Extension — Free</a>
           </motion.div>
         </div>
+
+        {/* Independent third-party notice */}
+        <motion.div
+          className="third-party-notice"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          <div className="notice-icon">ⓘ</div>
+          <div className="notice-text">
+            <strong>Not affiliated with Google.</strong> Flow NextGen is an independent Chrome extension
+            built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google
+            or Google Flow. Your $9.99/month Pro subscription <strong>only covers this extension's automation
+            features</strong> — you still need your own Google account and access to{" "}
+            <code>labs.google/fx/tools/flow</code> for actual generation. Google Flow's own Pro/Ultra tiers
+            are separate and unaffected by this purchase.
+          </div>
+        </motion.div>
       </div>
     </div>
   );

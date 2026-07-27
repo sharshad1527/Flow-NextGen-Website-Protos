@@ -661,6 +661,10 @@ export function Guide() {
           <hr className="guide-divider" />
 
           <div className="guide-highlight">
+            <p><strong>Not affiliated with Google.</strong> Flow NextGen is an independent Chrome extension. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The Pro subscription covers this extension's automation features only — you still need your own Google account and access to Google Flow. Google Flow's own Pro/Ultra tiers are separate and unaffected.</p>
+          </div>
+
+          <div className="guide-highlight">
             <p><strong>Note on disabled features:</strong> The Character @handle system is disabled in the current UI (re-enabled pending a future release). Auto Flow Packet import is also disabled. Everything described above works in the current extension version.</p>
           </div>
         </section>
