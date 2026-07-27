@@ -6,6 +6,7 @@ import { Footer } from "./components/Footer";
 import { DriftBackground } from "./components/DriftBackground";
 import { ScrollToTop } from "./components/ScrollToTop";
 import { PageLoading } from "./components/PageLoading";
+import { WebSiteSchema } from "./components/JSONLD";
 import "./App.css";
 
 // Lazy-loaded pages for code-splitting — each page chunk loads only when navigated to
@@ -24,6 +25,7 @@ function AppContent() {
   return (
     <>
       {/* Cinematic page-load reveal — fades from black to transparent once */}
+      <WebSiteSchema />
       <motion.div
         initial={{ opacity: 1 }}
         animate={{ opacity: 0 }}
