@@ -190,6 +190,47 @@
   flex-wrap: wrap;
 }
 
+/* ---- SOCIAL PROOF ---- */
+.hero-social-proof {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.hero-social-proof .stars-row {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.hero-social-proof .stars-row svg {
+  display: block;
+  filter: drop-shadow(0 0 4px rgba(255, 107, 0, 0.3));
+}
+
+.hero-social-proof .rating-text {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.02em;
+  margin-left: 0.25rem;
+}
+
+.hero-social-proof .rating-divider {
+  color: rgba(255, 255, 255, 0.15);
+  font-size: 1.1rem;
+  font-weight: 300;
+}
+
+.hero-social-proof .rating-users {
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
 .hero-stat-strip {
   display: flex;
   gap: 2rem;

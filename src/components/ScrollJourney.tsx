@@ -504,6 +504,28 @@ export function ScrollJourney() {
                 <strong> Flow NextGen takes over your entire queue</strong> while you sleep, work, or just live your life.
               </motion.p>
 
+              {/* ---- SOCIAL PROOF ---- */}
+              <motion.div className="hero-social-proof" variants={itemVariants}>
+                <svg width="0" height="0" style={{ position: 'absolute' }}>
+                  <defs>
+                    <linearGradient id="halfGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="80%" stopColor="var(--accent)" />
+                      <stop offset="80%" stopColor="transparent" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+                <div className="stars-row">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <svg key={s} width="18" height="18" viewBox="0 0 24 24" fill={s <= 4 ? "var(--accent)" : s === 5 ? "url(#halfGrad)" : "none"} stroke={s <= 4 ? "var(--accent)" : "rgba(255,255,255,0.15)"} strokeWidth="1.5">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="rating-text">4.8</span>
+                <span className="rating-divider">·</span>
+                <span className="rating-users">1,000+ users</span>
+              </motion.div>
+
               <motion.div className="hero-cta-row" variants={itemVariants}>
                 <a
                   href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond"
