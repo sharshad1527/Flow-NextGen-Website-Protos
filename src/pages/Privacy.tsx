@@ -83,7 +83,7 @@ export function Privacy() {
 
         <section>
           <h2>Contact</h2>
-          <p><strong>bhandarigaurav@gmail.com</strong></p>
+          <p><strong>support.flownextgen@gmail.com</strong></p>
         </section>
 
         <div className="legal-nav-links">
