@@ -662,7 +662,7 @@ const CONCEPTS: ConceptSpec[] = [
     title: "Linear-Style Gradient Beam Sweep",
     category: "shaders",
     bgType: "smoke",
-    badge: "₹1L Tier — Minimal Beam",
+    badge: "₹1L Tier - Minimal Beam",
     visuals: "Dead-black canvas with a single ultra-thin diagonal gradient beam slowly sweeping across — like a lighthouse rotating in void. The beam catches the orange accent at its tip and fades to absolute zero. Borrowed from Linear.app's iconic hero treatment but tuned to our palette.",
     interaction: "Cursor proximity bends the beam angle toward it with a 400ms spring lag. The trailing edge brightens momentarily on mouse-stop.",
     stack: "Single WebGL fullscreen quad. Beam computed as a signed distance function (SDF) to a line segment in UV space. No textures needed.",

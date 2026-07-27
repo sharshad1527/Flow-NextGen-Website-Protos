@@ -171,12 +171,16 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.2s ease;
+  transition: filter 0.2s ease, transform 0.2s ease;
 }
 
 .button-primary:hover {
   filter: brightness(1.1);
   transform: translateY(-1px);
+}
+
+.button-primary:active {
+  transform: scale(0.97);
 }
 
 .button-secondary {
@@ -190,9 +194,39 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  transition: all 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .button-secondary:hover {
   background-color: var(--border);
+}
+
+.button-secondary:active {
+  transform: scale(0.97);
+}
+
+/* --- prefers-reduced-motion: disable all animations --- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scroll-journey {
+    height: auto !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .journey-stage {
+    position: relative !important;
+    height: auto !important;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .logo-intro-overlay {
+    display: none !important;
+  }
 }

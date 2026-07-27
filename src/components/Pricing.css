@@ -46,7 +46,7 @@
 
 .pro-badge {
   position: absolute;
-  top: -12px;
+  top: 6px;
   left: 50%;
   transform: translateX(-50%);
   background: var(--accent);
@@ -56,6 +56,7 @@
   padding: 0.3rem 1rem;
   border-radius: 20px;
   letter-spacing: 1px;
+  z-index: 10;
 }
 
 .tier-header h3 {

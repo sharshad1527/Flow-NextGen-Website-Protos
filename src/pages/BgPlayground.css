@@ -66,7 +66,7 @@
   padding: 0.5rem;
   cursor: pointer;
   border-radius: 8px;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease;
 }
 
 .panel-tab-btn.active {
@@ -92,7 +92,7 @@
   font-weight: 800;
   padding: 0.25rem 0.55rem;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   letter-spacing: 0.5px;
 }
 
@@ -137,7 +137,7 @@
   color: #fff;
   text-align: left;
   cursor: pointer;
-  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: background 0.2s cubic-bezier(0.4, 0, 0.2, 1), border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
@@ -401,7 +401,7 @@ input:checked + .checkbox-slider:before {
   box-shadow: 
     0 30px 60px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.03);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: border-color 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1), transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform, border-color, box-shadow;
 }
 
@@ -658,7 +658,7 @@ input:checked + .checkbox-slider:before {
   font-size: 0.55rem;
   padding: 0.2rem 0.35rem;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
 }
 
 .dpr-btn:hover {

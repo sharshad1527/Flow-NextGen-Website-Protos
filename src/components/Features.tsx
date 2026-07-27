@@ -92,7 +92,7 @@ export function Features() {
       <div className="container">
         <div className="features-header">
           <h2>Engineered for <span className="gradient-text">Uninterrupted Scale</span></h2>
-          <p>Play with the interactive simulators below to see how Flow automates the heavy lifting.</p>
+          <p>Click through the interactive demos to see how Flow NextGen automates bulk AI generation.</p>
         </div>
         
         <div className="bento-grid">
@@ -133,7 +133,7 @@ export function Features() {
             </div>
             <div className="bento-content">
               <h3><ListChecks size={20} className="accent-text" /> 100+ Bulk Prompt Queues</h3>
-              <p>Stop wasting hours copy-pasting prompts one-by-one. Import spreadsheets, inject dynamic variables, reorder on the fly, and let the background queue run while you focus on high-value creative work.</p>
+              <p>Queue hundreds of prompts in seconds. Paste your list, reorder on the fly, and let the background queue process them while you focus on creative work.</p>
             </div>
           </motion.div>
 
@@ -193,7 +193,7 @@ export function Features() {
             </div>
             <div className="bento-content">
               <h3><TerminalSquare size={20} className="accent-text" /> Hybrid API + DOM Simulation</h3>
-              <p>Generate at hyper-speed via direct API integration, or toggle DOM Simulation to simulate realistic user typing and mouse clicks — bypassing bot detection and platform limits effortlessly.</p>
+              <p>Generate at maximum speed via direct API calls. When rate limits or errors hit, the engine auto-fallsback to DOM simulation - no manual switching required.</p>
             </div>
           </motion.div>
 
@@ -240,7 +240,7 @@ export function Features() {
                       <RefreshCw size={32} className="accent-text rotate-animation" />
                       <div className="healing-info">
                         <h4>RECOVERY ACTIVE</h4>
-                        <p>Cooling down 2.0s & rotating proxies</p>
+                        <p>Cooling down & falling back to DOM mode</p>
                       </div>
                     </motion.div>
                   )}
@@ -266,7 +266,7 @@ export function Features() {
             </div>
             <div className="bento-content">
               <h3><AlertTriangle size={20} className="accent-text" /> Self-Healing Error Recovery</h3>
-              <p>Never wake up to a broken queue. If a target site throws a 429 rate limit or network exception, Flow pauses, cools down, rotates proxy endpoints, and resumes without losing your progress.</p>
+              <p>Never wake up to a broken queue. If a rate limit or network error hits, Flow pauses, cools down, switches submit modes, and resumes without losing your progress.</p>
             </div>
           </motion.div>
 
@@ -314,7 +314,7 @@ export function Features() {
             </div>
             <div className="bento-content">
               <h3><FolderDown size={20} className="accent-text" /> Auto-Download & Clean Renaming</h3>
-              <p>Eliminate download exhaustion. Finished media is downloaded instantly and renamed using custom formulas matching your prompt keywords, keeping your output directory perfectly structured.</p>
+              <p>Eliminate download exhaustion. Finished media is downloaded instantly and renamed using custom naming templates - prefix, date, index, or slug - keeping your output directory perfectly structured.</p>
             </div>
           </motion.div>
         </div>

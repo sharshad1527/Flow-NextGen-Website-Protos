@@ -5,7 +5,6 @@ import {
   Pause,
   Check, 
   Settings, 
-  FolderDown, 
   LayoutGrid,
   UserCheck,
   RotateCcw,
@@ -91,6 +90,11 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
       setActiveTab("gallery");
       setQueueStatus("paused");
       setProgressVal(100);
+    } else {
+      // Default/gallery view for any other phase (e.g. phase=3)
+      setActiveTab("gallery");
+      setQueueStatus("paused");
+      setProgressVal(100);
     }
   }, [phase]);
 
@@ -135,7 +139,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
             <span className="ext-title">
               Flow<span className="accent-orange">NextGen</span>
             </span>
-            <span className="ext-version">BY HARSHAD V0.10.0</span>
+            <span className="ext-version">STABLE BUILD</span>
           </div>
         </div>
 
@@ -321,7 +325,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
                   </div>
                   <div className="q-title-text-group">
                     <span className="q-main-title">TASK LEDGER QUEUE</span>
-                    <span className="q-sub-title">FLOW COMPANION V0.10</span>
+                    <span className="q-sub-title">FLOW COMPANION</span>
                   </div>
                 </div>
                 <div className={`paused-badge ${queueStatus === "paused" ? "active" : ""}`}>
@@ -629,12 +633,6 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
                 )}
               </div>
 
-              {/* Bottom Zip CTA */}
-              <button className="gallery-zip-btn glow-emerald">
-                <FolderDown size={12} />
-                <span>DOWNLOAD BATCH ZIP</span>
-              </button>
-
             </motion.div>
           )}
 
@@ -685,7 +683,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
                       <span className="acc-lbl">ACTIVE ACCOUNT</span>
                       <div className="pro-capsule-badge">PRO</div>
                     </div>
-                    <span className="account-email font-mono">dev.sharshad1527@gmail.com</span>
+                    <span className="account-email font-mono">flow.user@flownextgen.io</span>
                   </div>
                 </div>
 

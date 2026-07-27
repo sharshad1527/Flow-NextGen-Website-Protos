@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // --- VERTEX SHADER SOURCE ---
 const vertexShaderSource = `
@@ -75,7 +75,7 @@ vec2 hash22(vec2 p) {
   p = mod(p, 31.0);
 #endif
   float n = sin(dot(p, vec2(41.0, 289.0)));
-  return fract(vec2(15731.743, 7892.321) * n);
+  return fract(vec2(201.0, 7892.321) * n);
 }
 
 float noise(vec2 p) {
@@ -108,26 +108,26 @@ vec3 linearToSrgb(vec3 c) {
     step(0.0031308, c));
 }
 vec3 linToOklab(vec3 c) {
-  float l = 0.4122214708 * c.r + 0.5363325363 * c.g + 0.0514459929 * c.b;
-  float m = 0.2119034982 * c.r + 0.6806995451 * c.g + 0.1073969566 * c.b;
-  float s = 0.0883024619 * c.r + 0.2817188376 * c.g + 0.6299787005 * c.b;
+  float l = 0.4122 * c.r + 0.5363 * c.g + 0.0514 * c.b;
+  float m = 0.2119 * c.r + 0.6807 * c.g + 0.1074 * c.b;
+  float s = 0.0883 * c.r + 0.2818 * c.g + 0.6300 * c.b;
   l = pow(max(l, 0.0), 1.0 / 3.0);
   m = pow(max(m, 0.0), 1.0 / 3.0);
   s = pow(max(s, 0.0), 1.0 / 3.0);
   return vec3(
-    0.2104542553 * l + 0.7936177850 * m - 0.0040720468 * s,
-    1.9779984951 * l - 2.4285922050 * m + 0.4505937099 * s,
-    0.0259040371 * l + 0.7827717662 * m - 0.8086757660 * s);
+    0.2105 * l + 0.7936 * m - 0.0041 * s,
+    1.9780 * l - 2.4286 * m + 0.4506 * s,
+    0.0259 * l + 0.7828 * m - 0.8087 * s);
 }
 vec3 oklabToLin(vec3 c) {
-  float l = c.x + 0.3963377774 * c.y + 0.2158037573 * c.z;
-  float m = c.x - 0.1055613458 * c.y - 0.0638541728 * c.z;
-  float s = c.x - 0.0894841775 * c.y - 1.2914855480 * c.z;
+  float l = c.x + 0.3963 * c.y + 0.2158 * c.z;
+  float m = c.x - 0.1056 * c.y - 0.0639 * c.z;
+  float s = c.x - 0.0895 * c.y - 1.2915 * c.z;
   l = l * l * l; m = m * m * m; s = s * s * s;
   return vec3(
-    4.0767416621 * l - 3.3077115913 * m + 0.2309699292 * s,
-    -1.2684380046 * l + 2.6097574011 * m - 0.3413193965 * s,
-    -0.0041960863 * l - 0.7034186147 * m + 1.7076147010 * s);
+    4.0767 * l - 3.3077 * m + 0.2310 * s,
+    -1.2684 * l + 2.6098 * m - 0.3413 * s,
+    -0.0042 * l - 0.7034 * m + 1.7076 * s);
 }
 vec3 mixColour(vec3 a, vec3 b, float t) {
   if (u_oklab > 0.5) {
@@ -249,7 +249,7 @@ void main() {
   if (abs(u_brightness) > 0.0001)
     col += u_brightness;
   if (u_vignette > 0.0001) {
-    float vd = length(screenUv - 0.5) * 1.41421356;
+    float vd = length(screenUv - 0.5) * 1.4;
     col *= 1.0 - u_vignette * smoothstep(0.35, 1.0, vd);
   }
   if (u_cursorPresence > 0.001 && u_cursorEffect > 3.5)
@@ -297,6 +297,7 @@ export const DriftBackground: React.FC = () => {
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const bufferRef = useRef<WebGLBuffer | null>(null);
+  const [webglFailed, setWebglFailed] = useState(false);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -320,6 +321,7 @@ export const DriftBackground: React.FC = () => {
 
     if (!gl) {
       console.error("WebGL1 not supported for DriftBackground");
+      setWebglFailed(true);
       return;
     }
     glRef.current = gl;
@@ -431,6 +433,21 @@ export const DriftBackground: React.FC = () => {
       }
     };
   }, []);
+
+  if (webglFailed) {
+    return (
+      <div style={{
+        position: "fixed",
+        inset: 0,
+        zIndex: 0,
+        pointerEvents: "none",
+        background:
+          "radial-gradient(ellipse at 80% 20%, rgba(255,107,0,0.08) 0%, transparent 60%), " +
+          "radial-gradient(ellipse at 20% 80%, rgba(0,230,118,0.05) 0%, transparent 50%)",
+        backgroundColor: "#0D0D0D"
+      }} />
+    );
+  }
 
   return (
     <div style={{ position: "fixed", inset: 0, zIndex: 0, pointerEvents: "none", transform: "translate3d(0,0,0)", willChange: "transform" }}>

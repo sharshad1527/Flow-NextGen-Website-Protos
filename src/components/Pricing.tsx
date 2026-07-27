@@ -38,15 +38,15 @@ export function Pricing() {
 
             <ul className="feature-list">
               <li><Check size={16} className="accent-text" /> DOM Simulation Mode</li>
-              <li><Check size={16} className="accent-text" /> Up to 10 prompts per queue</li>
-              <li><Check size={16} className="accent-text" /> Basic Gallery Management</li>
-              <li className="disabled-feature"><X size={16} /> API-First Acceleration</li>
-              <li className="disabled-feature"><X size={16} /> Self-Healing Cooldown Loop</li>
-              <li className="disabled-feature"><X size={16} /> Unlimited Batching</li>
-              <li className="disabled-feature"><X size={16} /> Priority Support</li>
+              <li><Check size={16} className="accent-text" /> 30 prompts per 6 hours</li>
+              <li><Check size={16} className="accent-text" /> Basic Gallery</li>
+              <li className="disabled-feature"><X size={16} /> API-First Generation</li>
+              <li className="disabled-feature"><X size={16} /> Auto-Download & Smart Naming</li>
+              <li className="disabled-feature"><X size={16} /> Unlimited Queue</li>
+              <li className="disabled-feature"><X size={16} /> 4K Upscale & Downloads</li>
             </ul>
 
-            <button className="button-secondary full-width">Start Free Trial</button>
+            <button className="button-secondary full-width">Get Started Free</button>
           </motion.div>
 
           {/* Pro Tier */}
@@ -69,11 +69,11 @@ export function Pricing() {
             <div className="divider"></div>
 
             <ul className="feature-list">
-              <li><Check size={16} className="success-text" /> API Mode & DOM Simulation Toggle</li>
-              <li><Check size={16} className="success-text" /> Unlimited Background Queues</li>
-              <li><Check size={16} className="success-text" /> Self-Healing Cooldown (Zero failed runs)</li>
-              <li><Check size={16} className="success-text" /> Instant Auto-Download & Renaming</li>
-              <li><Check size={16} className="success-text" /> Advanced Gallery & Metadata Export</li>
+              <li><Check size={16} className="success-text" /> API Mode + DOM auto-fallback</li>
+              <li><Check size={16} className="success-text" /> Unlimited Queue</li>
+              <li><Check size={16} className="success-text" /> Auto-Download & Smart Naming</li>
+              <li><Check size={16} className="success-text" /> 2K/4K Upscale & Downloads</li>
+              <li><Check size={16} className="success-text" /> Advanced Gallery & Metadata</li>
               <li><Check size={16} className="success-text" /> Scene Builder access</li>
               <li><Check size={16} className="success-text" /> Priority Developer Support</li>
             </ul>

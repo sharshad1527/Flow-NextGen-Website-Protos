@@ -25,7 +25,6 @@ export function Footer() {
             <div className="link-group">
               <h4>Resources</h4>
               <a href="#how-it-works">How It Works</a>
-              <a href="#">Support Hub</a>
             </div>
             <div className="link-group">
               <h4>Legal</h4>

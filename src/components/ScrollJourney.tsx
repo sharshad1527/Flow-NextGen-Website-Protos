@@ -6,8 +6,7 @@ import {
   useSpring,
   AnimatePresence,
 } from "motion/react";
-import { ArrowRight, FolderDown } from "lucide-react";
-import { ShinyButton } from "./ShinyButton";
+import { FolderDown } from "lucide-react";
 import { ExtensionMockup } from "./ExtensionMockup";
 import "./ScrollJourney.css";
 
@@ -57,7 +56,8 @@ function LogoIntroCanvas() {
       let groupRot = 0;
       let l_tx = 0, l_ty = 0, l_sx = 1, l_sy = 1;
       let r_tx = 0, r_ty = 0, r_sx = 1, r_sy = 1;
-      let m_tx = 0, m_ty = 0, m_sx = 1, m_sy = 1, m_op = 1;
+      const m_tx = 0;
+      let m_ty = 0, m_sx = 1, m_sy = 1, m_op = 1;
       let txt_op = 0, txt_s = 0.5, txt_y = 10;
 
       if (progress < 0.15) {
@@ -284,7 +284,7 @@ function LogoIntroOverlay() {
         exit={{
           scale: 1.2,
           opacity: 0,
-          transition: { duration: 0.5, ease: "easeIn" },
+          transition: { duration: 0.5, ease: [0.4, 0, 0.2, 1] },
         }}
       >
         <LogoIntroCanvas />
@@ -366,7 +366,7 @@ export function ScrollJourney() {
   // Reset scroll position on refresh
   useEffect(() => {
     if ("scrollRestoration" in window.history) {
-      window.history.scrollRestoration = "manual";
+      // Let the browser manage scroll restoration
     }
     window.scrollTo(0, 0);
   }, []);
@@ -483,7 +483,11 @@ export function ScrollJourney() {
             {/* Ambient orange volumetric flare background */}
             <div className="hero-ambient-glow" />
 
-            <div className="hero-text-frame glass-panel">
+            <div 
+              className="hero-text-frame glass-panel" 
+              onClick={() => window.scrollTo({ top: window.innerHeight * 2.7, behavior: 'smooth' })}
+              style={{ cursor: 'pointer' }}
+            >
               <motion.div className="hero-eyebrow" variants={itemVariants} style={{ opacity: 1 }}>
                 <span className="hero-eyebrow-dot" />
                 Chrome Extension · Google Flow
@@ -492,38 +496,52 @@ export function ScrollJourney() {
               <motion.h1 className="hero-headline" variants={itemVariants}>
                 <span className="title-row text-light-gradient">You Slept.</span>
                 <span className="title-row text-light-gradient">Flow Ran.</span>
-                <span className="title-row text-accent-gradient">127 Prompts.</span>
+                <span className="title-row text-accent-gradient">143 Prompts.</span>
               </motion.h1>
 
               <motion.p className="hero-subtext" variants={itemVariants}>
                 Every prompt you run manually is time you're not creating.
-                <strong> Flow NextGen takes over your entire queue</strong> — imports,
-                runs, retries, downloads — while you sleep, work, or just live your life.
+                <strong> Flow NextGen takes over your entire queue</strong> while you sleep, work, or just live your life.
               </motion.p>
 
               <motion.div className="hero-cta-row" variants={itemVariants}>
-                <ShinyButton>
-                  Start Your First Queue Free <ArrowRight size={16} />
-                </ShinyButton>
-                <a href="#how-it-works" className="button-secondary glass-card" style={{ cursor: "pointer" }}>
-                  Watch It Run
+                <a
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-primary shiny-button-lg"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.9rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #FF6B00, #FF5100)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    boxShadow: '0 8px 32px rgba(255, 107, 0, 0.35), 0 0 0 1px rgba(255, 107, 0, 0.3)',
+                    transition: 'all 0.3s ease'
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-2px)';
+                    e.currentTarget.style.boxShadow = '0 12px 40px rgba(255, 107, 0, 0.5)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0)';
+                    e.currentTarget.style.boxShadow = '0 8px 32px rgba(255, 107, 0, 0.35), 0 0 0 1px rgba(255, 107, 0, 0.3)';
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Install Extension - Free
                 </a>
               </motion.div>
 
-              <motion.div className="hero-stat-strip" variants={itemVariants}>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">127+</span>
-                  <span className="hero-stat-label">Prompts per run</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">0</span>
-                  <span className="hero-stat-label">Clicks required</span>
-                </div>
-                <div className="hero-stat">
-                  <span className="hero-stat-num">98%</span>
-                  <span className="hero-stat-label">Queue success rate</span>
-                </div>
-              </motion.div>
             </div>
           </motion.div>
 
@@ -601,13 +619,13 @@ export function ScrollJourney() {
               </h2>
 
               <p className="results-subtext">
-                127 generations. Zero babysitting. Every file downloaded, sorted,
+                143 generations. Zero babysitting. Every file downloaded, sorted,
                 and named. This is what AI automation is supposed to feel like.
               </p>
 
               <div className="results-stats-grid">
                 <div className="result-stat-card highlight">
-                  <span className="result-stat-value green">127</span>
+                  <span className="result-stat-value green">143</span>
                   <span className="result-stat-label">Assets generated</span>
                 </div>
                 <div className="result-stat-card">
@@ -615,7 +633,7 @@ export function ScrollJourney() {
                   <span className="result-stat-label">Queue success</span>
                 </div>
                 <div className="result-stat-card">
-                  <span className="result-stat-value">18.4s</span>
+                  <span className="result-stat-value">36.2s</span>
                   <span className="result-stat-label">Avg generation</span>
                 </div>
                 <div className="result-stat-card">
@@ -628,10 +646,7 @@ export function ScrollJourney() {
               <div className="image-results-showcase">
                 <div className="showcase-header">
                   <span className="folder-label">OUTPUTS (Downloads/Flow-NextGen/)</span>
-                  <button className="download-all-btn glass-card" style={{ cursor: "pointer" }}>
-                    <FolderDown size={11} />
-                    <span>Zip All</span>
-                  </button>
+
                 </div>
                 <div className="image-showcase-grid">
                   {[
@@ -663,23 +678,6 @@ export function ScrollJourney() {
             ))}
           </div>
 
-          {/* ---- Scroll Cue — shows after intro exits ---- */}
-          <AnimatePresence>
-            {phase === 0 && !showIntro && (
-              <motion.div
-                className="scroll-cue"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{ delay: 0.6 }}
-              >
-                <span className="scroll-cue-label">Scroll</span>
-                <div className="scroll-cue-arrow">
-                  <div className="scroll-cue-dot" />
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
         </div>
       </div>
     </>

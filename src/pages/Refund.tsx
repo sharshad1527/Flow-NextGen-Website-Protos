@@ -10,15 +10,15 @@ export function Refund() {
 
         <section>
           <h2>The Short Version</h2>
-          <p>Try the free tier first. It's not a trial — it's a fully working extension with a daily limit of 30 prompts. If Pro works for you, great. If not, you have 14 days to ask for your money back on the first payment. After that, refunds are only where required by law.</p>
+          <p>Try the free tier first. It's not a trial - it's a fully working extension with a daily limit of 30 prompts. If Pro works for you, great. If not, you have 14 days to ask for your money back on the first payment. After that, refunds are only where required by law.</p>
         </section>
 
         <section>
           <h2>14-Day Window (First Subscription Only)</h2>
-          <p>If you're in the EU, EEA, Switzerland, or the UK, you have a statutory right to cancel within 14 days of your first Pro payment. We extend this to everyone — if you request a refund within 14 days of your first payment, we'll process it.</p>
+          <p>If you're in the EU, EEA, Switzerland, or the UK, you have a statutory right to cancel within 14 days of your first Pro payment. We extend this to everyone - if you request a refund within 14 days of your first payment, we'll process it.</p>
           <p>This only applies to the <strong>first</strong> payment. Subsequent renewals are non-refundable.</p>
           <div className="legal-highlight">
-            <p>When you purchase Pro, you agree that access starts immediately. If you're in the EU/UK, you acknowledge you're waiving your withdrawal right by starting the service right away. If you don't agree, don't complete the purchase — the free tier is always available.</p>
+            <p>When you purchase Pro, you agree that access starts immediately. If you're in the EU/UK, you acknowledge you're waiving your withdrawal right by starting the service right away. If you don't agree, don't complete the purchase - the free tier is always available.</p>
           </div>
         </section>
 
@@ -29,7 +29,7 @@ export function Refund() {
 
         <section>
           <h2>Cancellation</h2>
-          <p>You can cancel anytime. You keep Pro access until the end of your billing period — no interruption. No partial refunds for unused days. After the period ends, you're back on the free tier.</p>
+          <p>You can cancel anytime. You keep Pro access until the end of your billing period - no interruption. No partial refunds for unused days. After the period ends, you're back on the free tier.</p>
         </section>
 
         <section>

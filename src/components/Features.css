@@ -178,7 +178,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.2s;
+  transition: background 0.2s, color 0.2s;
 }
 
 .reorder-btn:hover:not(:disabled) {
@@ -218,7 +218,7 @@
   padding: 0.5rem;
   border-radius: 6px;
   color: var(--text-muted);
-  transition: all 0.2s;
+  transition: color 0.2s, background 0.2s, box-shadow 0.2s;
   text-align: center;
 }
 
@@ -377,7 +377,7 @@
   align-items: center;
   gap: 6px;
   box-shadow: 0 4px 12px rgba(255, 107, 0, 0.3);
-  transition: all 0.2s;
+  transition: filter 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .heal-action-btn:hover {
@@ -438,7 +438,7 @@
   font-size: 0.75rem;
   font-weight: 700;
   padding: 0.6rem 1.2rem;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .download-trigger-btn:disabled {
