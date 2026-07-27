@@ -9,6 +9,7 @@ import { BgPlayground } from "./pages/BgPlayground";
 import { Privacy } from "./pages/Privacy";
 import { Terms } from "./pages/Terms";
 import { Refund } from "./pages/Refund";
+import { Guide } from "./pages/Guide";
 import { ScrollToTop } from "./components/ScrollToTop";
 import "./App.css";
 
@@ -46,6 +47,7 @@ function AppContent() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/refund" element={<Refund />} />
+          <Route path="/guide" element={<Guide />} />
         </Routes>
         {showHeaderFooter && <Footer />}
       </div>

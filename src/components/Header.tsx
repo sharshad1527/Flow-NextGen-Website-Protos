@@ -65,6 +65,7 @@ export function Header() {
           <Link to="/pricing">Pricing</Link>
           <a href="/#how-it-works">How it Works</a>
           <a href="/#faq">FAQ</a>
+          <Link to="/guide">Guide</Link>
           <a href="#">Review</a>
         </nav>
 

@@ -1,0 +1,314 @@
+.guide-page {
+  min-height: 100vh;
+  padding: 8rem 1.5rem 4rem;
+  background: var(--bg);
+}
+
+.guide-container {
+  max-width: 900px;
+  margin: 0 auto;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1.5rem;
+  padding: 3rem;
+}
+
+.guide-container h1 {
+  font-size: clamp(1.75rem, 2.5vw, 2.5rem);
+  font-weight: 800;
+  color: var(--text-high);
+  margin-bottom: 0.25rem;
+}
+
+.guide-container .guide-subtitle {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-bottom: 2.5rem;
+  font-style: italic;
+}
+
+/* Table of Contents */
+.guide-toc {
+  background: rgba(255, 107, 0, 0.04);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.guide-toc h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 0 0 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.guide-toc ol {
+  padding-left: 1.25rem;
+  margin: 0;
+  columns: 2;
+  column-gap: 2rem;
+}
+
+.guide-toc li {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  line-height: 1.9;
+  break-inside: avoid;
+}
+
+.guide-toc li a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.guide-toc li a:hover {
+  opacity: 0.8;
+  text-decoration: underline;
+}
+
+.guide-toc li a::before {
+  content: "→ ";
+  opacity: 0.5;
+}
+
+/* Section Divider */
+.guide-divider {
+  border: none;
+  border-top: 1px solid var(--border);
+  margin: 2.5rem 0;
+  opacity: 0.5;
+}
+
+/* Sections */
+.guide-container section {
+  margin-bottom: 2rem;
+}
+
+.guide-container h2 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text-high);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.guide-container h3 {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--text-high);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.guide-container h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 1.25rem 0 0.5rem;
+}
+
+.guide-container p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 0.75rem;
+}
+
+.guide-container strong {
+  color: var(--text-high);
+  font-weight: 600;
+}
+
+.guide-container a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.guide-container a:hover {
+  text-decoration: underline;
+}
+
+/* Tables */
+.guide-table-wrapper {
+  overflow-x: auto;
+  margin: 1.25rem 0;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.guide-container table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  min-width: 500px;
+}
+
+.guide-container thead {
+  background: rgba(255, 107, 0, 0.08);
+}
+
+.guide-container th {
+  color: var(--text-high);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.guide-container td {
+  color: var(--text-muted);
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+  line-height: 1.55;
+}
+
+.guide-container tr:last-child td {
+  border-bottom: none;
+}
+
+.guide-container tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Lists */
+.guide-container ul,
+.guide-container ol {
+  padding-left: 1.5rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.guide-container li {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  line-height: 1.75;
+  margin-bottom: 0.25rem;
+}
+
+.guide-container li strong {
+  color: var(--text-high);
+}
+
+/* Inline code */
+.guide-container code {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ff9a5c;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+/* Block code */
+.guide-container pre {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  padding: 1rem 1.25rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
+.guide-container pre code {
+  background: none;
+  color: var(--text-muted);
+  padding: 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  white-space: pre;
+}
+
+/* Blockquote */
+.guide-container blockquote {
+  border-left: 3px solid var(--accent);
+  background: rgba(255, 107, 0, 0.05);
+  padding: 0.75rem 1.25rem;
+  margin: 1rem 0;
+  border-radius: 0 0.75rem 0.75rem 0;
+}
+
+.guide-container blockquote p {
+  color: var(--text-high);
+  margin-bottom: 0;
+  font-size: 0.92rem;
+}
+
+/* Highlight callout matching legal page pattern */
+.guide-highlight {
+  background: rgba(255, 107, 0, 0.08);
+  border-left: 3px solid var(--accent);
+  padding: 1rem 1.5rem;
+  border-radius: 0 0.75rem 0.75rem 0;
+  margin: 1.5rem 0;
+}
+
+.guide-highlight p {
+  color: var(--text-high);
+  margin-bottom: 0;
+}
+
+/* Feature badges */
+.guide-badge {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.78rem;
+  font-weight: 600;
+}
+
+.guide-badge.pro {
+  background: rgba(255, 107, 0, 0.2);
+  color: var(--accent);
+}
+
+.guide-badge.free {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-muted);
+}
+
+.guide-nav-links {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 3rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.guide-nav-links a {
+  color: var(--accent);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* -- screenshot suggestion boxes -- */
+.guide-screenshot {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed var(--border);
+  border-radius: 0.75rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.guide-screenshot strong {
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+
+@media (max-width: 700px) {
+  .guide-container {
+    padding: 1.5rem;
+  }
+  .guide-page {
+    padding: 6rem 1rem 3rem;
+  }
+  .guide-toc ol {
+    columns: 1;
+  }
+}
