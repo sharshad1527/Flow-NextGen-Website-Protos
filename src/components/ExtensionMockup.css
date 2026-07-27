@@ -1114,22 +1114,18 @@
 .gallery-media-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 1fr 1fr;
   gap: 8px;
-  max-height: 140px;
-  overflow-y: auto;
+  flex: 1;
+  min-height: 0;
 }
 
 .gallery-item-wrapper {
   position: relative;
-  aspect-ratio: 1.1;
   border-radius: 8px;
   overflow: hidden;
   border: 1px solid #222222;
   background: #141414;
-}
-
-.gallery-item-wrapper.video-item {
-  aspect-ratio: 1.5; /* wider video box matching screenshots */
 }
 
 .gallery-img {

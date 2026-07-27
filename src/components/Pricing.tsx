@@ -77,7 +77,7 @@ export function Pricing() {
               <li><Check size={16} className="success-text" /> Discord Community Access</li>
             </ul>
 
-            <button className="button-primary full-width btn-glow">Unlock Autopilot Generation</button>
+            <a href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond" target="_blank" rel="noopener noreferrer" className="button-primary full-width btn-glow" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>Get Extension — Free</a>
           </motion.div>
         </div>
       </div>
