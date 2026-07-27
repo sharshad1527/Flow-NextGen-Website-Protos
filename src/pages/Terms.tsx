@@ -1,9 +1,15 @@
+import { SEO } from "../components/SEO";
 import { Link } from "react-router-dom";
 import "./Legal.css";
 
 export function Terms() {
   return (
     <div className="legal-page">
+      <SEO
+        title="Terms of Service"
+        description="Flow NextGen terms of service — conditions for using our Chrome extension and subscription service."
+        canonicalPath="/terms"
+      />
       <div className="legal-container">
         <h1>Terms of Service</h1>
         <p className="legal-date">Last updated: July 26, 2026</p>

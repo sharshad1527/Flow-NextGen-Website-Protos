@@ -1,9 +1,15 @@
+import { SEO } from "../components/SEO";
 import { Link } from "react-router-dom";
 import "./Legal.css";
 
 export function Refund() {
   return (
     <div className="legal-page">
+      <SEO
+        title="Refund Policy"
+        description="Flow NextGen refund policy — 30-day refund window for first-time subscribers and cancellation terms."
+        canonicalPath="/refund"
+      />
       <div className="legal-container">
         <h1>Refund Policy</h1>
         <p className="legal-date">Last updated: July 26, 2026</p>

@@ -1,9 +1,15 @@
+import { SEO } from "../components/SEO";
 import { Link } from "react-router-dom";
 import "./Legal.css";
 
 export function Privacy() {
   return (
     <div className="legal-page">
+      <SEO
+        title="Privacy Policy"
+        description="Flow NextGen privacy policy — how we collect, use, and protect your data when using our Chrome extension."
+        canonicalPath="/privacy"
+      />
       <div className="legal-container">
         <h1>Privacy Policy</h1>
         <p className="legal-date">Last updated: July 26, 2026</p>

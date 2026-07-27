@@ -11,7 +11,7 @@ import "./App.css";
 // Lazy-loaded pages for code-splitting — each page chunk loads only when navigated to
 const Home = lazy(() => import("./pages/Home").then((m) => ({ default: m.Home })));
 const PricingPage = lazy(() => import("./pages/PricingPage").then((m) => ({ default: m.PricingPage })));
-const BgPlayground = lazy(() => import("./pages/BgPlayground").then((m) => ({ default: m.BgPlayground })));
+const BgPlayground = lazy(() => import("./pages/BgPlayground"));
 const Privacy = lazy(() => import("./pages/Privacy").then((m) => ({ default: m.Privacy })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const Refund = lazy(() => import("./pages/Refund").then((m) => ({ default: m.Refund })));

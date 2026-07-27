@@ -1,9 +1,15 @@
+import { SEO } from "../components/SEO";
 import { Link } from "react-router-dom";
 import "./Guide.css";
 
 export function Guide() {
   return (
     <div className="guide-page">
+      <SEO
+        title="Complete User Guide — All Modes & Features"
+        description="Learn how to use all 4 generation modes (Text-to-Image, Text-to-Video, Frame-to-Video, Ingredients-to-Video) in Flow NextGen."
+        canonicalPath="/guide"
+      />
       <div className="guide-container">
         <h1>Flow NextGen Guide</h1>
         <p className="guide-subtitle">Based on source code analysis of Version 0.10 (July 2026).</p>
@@ -498,80 +504,6 @@ export function Guide() {
               </tbody>
             </table>
           </div>
-
-          <h3>Downloads Tab</h3>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Setting</th><th>Description</th><th>Options</th><th>Default</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Download Folder Root</strong></td><td>Base folder name for saving files</td><td>Text input</td><td>"Flow-NextGen"</td></tr>
-                <tr><td><strong>Auto-Number Folder</strong></td><td>Append number to avoid overwrites</td><td>ON/OFF</td><td>OFF</td></tr>
-                <tr><td><strong>Video Resolution</strong></td><td>Quality for video downloads</td><td>270p GIF, 720p HD, 1080p Full HD, 4K Ultra</td><td>720p</td></tr>
-                <tr><td><strong>Image Resolution</strong></td><td>Quality for image downloads</td><td>1K Standard, 2K High, 4K Ultra</td><td>1K</td></tr>
-                <tr><td><strong>Naming Template Style</strong></td><td>How to name saved files</td><td>Detailed Template, Prompt Prefix, Flow NextGen Default, Custom Pattern</td><td>Detailed</td></tr>
-                <tr><td><strong>Auto Download Videos</strong></td><td>Save videos automatically</td><td>ON/OFF</td><td>ON</td></tr>
-                <tr><td><strong>Auto Download Images</strong></td><td>Save images automatically</td><td>ON/OFF</td><td>ON</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <h4>Custom Template <span style={{ color: "var(--text-muted)", fontWeight: 400, fontSize: "0.85rem" }}>(when "Custom Pattern" is selected)</span></h4>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Sub-setting</th><th>Description</th><th>Options</th><th>Default</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Prefix String</strong></td><td>Custom text at start of filename</td><td>Text input</td><td>""</td></tr>
-                <tr><td><strong>Separator</strong></td><td>Character between name parts</td><td>Underscore (_), Hyphen (-)</td><td>Underscore</td></tr>
-                <tr><td><strong>Index Pad</strong></td><td>Number padding for sequence</td><td>None, 1/2/3 (n), 01/02/03 (nn), 001/002/003 (nnn)</td><td>nn</td></tr>
-                <tr><td><strong>Prompt Length</strong></td><td>How much of the prompt to include</td><td>None, First Word, First 3 Words, 8-Char Slug</td><td>First 3 Words</td></tr>
-                <tr><td><strong>Date Stamp</strong></td><td>Date/time suffix</td><td>None, YYYYMMDD, YYMMDD_HHMM</td><td>None</td></tr>
-                <tr><td><strong>Random Salt</strong></td><td>Random characters at end</td><td>None, 4-Char, 8-Char</td><td>None</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p>A live preview shows the generated filename as you adjust settings.</p>
-          <blockquote>
-            <p><strong>Free tier limits:</strong> Free users can only select 720p/270p for video and 1K for image downloads. Higher resolutions require Pro.</p>
-          </blockquote>
-
-          <h3>System Tab</h3>
-          <p>Shows live diagnostics and maintenance tools.</p>
-          <p><strong>Diagnostics table:</strong></p>
-          <ul>
-            <li>Bridge status (Connected/Ready/Disconnected)</li>
-            <li>Bridge Healthy (Yes/No)</li>
-            <li>Bridge Version</li>
-            <li>Page Hook Version</li>
-            <li>Page Hook Installed</li>
-            <li>Native Fetch (Yes/No)</li>
-            <li>Active Tab ID</li>
-            <li>Page URL</li>
-            <li>Page Title</li>
-            <li>Last Sync time</li>
-            <li>Project ID</li>
-            <li>Extension Version</li>
-          </ul>
-          <p><strong>Maintenance Utilities:</strong></p>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Button</th><th>What it does</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Clear Cache</strong></td><td>Wipes local storage and cached files</td></tr>
-                <tr><td><strong>Clear Ref Cache</strong></td><td>Clears reference image registry</td></tr>
-                <tr><td><strong>Clear Local Device Library</strong></td><td>Deletes all local device references</td></tr>
-                <tr><td><strong>Clear Cookies</strong></td><td>Removes Flow session cookies (keeps Google login)</td></tr>
-                <tr><td><strong>Bypass Reload</strong></td><td>Force-reloads the active Flow project tab</td></tr>
-                <tr><td><strong>Reset Session</strong></td><td>Hard reset of all local Flow data</td></tr>
-              </tbody>
-            </table>
-          </div>
-          <p><strong>Version History:</strong> Shows installed versions with changelogs.</p>
-
-          <h3>Debugger Tab</h3>
-          <p>
-            A live <strong>Chrome DevTools Protocol (CDP) trace stream</strong> for debugging the bridge connection.
-            Shows raw messages between the extension and the Flow page.
-          </p>
         </section>
 
         <hr className="guide-divider" />
@@ -579,100 +511,30 @@ export function Guide() {
         {/* ============================================ BILLING ============================================ */}
         <section id="billing">
           <h2>8. Billing &amp; Tiers</h2>
-
-          <h3>Free Plan</h3>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Feature</th><th>Detail</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Cost</strong></td><td>$0</td></tr>
-                <tr><td><strong>Prompt limit</strong></td><td>30 prompts per day</td></tr>
-                <tr><td><strong>Quota reset</strong></td><td>Daily at 06:00 UTC</td></tr>
-                <tr><td><strong>Available modes</strong></td><td>All 4 modes (T2I, T2V, I2V, Ingredients)</td></tr>
-                <tr><td><strong>Submit route</strong></td><td>DOM (Simulated Clicks)</td></tr>
-                <tr><td><strong>Download resolution</strong></td><td>Images: 1K max. Videos: 720p/270p max</td></tr>
-                <tr><td><strong>Upscale</strong></td><td>❌ Not available</td></tr>
-                <tr><td><strong>4K downloads</strong></td><td>❌ Not available</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p><strong>How quota works:</strong></p>
+          <p><strong>Free Tier:</strong></p>
           <ul>
-            <li>30 prompts per day (resets at 06:00 UTC).</li>
-            <li>The Control view shows a quota bar with used/total.</li>
-            <li>At 75% usage, a soft warning toast appears.</li>
-            <li>If you try to launch more prompts than remaining, an upgrade modal blocks the launch.</li>
-            <li>Pro users see "Unlimited" and have no quota checks.</li>
+            <li>30 generations per day (resets at 06:00 UTC)</li>
+            <li>Core automation features</li>
+            <li>Standard download resolution</li>
           </ul>
-
-          <h3>Pro Plan ($9.99/month)</h3>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Feature</th><th>Detail</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Cost</strong></td><td>$9.99/month (via Paddle)</td></tr>
-                <tr><td><strong>Prompt limit</strong></td><td>Unlimited</td></tr>
-                <tr><td><strong>Submit route</strong></td><td>API (Direct Fetch) — faster, more reliable</td></tr>
-                <tr><td><strong>Download resolution</strong></td><td>All options including 4K</td></tr>
-                <tr><td><strong>Upscale capability</strong></td><td>✅ Videos: 720p, 1080p, 4K. Images: 1K, 2K, 4K</td></tr>
-                <tr><td><strong>4K downloads</strong></td><td>✅ Available (50 credits for 4K video)</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p><strong>How to upgrade:</strong></p>
-          <ol>
-            <li>Go to Settings &gt; Account tab.</li>
-            <li>Tap <strong>Upgrade to Pro Plan</strong>.</li>
-            <li>Complete the Paddle checkout in the opened tab.</li>
-            <li>The extension polls for tier change (up to 2 minutes) and automatically refreshes.</li>
-          </ol>
-
-          <p><strong>Subscription management:</strong></p>
+          <p><strong>Pro Tier ($9/month):</strong></p>
           <ul>
-            <li>Pro users see a <strong>Manage Subscription</strong> button that opens the Paddle customer portal.</li>
-            <li>Past due accounts have a 72-hour grace period before access is revoked.</li>
-            <li>You can cancel, change payment method, or view renewal date from the portal.</li>
+            <li>Unlimited generation</li>
+            <li>Priority queue scheduling</li>
+            <li>Upscaling to 4K</li>
+            <li>Higher download resolutions</li>
           </ul>
-
-          <h3>Plan Comparison Table</h3>
-          <div className="guide-table-wrapper">
-            <table>
-              <thead><tr><th>Capability</th><th>Free</th><th>Pro ($9.99/mo)</th></tr></thead>
-              <tbody>
-                <tr><td><strong>Generations</strong></td><td>30 prompts / day</td><td>Unlimited</td></tr>
-                <tr><td><strong>All 4 modes</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>API submit route</strong></td><td>❌ (DOM only)</td><td>✅</td></tr>
-                <tr><td><strong>1K images / 720p video</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>1080p video</strong></td><td>❌</td><td>✅</td></tr>
-                <tr><td><strong>4K downloads</strong></td><td>❌</td><td>✅ (50 credits)</td></tr>
-                <tr><td><strong>Upscale</strong></td><td>❌</td><td>✅</td></tr>
-                <tr><td><strong>Reference images</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>Autopilot T2I→F2V</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>Auto-download</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>Custom filename templates</strong></td><td>✅</td><td>✅</td></tr>
-                <tr><td><strong>Queue management</strong></td><td>✅</td><td>✅</td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <hr className="guide-divider" />
-
-          <div className="guide-highlight">
-            <p><strong>Not affiliated with Google.</strong> Flow NextGen is an independent Chrome extension. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The Pro subscription covers this extension's automation features only — you still need your own Google account and access to Google Flow. Google Flow's own Pro/Ultra tiers are separate and unaffected.</p>
-          </div>
-
-          <div className="guide-highlight">
-            <p><strong>Note on disabled features:</strong> The Character @handle system is disabled in the current UI (re-enabled pending a future release). Auto Flow Packet import starts collapsed by default but is fully functional — tap the toggle to import packet JSON. Everything described above works in the current extension version.</p>
-          </div>
+          <p>See <Link to="/pricing">Pricing Page</Link> for current details.</p>
         </section>
 
-        {/* Bottom Nav */}
-        <div className="guide-nav-links">
-          <Link to="/">← Home</Link>
-          <Link to="/pricing">Pricing</Link>
-          <Link to="/privacy">Privacy Policy</Link>
+        <hr className="guide-divider" />
+
+        <div className="guide-footer">
+          <p>
+            <Link to="/">Home</Link> · <Link to="/pricing">Pricing</Link> ·{" "}
+            <Link to="/privacy">Privacy</Link> · <Link to="/terms">Terms</Link> ·{" "}
+            <Link to="/refund">Refund</Link>
+          </p>
         </div>
       </div>
     </div>
