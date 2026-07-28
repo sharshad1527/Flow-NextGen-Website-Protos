@@ -4,7 +4,7 @@ import { fileURLToPath } from 'url'
 import Sitemap from 'vite-plugin-sitemap'
 import { VitePWA } from 'vite-plugin-pwa'
 
-const dynamicRoutes = ['/', '/pricing', '/guide', '/privacy', '/terms', '/refund']
+const dynamicRoutes = ['/pricing', '/guide', '/privacy', '/terms', '/refund']
 
 // https://vite.dev/config/
 export default defineConfig({
