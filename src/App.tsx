@@ -17,6 +17,7 @@ const Privacy = lazy(() => import("./pages/Privacy").then((m) => ({ default: m.P
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const Refund = lazy(() => import("./pages/Refund").then((m) => ({ default: m.Refund })));
 const Guide = lazy(() => import("./pages/Guide").then((m) => ({ default: m.Guide })));
+const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 function AppContent() {
   const location = useLocation();
@@ -76,6 +77,7 @@ function AppContent() {
             <Route path="/terms" element={<Terms />} />
             <Route path="/refund" element={<Refund />} />
             <Route path="/guide" element={<Guide />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
         {showHeaderFooter && <Footer />}

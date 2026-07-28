@@ -1,0 +1,53 @@
+.not-found-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.not-found-container {
+  max-width: 500px;
+}
+
+.not-found-code {
+  font-size: clamp(6rem, 15vw, 10rem);
+  font-weight: 900;
+  background: linear-gradient(135deg, #FF6B00, #FF8A00);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+  margin-bottom: 1rem;
+}
+
+.not-found-title {
+  font-size: clamp(1.5rem, 4vw, 2rem);
+  color: #F5F5F5;
+  margin-bottom: 1rem;
+}
+
+.not-found-text {
+  color: #808080;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
+
+.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 2rem;
+  background: #FF6B00;
+  color: #F5F5F5;
+  border-radius: 8px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.not-found-link:hover {
+  opacity: 0.85;
+}
