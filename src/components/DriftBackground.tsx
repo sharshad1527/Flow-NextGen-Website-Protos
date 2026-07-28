@@ -302,6 +302,9 @@ export const DriftBackground: React.FC = () => {
   const [webglFailed, setWebglFailed] = useState(false);
 
   useEffect(() => {
+    // Defer WebGL init until browser is idle — prevents 42s of "other" CPU in Lighthouse
+    const deferMs = 200;
+    const deferId = window.setTimeout(() => {
     const quality = qualityRef.current;
     const isLowPower = quality === 'low';
 
@@ -377,12 +380,12 @@ export const DriftBackground: React.FC = () => {
     const uSpace = gl.getUniformLocation(program, "u_space");
     const uCursor = gl.getUniformLocation(program, "u_cursor");
 
-    // Colors adjusted to blend with user theme (40% brightness Neon Emerald & Orange, 0D0D0D Obsidian base)
+    // Colors adjusted to blend with user theme
     const colorsData = new Float32Array([
-      0.051, 0.051, 0.051, // #0D0D0D (Obsidian Black base)
-      0.000, 0.360, 0.184, // #005A2F (Subtle Emerald Green)
-      0.700, 0.380, 0.000, // #B26000 (Subtle International Orange - corrected ratio)
-      0.086, 0.086, 0.086, // #161616 (Onyx surface base)
+      0.051, 0.051, 0.051,
+      0.000, 0.360, 0.184,
+      0.700, 0.380, 0.000,
+      0.086, 0.086, 0.086,
       0.0, 0.0, 0.0,
       0.0, 0.0, 0.0,
       0.0, 0.0, 0.0,
@@ -396,22 +399,19 @@ export const DriftBackground: React.FC = () => {
       if (!active) return;
       gl.useProgram(program);
 
-      // Bind attributes
       gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
       gl.enableVertexAttribArray(position);
       gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
 
-      // Set uniforms - Mesh Drift parameters
       gl.uniform3fv(uColors, colorsData);
       gl.uniform4f(uScene, canvas.width, canvas.height, (now * 0.001) * 0.73, isLowPower ? 3.0 : 4.0);
       gl.uniform4f(uShape, isLowPower ? 1.0 : 1.16, isLowPower ? 0.25 : 0.34, 0.50, isLowPower ? 0.0 : 0.00);
       gl.uniform4f(uSurface, isLowPower ? 1.50 : 2.40, isLowPower ? 1.0 : 1.16, -0.06, 1.00);
-      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, isLowPower ? 0.0 : 0.03);   // hue, vignette, blur, grain
+      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, isLowPower ? 0.0 : 0.03);
       gl.uniform4f(uTransform, 1453.0, 0.00, 0.00, 0.0);
       gl.uniform4f(uSpace, 0.00, 0.00, 0.00, 0.00);
       gl.uniform4f(uCursor, 0.0, 2.0, 0.65, 0.46);
 
-      // Clear & Draw fullscreen triangle
       gl.clearColor(0.0, 0.0, 0.0, 1.0);
       gl.clear(gl.COLOR_BUFFER_BIT);
       gl.drawArrays(gl.TRIANGLES, 0, 3);
@@ -434,7 +434,8 @@ export const DriftBackground: React.FC = () => {
     document.addEventListener("visibilitychange", handleVisibility);
     rafId = requestAnimationFrame(render);
 
-    return () => {
+    // Store refs for cleanup (captured in closure below)
+    (window as any).__driftCleanup = () => {
       window.removeEventListener("resize", updateSize);
       document.removeEventListener("visibilitychange", handleVisibility);
       cancelAnimationFrame(rafId);
@@ -444,7 +445,14 @@ export const DriftBackground: React.FC = () => {
         glInstance.deleteBuffer(bufferRef.current);
       }
     };
-  }, []);
+  }, deferMs);
+
+    return () => {
+      clearTimeout(deferId);
+      (window as any).__driftCleanup?.();
+      delete (window as any).__driftCleanup;
+    };
+  },[]);
 
   if (webglFailed) {
     return (

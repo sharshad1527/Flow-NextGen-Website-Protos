@@ -1,0 +1,58 @@
+[
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.37,
+    "values": [
+      0.37
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:4173/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.9,
+    "actual": 0.89,
+    "values": [
+      0.89
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "accessibility",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:4173/"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.55,
+    "values": [
+      0.55
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:4173/pricing"
+  },
+  {
+    "name": "minScore",
+    "expected": 0.8,
+    "actual": 0.43,
+    "values": [
+      0.43
+    ],
+    "operator": ">=",
+    "passed": false,
+    "auditProperty": "performance",
+    "auditId": "categories",
+    "level": "warn",
+    "url": "http://localhost:4173/guide"
+  }
+]

@@ -462,6 +462,166 @@ export function ScrollJourney() {
     return positions;
   }, []);
 
+  // On mobile, render a simplified static view — no scroll animations, no mockup, no 3D transforms
+  if (isMobile) {
+    return (
+      <>
+        <AnimatePresence>
+          {showIntro && <LogoIntroOverlay key="logo-intro" />}
+        </AnimatePresence>
+        <div className="scroll-journey scroll-journey-mobile">
+          {/* ---- HERO SECTION ---- */}
+          <section className="mobile-hero-section">
+            <div className="hero-left mobile">
+              <div className="hero-ambient-glow" />
+              {/* No glass-panel wrapper — clean centered layout */}
+              <div className="hero-eyebrow">
+                <span className="hero-eyebrow-dot" />
+                Chrome Extension · Google Flow
+              </div>
+              <h1 className="hero-headline">
+                <span className="title-row text-light-gradient">You Slept.</span>
+                <span className="title-row text-light-gradient">Flow Ran.</span>
+                <span className="title-row text-accent-gradient">143 Prompts.</span>
+              </h1>
+              <p className="hero-subtext">
+                Every prompt you run manually is time you&apos;re not creating.
+              </p>
+              <div className="hero-social-proof">
+                <div className="stars-row">
+                  {[1, 2, 3, 4, 5].map((s) => (
+                    <svg key={s} width="18" height="18" viewBox="0 0 24 24" fill={s <= 4 ? "var(--accent)" : "none"} stroke={s <= 4 ? "var(--accent)" : "rgba(255,255,255,0.15)"} strokeWidth="1.5">
+                      <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+                    </svg>
+                  ))}
+                </div>
+                <span className="rating-text">4.8</span>
+                <span className="rating-divider">·</span>
+                <span className="rating-users">1,000+ users</span>
+              </div>
+              <div className="hero-cta-row">
+                <a
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-primary shiny-button-lg"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '0.9rem 2rem',
+                    fontSize: '1rem',
+                    fontWeight: 700,
+                    borderRadius: '12px',
+                    background: 'linear-gradient(135deg, #FF6B00, #FF5100)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    boxShadow: '0 8px 32px rgba(255, 107, 0, 0.35), 0 0 0 1px rgba(255, 107, 0, 0.3)',
+                  }}
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                    <polyline points="7 10 12 15 17 10"/>
+                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  </svg>
+                  Install Extension - Free
+                </a>
+                <a
+                  href="#"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button-secondary review-btn"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.4rem',
+                    padding: '0.7rem 1.2rem',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    borderRadius: '12px',
+                    border: '1px solid rgba(255,255,255,0.1)',
+                    color: '#fff',
+                    textDecoration: 'none',
+                    background: 'rgba(255,255,255,0.05)',
+                  }}
+                >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                  Leave a Review
+                </a>
+              </div>
+              {/* Stat strip removed from hero — banned per taste-skill rule 4.7 */}
+            </div>
+          </section>
+
+          {/* ---- RESULTS SECTION ---- */}
+          <section className="mobile-results-section">
+            <div className="results-hero static">
+              <div className="results-ambient-glow" />
+              <div className="results-text-frame glass-panel">
+                <div className="results-tag">
+                  <span className="results-tag-dot" />
+                  Queue Complete · All Downloads Synced
+                </div>
+                <h2 className="results-headline">
+                  <span className="title-row text-light-gradient">Done.</span>
+                  <span className="title-row text-success-gradient">While You Slept.</span>
+                </h2>
+                <p className="results-subtext">
+                  143 generations. Zero babysitting. Every file downloaded, sorted,
+                  and named. This is what AI automation is supposed to feel like.
+                </p>
+                <div className="results-stats-grid">
+                  <div className="result-stat-card highlight">
+                    <span className="result-stat-value green">143</span>
+                    <span className="result-stat-label">Assets generated</span>
+                  </div>
+                  <div className="result-stat-card">
+                    <span className="result-stat-value orange">100%</span>
+                    <span className="result-stat-label">Queue success</span>
+                  </div>
+                  <div className="result-stat-card">
+                    <span className="result-stat-value">36.2s</span>
+                    <span className="result-stat-label">Avg generation</span>
+                  </div>
+                  <div className="result-stat-card">
+                    <span className="result-stat-value">0</span>
+                    <span className="result-stat-label">Manual actions</span>
+                  </div>
+                </div>
+                <div className="image-results-showcase">
+                  <div className="showcase-header">
+                    <span className="folder-label">OUTPUTS (Downloads/Flow-NextGen/)</span>
+                  </div>
+                  <div className="image-showcase-grid">
+                    {[
+                      { title: "Samurai", prompt: "cyberpunk samurai in neon Tokyo alley", src: "/result_samurai.jpg" },
+                      { title: "Anime", prompt: "anime girl in cherry blossom forest", src: "/result_anime.jpg" },
+                      { title: "Cityscape", prompt: "futuristic flying vehicles timelapse", src: "/result_city.jpg" },
+                      { title: "Astronaut", prompt: "astronaut in colorful nebula space", src: "/result_space.jpg" }
+                    ].map((img, idx) => (
+                      <div key={idx} className="image-card glass-card">
+                        <img src={img.src} alt={img.title} className="showcase-img" loading="lazy" />
+                        <div className="image-card-overlay">
+                          <span className="img-title">{img.title}</span>
+                          <span className="img-prompt">{img.prompt}</span>
+                          <button className="img-dl-btn" title="Download output" style={{ cursor: "pointer" }}>
+                            <FolderDown size={11} />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       {/* ---- LOGO INTRO OVERLAY (fixed, above header) ---- */}

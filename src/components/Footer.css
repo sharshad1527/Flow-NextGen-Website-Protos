@@ -3,6 +3,7 @@
   border-top: 1px solid var(--border);
   padding: clamp(3rem, 5vw, 6rem) 0 clamp(2rem, 3vw, 4rem);
   margin-top: clamp(4rem, 6vw, 8rem);
+  min-height: clamp(12rem, 30vh, 20rem); /* Reserve space to prevent CLS */
 }
 
 .footer-content {
@@ -10,6 +11,7 @@
   grid-template-columns: 1.2fr 2fr;
   gap: clamp(2rem, 4vw, 6rem);
   margin-bottom: clamp(2rem, 4vw, 4rem);
+  min-height: clamp(8rem, 20vh, 15rem); /* Prevent layout shift as content loads */
 }
 
 .footer-brand p {

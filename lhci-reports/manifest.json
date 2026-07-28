@@ -1,0 +1,38 @@
+[
+  {
+    "url": "http://localhost:5173/",
+    "isRepresentativeRun": true,
+    "htmlPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost--2026_07_28_06_46_22.report.html",
+    "jsonPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost--2026_07_28_06_46_22.report.json",
+    "summary": {
+      "performance": 0.14,
+      "accessibility": 0.89,
+      "best-practices": 0.96,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:5173/pricing",
+    "isRepresentativeRun": true,
+    "htmlPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost-pricing-2026_07_28_06_48_07.report.html",
+    "jsonPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost-pricing-2026_07_28_06_48_07.report.json",
+    "summary": {
+      "performance": 0.31,
+      "accessibility": 0.96,
+      "best-practices": 0.96,
+      "seo": 1
+    }
+  },
+  {
+    "url": "http://localhost:5173/guide",
+    "isRepresentativeRun": true,
+    "htmlPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost-guide-2026_07_28_06_49_29.report.html",
+    "jsonPath": "/home/haiva/projects/Flow-NextGen-Website-Protos/lhci-reports/localhost-guide-2026_07_28_06_49_29.report.json",
+    "summary": {
+      "performance": 0.21,
+      "accessibility": 0.9,
+      "best-practices": 0.96,
+      "seo": 1
+    }
+  }
+]

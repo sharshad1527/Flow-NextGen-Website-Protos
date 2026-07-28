@@ -144,10 +144,10 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         </div>
 
         <div className="ext-header-actions">
-          <button className="header-icon-btn">
+          <button className="header-icon-btn" aria-label="Messages">
             <MessageSquare size={13} />
           </button>
-          <button className="header-icon-btn">
+          <button className="header-icon-btn" aria-label="Documentation">
             <BookOpen size={13} />
           </button>
           <div className="vertical-divider" />
@@ -720,6 +720,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         <button 
           className={`nav-item ${activeTab === "control" ? "active" : ""}`}
           onClick={() => setActiveTab("control")}
+          aria-label="Control Panel"
         >
           <Zap size={13} className="nav-icon" />
           {activeTab === "control" && <span className="nav-label">CONTROL</span>}
@@ -728,6 +729,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         <button 
           className={`nav-item ${activeTab === "gallery" ? "active" : ""}`}
           onClick={() => setActiveTab("gallery")}
+          aria-label="Gallery"
         >
           <LayoutGrid size={13} className="nav-icon" />
           {activeTab === "gallery" && <span className="nav-label">GALLERY</span>}
@@ -736,6 +738,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         <button 
           className={`nav-item ${activeTab === "queue" ? "active" : ""}`}
           onClick={() => setActiveTab("queue")}
+          aria-label="Queue"
         >
           <List size={13} className="nav-icon" />
           {activeTab === "queue" && <span className="nav-label">QUEUE</span>}
@@ -744,6 +747,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         <button 
           className="nav-item disabled-media"
           onClick={() => setActiveTab("gallery")}
+          aria-label="Media"
         >
           <Video size={13} className="nav-icon" />
         </button>
@@ -751,6 +755,7 @@ export function ExtensionMockup({ phase }: ExtensionMockupProps) {
         <button 
           className={`nav-item ${activeTab === "settings" ? "active" : ""}`}
           onClick={() => setActiveTab("settings")}
+          aria-label="Settings"
         >
           <Settings size={13} className="nav-icon" />
           {activeTab === "settings" && <span className="nav-label">SETTINGS</span>}
