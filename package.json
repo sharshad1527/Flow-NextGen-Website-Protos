@@ -7,7 +7,10 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:e2e": "playwright test",
+    "check:budget": "node scripts/check-bundle-size.mjs",
+    "lighthouse": "lhci autorun"
   },
   "dependencies": {
     "lucide-react": "^1.20.0",
@@ -20,7 +23,9 @@
     "vite-plugin-sitemap": "^0.8.2"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.12.1",
     "@eslint/js": "^10.0.1",
+    "@playwright/test": "^1.62.0",
     "@types/node": "^24.12.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
