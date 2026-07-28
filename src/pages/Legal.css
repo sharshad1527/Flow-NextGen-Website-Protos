@@ -115,3 +115,80 @@
     padding: 6rem 1rem 3rem;
   }
 }
+
+/* Print styles — light background, dark text, no animations */
+@media print {
+  body,
+  .legal-page,
+  .legal-container {
+    background: #fff !important;
+    color: #000 !important;
+  }
+
+  .legal-container h1,
+  .legal-container h2,
+  .legal-container h3,
+  .legal-container p,
+  .legal-container li,
+  .legal-container strong {
+    color: #000 !important;
+  }
+
+  .legal-container h2 {
+    color: #000 !important;
+  }
+
+  .legal-container a {
+    color: #1a0dab !important;
+    text-decoration: underline !important;
+  }
+
+  /* Hide navigation, chrome, backgrounds, loading spinners */
+  .header-wrapper,
+  footer.footer,
+  .page-loading,
+  a[href="#main-content"],
+  canvas {
+    display: none !important;
+  }
+
+  /* Remove glass effects */
+  .legal-highlight {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    box-shadow: none !important;
+  }
+
+  /* Ensure content takes full width */
+  .legal-container {
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+  }
+
+  .legal-page {
+    padding: 0 !important;
+  }
+
+  /* Remove nav links at bottom of legal pages */
+  .legal-nav-links {
+    display: none !important;
+  }
+
+  /* Page margins */
+  @page {
+    margin: 2cm;
+  }
+
+  /* Avoid page breaks inside headings and sections */
+  h1, h2, h3, h4 {
+    page-break-after: avoid;
+  }
+
+  section {
+    page-break-inside: avoid;
+  }
+}
