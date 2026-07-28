@@ -24,6 +24,29 @@ function AppContent() {
 
   return (
     <>
+      {/* Skip-to-content link for keyboard users — appears on Tab press */}
+      <a
+        href="#main-content"
+        style={{
+          position: 'fixed',
+          top: '-100%',
+          left: 0,
+          zIndex: 100000,
+          padding: '1rem 2rem',
+          background: '#FF6B00',
+          color: '#F5F5F5',
+          fontWeight: 600,
+          fontSize: '1rem',
+          textDecoration: 'none',
+          borderRadius: '0 0 8px 0',
+          transition: 'top 0.2s ease',
+        }}
+        onFocus={(e) => { e.currentTarget.style.top = '0' }}
+        onBlur={(e) => { e.currentTarget.style.top = '-100%' }}
+      >
+        Skip to content
+      </a>
+
       {/* Cinematic page-load reveal — fades from black to transparent once */}
       <WebSiteSchema />
       <motion.div
@@ -42,7 +65,7 @@ function AppContent() {
       {/* Mesh Drift WebGL1 background integrating with our theme */}
       {showHeaderFooter && <DriftBackground />}
 
-      <div style={{ position: "relative", zIndex: 1 }}>
+      <div id="main-content" role="main" style={{ position: "relative", zIndex: 1 }}>
         {showHeaderFooter && <Header />}
         <Suspense fallback={<PageLoading />}>
           <Routes>

@@ -16,23 +16,23 @@ export function Footer() {
             </div>
             <p>Autopilot generation queue engine for modern creative teams.</p>
           </div>
-          <div className="footer-links">
+          <div className="footer-links" role="navigation" aria-label="Footer navigation">
             <div className="link-group">
-              <h4>Product</h4>
-              <a href="#features">Features</a>
-              <a href="/pricing">Pricing</a>
+              <h4 id="footer-product">Product</h4>
+              <a href="#features" aria-labelledby="footer-product">Features</a>
+              <a href="/pricing" aria-labelledby="footer-product">Pricing</a>
             </div>
             <div className="link-group">
-              <h4>Resources</h4>
-              <a href="#how-it-works">How It Works</a>
-              <Link to="/guide">Guide</Link>
-              <a href="#">Discord Community</a>
+              <h4 id="footer-resources">Resources</h4>
+              <a href="#how-it-works" aria-labelledby="footer-resources">How It Works</a>
+              <Link to="/guide" aria-labelledby="footer-resources">Guide</Link>
+              <a href="#" aria-labelledby="footer-resources">Discord Community</a>
             </div>
             <div className="link-group">
-              <h4>Legal</h4>
-              <Link to="/privacy">Privacy Policy</Link>
-              <Link to="/terms">Terms of Service</Link>
-              <Link to="/refund">Refund Policy</Link>
+              <h4 id="footer-legal">Legal</h4>
+              <Link to="/privacy" aria-labelledby="footer-legal">Privacy Policy</Link>
+              <Link to="/terms" aria-labelledby="footer-legal">Terms of Service</Link>
+              <Link to="/refund" aria-labelledby="footer-legal">Refund Policy</Link>
             </div>
           </div>
         </div>

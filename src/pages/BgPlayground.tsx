@@ -529,12 +529,12 @@ export default function BgPlayground() {
         {/* Top bar */}
         <div className="bg-top-bar">
           <Link to="/" className="bg-back-link">
-            <ArrowLeft size={16} />
+            <ArrowLeft size={16} aria-hidden="true" />
             <span>Back</span>
           </Link>
 
           <div className="bg-top-center">
-            <Compass size={18} />
+            <Compass size={18} aria-hidden="true" />
             <span className="bg-top-title">{currentBg.title}</span>
             <span className="bg-top-badge">{currentBg.badge}</span>
           </div>
@@ -542,8 +542,11 @@ export default function BgPlayground() {
           <button
             className="bg-select-btn"
             onClick={() => setShowSelect((v) => !v)}
+            aria-expanded={showSelect}
+            aria-controls="concept-selector-drawer"
+            aria-label="Select background concept"
           >
-            <Layers size={16} />
+            <Layers size={16} aria-hidden="true" />
             <span>Select</span>
           </button>
         </div>
@@ -557,9 +560,12 @@ export default function BgPlayground() {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: 60, opacity: 0 }}
               transition={{ type: "spring", stiffness: 300, damping: 28 }}
+              id="concept-selector-drawer"
+              role="region"
+              aria-label="Background concept selection"
             >
               <div className="bg-select-header">
-                <Sparkles size={14} />
+                <Sparkles size={14} aria-hidden="true" />
                 <span>Select Background Concept</span>
               </div>
               <div className="bg-select-grid">
@@ -568,6 +574,8 @@ export default function BgPlayground() {
                     key={c.id}
                     className={`bg-concept-card ${activeConcept?.id === c.id ? "active" : ""}`}
                     onClick={() => handleSelect(c)}
+                    aria-label={`${c.title} — ${c.category}, ${c.badge}`}
+                    aria-current={activeConcept?.id === c.id ? "true" : undefined}
                   >
                     <span className="bg-concept-id">#{c.id}</span>
                     <span className="bg-concept-title">{c.title}</span>
@@ -625,7 +633,7 @@ export default function BgPlayground() {
 
         {/* Footer copyright */}
         <div className="bg-footer">
-          <Wand2 size={14} />
+          <Wand2 size={14} aria-hidden="true" />
           <span>Flow NextGen — Background Playground</span>
         </div>
       </div>
