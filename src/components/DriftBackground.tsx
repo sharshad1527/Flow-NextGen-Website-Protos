@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { detectWebGLQuality, type WebGLQuality } from "../lib/webgl-detect";
 
 // --- VERTEX SHADER SOURCE ---
 const vertexShaderSource = `
@@ -297,9 +298,20 @@ export const DriftBackground: React.FC = () => {
   const glRef = useRef<WebGLRenderingContext | null>(null);
   const programRef = useRef<WebGLProgram | null>(null);
   const bufferRef = useRef<WebGLBuffer | null>(null);
+  const qualityRef = useRef<WebGLQuality>(detectWebGLQuality());
   const [webglFailed, setWebglFailed] = useState(false);
 
   useEffect(() => {
+    const quality = qualityRef.current;
+    const isLowPower = quality === 'low';
+
+    // Skip WebGL entirely on unsupported devices — don't even create canvas
+    if (quality === 'unsupported') {
+      console.info("DriftBackground: WebGL unsupported, using CSS fallback");
+      setWebglFailed(true);
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -308,14 +320,14 @@ export const DriftBackground: React.FC = () => {
       antialias: false,
       depth: false,
       stencil: false,
-      powerPreference: "high-performance",
+      powerPreference: isLowPower ? "low-power" : "high-performance",
       preserveDrawingBuffer: false
     }) || canvas.getContext("experimental-webgl", {
       alpha: false,
       antialias: false,
       depth: false,
       stencil: false,
-      powerPreference: "high-performance",
+      powerPreference: isLowPower ? "low-power" : "high-performance",
       preserveDrawingBuffer: false
     }) as WebGLRenderingContext;
 
@@ -327,7 +339,7 @@ export const DriftBackground: React.FC = () => {
     glRef.current = gl;
 
     const updateSize = () => {
-      const dpr = Math.min(2.0, window.devicePixelRatio || 1);
+      const dpr = Math.min(isLowPower ? 1.0 : 2.0, window.devicePixelRatio || 1);
       canvas.width = window.innerWidth * dpr;
       canvas.height = window.innerHeight * dpr;
       gl.viewport(0, 0, canvas.width, canvas.height);
@@ -391,10 +403,10 @@ export const DriftBackground: React.FC = () => {
 
       // Set uniforms - Mesh Drift parameters
       gl.uniform3fv(uColors, colorsData);
-      gl.uniform4f(uScene, canvas.width, canvas.height, (now * 0.001) * 0.73, 4.0);
-      gl.uniform4f(uShape, 1.16, 0.34, 0.50, 0.00);
-      gl.uniform4f(uSurface, 2.40, 1.16, -0.06, 1.00); // detail, contrast, brightness=-0.06, saturation
-      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, 0.03);   // hue, vignette, blur, grain=0.03
+      gl.uniform4f(uScene, canvas.width, canvas.height, (now * 0.001) * 0.73, isLowPower ? 3.0 : 4.0);
+      gl.uniform4f(uShape, isLowPower ? 1.0 : 1.16, isLowPower ? 0.25 : 0.34, 0.50, isLowPower ? 0.0 : 0.00);
+      gl.uniform4f(uSurface, isLowPower ? 1.50 : 2.40, isLowPower ? 1.0 : 1.16, -0.06, 1.00);
+      gl.uniform4f(uFinish, 0.00, 0.00, 0.00, isLowPower ? 0.0 : 0.03);   // hue, vignette, blur, grain
       gl.uniform4f(uTransform, 1453.0, 0.00, 0.00, 0.0);
       gl.uniform4f(uSpace, 0.00, 0.00, 0.00, 0.00);
       gl.uniform4f(uCursor, 0.0, 2.0, 0.65, 0.46);
