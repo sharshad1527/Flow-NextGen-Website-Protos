@@ -27,7 +27,8 @@ body {
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    overflow: hidden;
+    overflow-y: auto;
+    padding: 20px 0;
 }
 
 /* --- High-Fidelity Background Mesh --- */
