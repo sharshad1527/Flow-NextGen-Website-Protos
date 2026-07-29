@@ -482,7 +482,7 @@ export function ScrollJourney() {
               <h1 className="hero-headline">
                 <span className="title-row text-light-gradient">You Slept.</span>
                 <span className="title-row text-light-gradient">Flow Ran.</span>
-                <span className="title-row text-accent-gradient">143 Prompts.</span>
+                <span className="title-row text-accent-gradient">278 Prompts.</span>
               </h1>
               <p className="hero-subtext">
                 Every prompt you run manually is time you&apos;re not creating.
@@ -569,12 +569,12 @@ export function ScrollJourney() {
                   <span className="title-row text-success-gradient">While You Slept.</span>
                 </h2>
                 <p className="results-subtext">
-                  143 generations. Zero babysitting. Every file downloaded, sorted,
+                  278 generations. Zero babysitting. Every file downloaded, sorted,
                   and named. This is what AI automation is supposed to feel like.
                 </p>
                 <div className="results-stats-grid">
                   <div className="result-stat-card highlight">
-                    <span className="result-stat-value green">143</span>
+                    <span className="result-stat-value green">278</span>
                     <span className="result-stat-label">Assets generated</span>
                   </div>
                   <div className="result-stat-card">
@@ -656,7 +656,7 @@ export function ScrollJourney() {
               <motion.h1 className="hero-headline" variants={itemVariants}>
                 <span className="title-row text-light-gradient">You Slept.</span>
                 <span className="title-row text-light-gradient">Flow Ran.</span>
-                <span className="title-row text-accent-gradient">143 Prompts.</span>
+                <span className="title-row text-accent-gradient">278 Prompts.</span>
               </motion.h1>
 
               <motion.p className="hero-subtext" variants={itemVariants}>
@@ -825,13 +825,13 @@ export function ScrollJourney() {
               </h2>
 
               <p className="results-subtext">
-                143 generations. Zero babysitting. Every file downloaded, sorted,
+                278 generations. Zero babysitting. Every file downloaded, sorted,
                 and named. This is what AI automation is supposed to feel like.
               </p>
 
               <div className="results-stats-grid">
                 <div className="result-stat-card highlight">
-                  <span className="result-stat-value green">143</span>
+                  <span className="result-stat-value green">278</span>
                   <span className="result-stat-label">Assets generated</span>
                 </div>
                 <div className="result-stat-card">

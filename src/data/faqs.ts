@@ -22,7 +22,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "How is this different from manually using Google Flow?",
-    answer: "Instead of typing prompts one at a time and waiting for each to finish, you paste your entire list at once. The extension handles the clicking, waiting, retrying, and downloading — while you focus on creative work."
+    answer: "Instead of typing prompts one at a time and waiting for each to finish, you paste your entire list at once. The extension handles the clicking, waiting, retrying, and downloading, while you focus on creative work."
   },
   {
     question: "Where can I get help?",
@@ -30,6 +30,6 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Is Flow NextGen affiliated with Google?",
-    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $9.99/month Pro subscription covers this extension's automation features only — you still need your own Google account and access to labs.google/fx/tools/flow. Google Flow's own Pro/Ultra tiers are completely separate."
+    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $9.99/month Pro subscription covers this extension's automation features only, you still need your own Google account and access to labs.google/fx/tools/flow. Google Flow's own Pro/Ultra tiers are completely separate."
   }
 ];

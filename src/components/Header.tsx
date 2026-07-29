@@ -61,7 +61,7 @@ export function Header() {
         initial={{ y: -150, opacity: 0, scale: 0.92 }}
         transition={{ duration: 0.45, type: "spring", stiffness: 220, damping: 26 }}
       >
-        <Link to="/" className="logo" aria-label="Flow NextGen — Home">
+        <Link to="/" className="logo" aria-label="Flow NextGen, Home">
           <Logo width={20} height={20} />
           <span className="logo-text">Flow NextGen</span>
         </Link>
@@ -97,12 +97,18 @@ export function Header() {
           >
             Guide
           </Link>
-          <a href="#">Review</a>
+          <a
+            href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond/reviews"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Review
+          </a>
         </nav>
 
         <div className="header-actions" style={{ gap: '0.5rem' }}>
           <a
-            href="#"
+            href="https://discord.gg/vk5wWWun9B"
             target="_blank"
             rel="noopener noreferrer"
             className="button-secondary discord-btn"
@@ -182,7 +188,14 @@ export function Header() {
         >
           Guide
         </Link>
-        <a href="#" onClick={() => setMobileMenuOpen(false)}>Review</a>
+        <a
+          href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond/reviews"
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setMobileMenuOpen(false)}
+        >
+          Review
+        </a>
       </nav>
     </div>
   );

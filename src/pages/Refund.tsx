@@ -7,7 +7,7 @@ export function Refund() {
     <div className="legal-page">
       <SEO
         title="Refund Policy"
-        description="Flow NextGen refund policy — 14-day refund window for first-time subscribers and cancellation terms."
+        description="Flow NextGen refund policy: 14-day refund window for first-time subscribers and cancellation terms."
         canonicalPath="/refund"
       />
       <div className="legal-container">
@@ -21,14 +21,14 @@ export function Refund() {
 
         <section>
           <h2>1. 14-Day Voluntary Money-Back Guarantee</h2>
-          <p>We offer a 14-day refund window from the date of your <strong>original</strong> Pro tier purchase. This policy allows you to evaluate the advanced queue and download capabilities. This money-back window applies only to first-time purchases—subsequent monthly renewal charges are strictly non-refundable.</p>
+          <p>We offer a 14-day refund window from the date of your <strong>original</strong> Pro tier purchase. This policy allows you to evaluate the advanced queue and download capabilities. This money-back window applies only to first-time purchases. Subsequent monthly renewal charges are strictly non-refundable.</p>
         </section>
 
         <section>
           <h2>2. Usage Limits to Prevent Abuse (Fair Use Quota)</h2>
           <div className="legal-highlight">
             <p><strong>IMPORTANT REFUND CONDITION:</strong></p>
-            <p>To prevent subscription cycling abuse—where users subscribe to Pro, execute massive queues download, and immediately request a refund—we enforce a usage threshold. Refunds are only eligible if you have executed <strong>fewer than 50 automated prompt generations</strong> on the Pro tier during the 14-day evaluation window. If your account usage logs exceed this threshold, your voluntary refund request will be rejected.</p>
+            <p>To prevent subscription cycling abuse, where users subscribe to Pro, execute massive queues download, and immediately request a refund, we enforce a usage threshold. Refunds are only eligible if you have executed <strong>fewer than 50 automated prompt generations</strong> on the Pro tier during the 14-day evaluation window. If your account usage logs exceed this threshold, your voluntary refund request will be rejected.</p>
           </div>
         </section>
 

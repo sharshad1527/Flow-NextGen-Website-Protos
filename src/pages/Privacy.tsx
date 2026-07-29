@@ -7,7 +7,7 @@ export function Privacy() {
     <div className="legal-page">
       <SEO
         title="Privacy Policy"
-        description="Flow NextGen privacy policy — how we collect, use, and protect your data when using our Chrome extension."
+        description="Flow NextGen privacy policy: how we collect, use, and protect your data when using our Chrome extension."
         canonicalPath="/privacy"
       />
       <div className="legal-container">

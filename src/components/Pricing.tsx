@@ -77,7 +77,7 @@ export function Pricing() {
               <li><Check size={16} className="success-text" /> Discord Community Access</li>
             </ul>
 
-            <a href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond" target="_blank" rel="noopener noreferrer" className="button-primary full-width btn-glow" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>Get Extension — Free</a>
+            <a href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond" target="_blank" rel="noopener noreferrer" className="button-primary full-width btn-glow" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}>Get Extension, Free</a>
           </motion.div>
         </div>
 
@@ -93,7 +93,7 @@ export function Pricing() {
             <strong>Not affiliated with Google.</strong> Flow NextGen is an independent Chrome extension
             built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google
             or Google Flow. Your $9.99/month Pro subscription <strong>only covers this extension's automation
-            features</strong> — you still need your own Google account and access to{" "}
+            features</strong>, you still need your own Google account and access to{" "}
             <code>labs.google/fx/tools/flow</code> for actual generation. Google Flow's own Pro/Ultra tiers
             are separate and unaffected by this purchase.
           </div>

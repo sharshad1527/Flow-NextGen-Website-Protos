@@ -7,7 +7,7 @@ export function Terms() {
     <div className="legal-page">
       <SEO
         title="Terms of Service"
-        description="Flow NextGen terms of service — conditions for using our Chrome extension and subscription service."
+        description="Flow NextGen terms of service: conditions for using our Chrome extension and subscription service."
         canonicalPath="/terms"
       />
       <div className="legal-container">

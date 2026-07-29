@@ -6,13 +6,13 @@ export function Guide() {
   return (
     <div className="guide-page">
       <SEO
-        title="Complete User Guide — All Modes & Features"
+        title="Complete User Guide: All Modes & Features"
         description="Learn how to use all 4 generation modes (Text-to-Image, Text-to-Video, Frame-to-Video, Ingredients-to-Video) in Flow NextGen."
         canonicalPath="/guide"
       />
       <div className="guide-container">
         <h1>Flow NextGen Guide</h1>
-        <p className="guide-subtitle">Based on source code analysis of Version 0.10 (July 2026).</p>
+        <p className="guide-subtitle">Based on source code analysis of Version 24.13.37 (July 2026).</p>
 
         <hr className="guide-divider" />
 
@@ -63,7 +63,7 @@ export function Guide() {
             </table>
           </div>
 
-          <p>Queue and Gallery tabs are locked for unsigned-in users — you'll see a sign-in prompt.</p>
+          <p>Queue and Gallery tabs are locked for unsigned-in users. You'll see a sign-in prompt.</p>
         </section>
 
         <hr className="guide-divider" />
@@ -124,7 +124,7 @@ export function Guide() {
             <li>The gutter on the left shows prompt numbering automatically.</li>
             <li>You can <strong>import a .txt file</strong> (one prompt per line) or paste a <strong>Flow-NextGen Packet</strong> (JSON with full settings).</li>
           </ol>
-          <p><strong>Prompt tip:</strong> Use <code>|||</code> as a separator to enable Autopilot — see the <a href="#autopilot">Autopilot section</a>.</p>
+          <p><strong>Prompt tip:</strong> Use <code>|||</code> as a separator to enable Autopilot. See the <a href="#autopilot">Autopilot section</a>.</p>
 
           <h4>Step 2: References <span style={{ color: "var(--text-muted)", fontWeight: 400, fontSize: "0.85rem" }}>(hidden for Text to Video)</span></h4>
           <ol>
@@ -160,8 +160,8 @@ export function Guide() {
             <li>Configure parameters (see below).</li>
             <li>Choose a <strong>Project Target Mode</strong>:
               <ul>
-                <li><strong>Create New Project</strong> — creates a new Flow project for these generations.</li>
-                <li><strong>Use Current Project</strong> — uses the currently open Flow project tab.</li>
+                <li><strong>Create New Project</strong>: creates a new Flow project for these generations.</li>
+                <li><strong>Use Current Project</strong>: uses the currently open Flow project tab.</li>
               </ul>
             </li>
             <li>Tap <strong>Launch N Prompts</strong>.</li>
@@ -191,9 +191,9 @@ export function Guide() {
           <h3 id="t2i">Text to Image (T2I)</h3>
           <p><strong>Available models:</strong></p>
           <ul>
-            <li><strong>Nano Banana Pro</strong> (default) — best quality/speed balance</li>
-            <li><strong>Nano Banana 2</strong> — higher quality</li>
-            <li><strong>Nano Banana 2 Lite</strong> — faster, lower quality</li>
+            <li><strong>Nano Banana Pro</strong> (default), best quality/speed balance</li>
+            <li><strong>Nano Banana 2</strong>, higher quality</li>
+            <li><strong>Nano Banana 2 Lite</strong>, faster, lower quality</li>
           </ul>
           <p><strong>Aspect ratios:</strong> Landscape (16:9), Landscape (4:3), Square (1:1), Portrait (3:4), Portrait (9:16)</p>
           <p><strong>Key settings:</strong></p>
@@ -211,15 +211,15 @@ export function Guide() {
           <h3 id="t2v">Text to Video (T2V)</h3>
           <p><strong>Available models:</strong></p>
           <ul>
-            <li><strong>Veo 3.1 Lite</strong> (default) — fastest</li>
-            <li><strong>Veo 3.1 Fast</strong> — balanced</li>
-            <li><strong>Veo 3.1 Quality</strong> — highest quality</li>
-            <li><strong>Omni Flash</strong> — supports variable duration (4/6/8/10s)</li>
+            <li><strong>Veo 3.1 Lite</strong> (default), fastest</li>
+            <li><strong>Veo 3.1 Fast</strong>, balanced</li>
+            <li><strong>Veo 3.1 Quality</strong>, highest quality</li>
+            <li><strong>Omni Flash</strong>, supports variable duration (4/6/8/10s)</li>
           </ul>
           <p><strong>Aspect ratios:</strong> Landscape (16:9), Portrait (9:16)</p>
           <p><strong>Key differences from T2I:</strong></p>
           <ul>
-            <li>No reference images needed — Step 2 is skipped entirely</li>
+            <li>No reference images needed, Step 2 is skipped entirely</li>
             <li>Video length selector visible only for Omni Flash (Veo models fixed at 8s)</li>
             <li>Silent video toggle available</li>
             <li>Downloads use video resolution options (270p → 4K)</li>
@@ -279,16 +279,16 @@ export function Guide() {
             </li>
             <li>In the Launch step, set <strong>Autopilot</strong> to:
               <ul>
-                <li><strong>Animate All</strong> — every prompt generates an image AND a follow-up video.</li>
-                <li><strong>Animate One</strong> — only the first prompt generates a follow-up video.</li>
+                <li><strong>Animate All</strong>: every prompt generates an image AND a follow-up video.</li>
+                <li><strong>Animate One</strong>: only the first prompt generates a follow-up video.</li>
               </ul>
             </li>
             <li>When Autopilot is active, additional settings appear:
               <ul>
-                <li><strong>Video Model</strong> — which model to use for the F2V step</li>
-                <li><strong>Generations</strong> — how many video outputs per image</li>
-                <li><strong>Duration</strong> — video length (4–10s)</li>
-                <li><strong>Download Resolution</strong> — video quality</li>
+                <li><strong>Video Model</strong>: which model to use for the F2V step</li>
+                <li><strong>Generations</strong>: how many video outputs per image</li>
+                <li><strong>Duration</strong>: video length (4-10s)</li>
+                <li><strong>Download Resolution</strong>: video quality</li>
               </ul>
             </li>
           </ol>
@@ -330,10 +330,10 @@ export function Guide() {
           <h3>Monitoring Progress</h3>
           <p>The queue header shows 4 live counters:</p>
           <ul>
-            <li><strong>Active</strong> — currently submitting, generating, or downloading</li>
-            <li><strong>Avg Time</strong> — average completion time for completed tasks</li>
-            <li><strong>Succeeded</strong> — count of completed tasks</li>
-            <li><strong>Failed</strong> — count of failed/blocked tasks</li>
+            <li><strong>Active</strong>: currently submitting, generating, or downloading</li>
+            <li><strong>Avg Time</strong>: average completion time for completed tasks</li>
+            <li><strong>Succeeded</strong>: count of completed tasks</li>
+            <li><strong>Failed</strong>: count of failed/blocked tasks</li>
           </ul>
           <p>Each launch group is shown as an <strong>accordion card</strong>:</p>
           <ul>
@@ -459,17 +459,17 @@ export function Guide() {
             <table>
               <thead><tr><th>Setting</th><th>Description</th><th>Default</th></tr></thead>
               <tbody>
-                <tr><td><strong>Email input</strong></td><td>Enter your email to sign in</td><td>—</td></tr>
-                <tr><td><strong>OTP input</strong></td><td>6-digit verification code sent to your email</td><td>—</td></tr>
-                <tr><td><strong>Authorize Session</strong></td><td>Sends OTP or verifies code</td><td>—</td></tr>
-                <tr><td><strong>Resend Code</strong></td><td>Re-send OTP (60s cooldown)</td><td>—</td></tr>
-                <tr><td><strong>Upgrade to Pro</strong></td><td>Opens Paddle checkout to purchase Pro</td><td>—</td></tr>
-                <tr><td><strong>Manage Subscription</strong></td><td>Opens Paddle customer portal (Pro users)</td><td>—</td></tr>
-                <tr><td><strong>Sync Subscription</strong></td><td>Force sync tier from Paddle/Supabase</td><td>—</td></tr>
-                <tr><td><strong>Refresh Session</strong></td><td>Re-fetch profile from Supabase</td><td>—</td></tr>
-                <tr><td><strong>Re-sync Subscription</strong></td><td>Full Paddle sync</td><td>—</td></tr>
-                <tr><td><strong>Reset Auth State</strong></td><td>Clear local session data</td><td>—</td></tr>
-                <tr><td><strong>Sign Out</strong></td><td>End session</td><td>—</td></tr>
+                <tr><td><strong>Email input</strong></td><td>Enter your email to sign in</td><td></td></tr>
+                <tr><td><strong>OTP input</strong></td><td>6-digit verification code sent to your email</td><td></td></tr>
+                <tr><td><strong>Authorize Session</strong></td><td>Sends OTP or verifies code</td><td></td></tr>
+                <tr><td><strong>Resend Code</strong></td><td>Re-send OTP (60s cooldown)</td><td></td></tr>
+                <tr><td><strong>Upgrade to Pro</strong></td><td>Opens Paddle checkout to purchase Pro</td><td></td></tr>
+                <tr><td><strong>Manage Subscription</strong></td><td>Opens Paddle customer portal (Pro users)</td><td></td></tr>
+                <tr><td><strong>Sync Subscription</strong></td><td>Force sync tier from Paddle/Supabase</td><td></td></tr>
+                <tr><td><strong>Refresh Session</strong></td><td>Re-fetch profile from Supabase</td><td></td></tr>
+                <tr><td><strong>Re-sync Subscription</strong></td><td>Full Paddle sync</td><td></td></tr>
+                <tr><td><strong>Reset Auth State</strong></td><td>Clear local session data</td><td></td></tr>
+                <tr><td><strong>Sign Out</strong></td><td>End session</td><td></td></tr>
               </tbody>
             </table>
           </div>

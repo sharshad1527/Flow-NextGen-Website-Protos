@@ -81,7 +81,7 @@ export function WebSiteSchema() {
     "name": "Flow NextGen",
     "url": BASE_URL,
     "description":
-      "Bulk AI generation queue for Google Flow — automate video and image generation with a Chrome extension.",
+      "Bulk AI generation queue for Google Flow, automate video and image generation with a Chrome extension.",
   }
 
   return (

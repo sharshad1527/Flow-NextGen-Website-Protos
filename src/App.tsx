@@ -1,5 +1,5 @@
-import { lazy, Suspense } from "react";
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { lazy, Suspense, useState, useEffect } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { motion } from "motion/react";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
@@ -12,7 +12,7 @@ import "./App.css";
 // Lazy-loaded pages for code-splitting — each page chunk loads only when navigated to
 const Home = lazy(() => import("./pages/Home").then((m) => ({ default: m.Home })));
 const PricingPage = lazy(() => import("./pages/PricingPage").then((m) => ({ default: m.PricingPage })));
-const BgPlayground = lazy(() => import("./pages/BgPlayground"));
+
 const Privacy = lazy(() => import("./pages/Privacy").then((m) => ({ default: m.Privacy })));
 const Terms = lazy(() => import("./pages/Terms").then((m) => ({ default: m.Terms })));
 const Refund = lazy(() => import("./pages/Refund").then((m) => ({ default: m.Refund })));
@@ -20,8 +20,11 @@ const Guide = lazy(() => import("./pages/Guide").then((m) => ({ default: m.Guide
 const NotFound = lazy(() => import("./pages/NotFound").then((m) => ({ default: m.NotFound })));
 
 function AppContent() {
-  const location = useLocation();
-  const showHeaderFooter = location.pathname !== "/bg-playground";
+  const [showFade, setShowFade] = useState(true);
+  useEffect(() => {
+    const t = setTimeout(() => setShowFade(false), 1600);
+    return () => clearTimeout(t);
+  }, []);
 
   return (
     <>
@@ -32,7 +35,7 @@ function AppContent() {
           position: 'fixed',
           top: '-100%',
           left: 0,
-          zIndex: 100000,
+          zIndex: 99999,
           padding: '1rem 2rem',
           background: '#FF6B00',
           color: '#F5F5F5',
@@ -50,29 +53,30 @@ function AppContent() {
 
       {/* Cinematic page-load reveal — fades from black to transparent once */}
       <WebSiteSchema />
-      <motion.div
-        initial={{ opacity: 1 }}
-        animate={{ opacity: 0 }}
-        transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1], delay: 0.15 }}
-        style={{
-          position: "fixed",
-          inset: 0,
-          background: "#000",
-          zIndex: 99999,
-          pointerEvents: "none",
-        }}
-      />
+      {showFade && (
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 0 }}
+          transition={{ duration: 1.4, ease: [0.4, 0, 0.2, 1], delay: 0.15 }}
+          style={{
+            position: "fixed",
+            inset: 0,
+            background: "#000",
+            zIndex: 99999,
+            pointerEvents: "none",
+          }}
+        />
+      )}
 
       {/* Mesh Drift WebGL1 background integrating with our theme */}
-      {showHeaderFooter && <DriftBackground />}
+      <DriftBackground />
 
       <div id="main-content" role="main" style={{ position: "relative", zIndex: 1 }}>
-        {showHeaderFooter && <Header />}
+        <Header />
         <Suspense fallback={<PageLoading />}>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/pricing" element={<PricingPage />} />
-            <Route path="/bg-playground" element={<BgPlayground />} />
             <Route path="/privacy" element={<Privacy />} />
             <Route path="/terms" element={<Terms />} />
             <Route path="/refund" element={<Refund />} />
@@ -80,7 +84,7 @@ function AppContent() {
             <Route path="*" element={<NotFound />} />
           </Routes>
         </Suspense>
-        {showHeaderFooter && <Footer />}
+        <Footer />
       </div>
     </>
   );

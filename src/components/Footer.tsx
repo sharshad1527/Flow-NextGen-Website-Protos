@@ -26,7 +26,7 @@ export function Footer() {
               <h4 id="footer-resources">Resources</h4>
               <a href="#how-it-works" aria-labelledby="footer-resources">How It Works</a>
               <Link to="/guide" aria-labelledby="footer-resources">Guide</Link>
-              <a href="#" aria-labelledby="footer-resources">Discord Community</a>
+              <a href="https://discord.gg/vk5wWWun9B" target="_blank" rel="noopener noreferrer" aria-labelledby="footer-resources">Discord Community</a>
             </div>
             <div className="link-group">
               <h4 id="footer-legal">Legal</h4>

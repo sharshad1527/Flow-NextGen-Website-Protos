@@ -76,6 +76,13 @@ body::after {
   opacity: 0.9;
 }
 
+@media (max-width: 768px) {
+  body::after {
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Outfit', sans-serif;
   line-height: 1.2;
@@ -190,6 +197,7 @@ button {
 
 .button-primary:active {
   transform: scale(0.97);
+  transition: transform 160ms ease-out;
 }
 
 .button-secondary {
@@ -212,6 +220,13 @@ button {
 
 .button-secondary:active {
   transform: scale(0.97);
+  transition: transform 160ms ease-out;
+}
+
+/* Shiny large CTA button active state */
+.shiny-button-lg:active {
+  transform: scale(0.97);
+  transition: transform 160ms ease-out;
 }
 
 /* --- prefers-reduced-motion: disable all animations --- */

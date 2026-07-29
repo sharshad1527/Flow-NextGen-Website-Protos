@@ -89,11 +89,22 @@
   align-items: center;
 }
 
+.discord-btn:active {
+  transform: scale(0.97);
+  transition: transform 160ms ease-out;
+}
+
 .island-btn {
   padding: 0.6rem clamp(1rem, 1.2vw, 1.5rem);
   border-radius: 100px;
   font-size: clamp(0.8rem, 0.15vw + 0.7rem, 0.95rem);
   font-weight: 700;
+  transition: transform 0.2s ease;
+}
+
+.island-btn:active {
+  transform: scale(0.97);
+  transition: transform 160ms ease-out;
 }
 
 @media (max-width: 768px) {
