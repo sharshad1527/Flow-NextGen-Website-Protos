@@ -11,7 +11,7 @@ export default defineConfig({
   plugins: [
     react(),
     Sitemap({
-      hostname: 'https://flow-nextgen.com',
+      hostname: 'https://flownextgen.netlify.app',
       dynamicRoutes,
       exclude: ['/bg-playground'],
       changefreq: 'weekly',

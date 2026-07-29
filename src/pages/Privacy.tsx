@@ -15,80 +15,76 @@ export function Privacy() {
         <p className="legal-date">Last updated: July 26, 2026</p>
 
         <section>
-          <h2>What This Covers</h2>
-          <p>Flow NextGen is a Chrome extension for Google Labs Flow. It automates prompt submission, batch scheduling, and media downloads. This policy covers what information the extension collects, why, and where it goes.</p>
+          <h2>1. Data Controller</h2>
+          <p>Flow NextGen ("we", "us", or "our") operates the Flow NextGen Chrome extension and website. We are committed to protecting your privacy. For any data protection inquiries, contact us at <strong>support.flownextgen@gmail.com</strong>.</p>
         </section>
 
         <section>
-          <h2>Information We Collect</h2>
-
-          <h3>Email address</h3>
-          <p>You sign in with your email via a one-time code — no password. Your email is stored in Supabase (our backend) and in your browser's local extension storage so the extension recognizes you when you return. Used for authentication, subscription management, and transactional emails.</p>
-
-          <h3>Extension settings</h3>
-          <p>Every setting you configure — prompt templates, model selection, aspect ratio, queue configuration — is saved locally in your browser's extension storage. Nothing is sent anywhere else.</p>
-
-          <h3>Queue and generation history</h3>
-          <p>When you queue a batch, the extension stores your prompts, generation mode, model choice, and output references locally. This allows the queue to survive browser restarts. Binary image data is removed before storage, and long strings are truncated.</p>
-
-          <h3>Authentication (Two Separate Systems)</h3>
-          <p><strong>Flow NextGen account (Supabase).</strong> When you sign in via the one-time code, Supabase issues a session token stored locally. Sent back only to Supabase when checking your subscription or profile.</p>
-          <p><strong>Your Google account (labs.google.com).</strong> The extension does not collect, store, or transmit your Google login credentials. When you submit prompts, the extension reads the active Google session from the Flow page you already have open — the same way any page script would. Requests go directly from your browser to Google's servers.</p>
-
-          <h3>Google Flow cookies</h3>
-          <p>The extension reads certain Google authentication cookies from the Flow page (SID, HSID, and related session cookies). This is done exclusively during session recovery — when Flow's auth goes stale, we clear problematic cookies while preserving valid ones. Cookies are not stored or transmitted anywhere.</p>
-
-          <h3>Flow page content (DOM)</h3>
-          <p>The extension reads specific elements from the Flow page: model names from dropdown menus, error messages, button labels, and the project ID from the page URL. Content from other websites or browser tabs is never accessed.</p>
-
-          <h3>Diagnostic data</h3>
-          <p>The extension keeps a record of recent diagnostic events and debugger traces in local storage for troubleshooting. Capped at a limited number of entries. Never sent to any external server. The extension does not use analytics SDKs, telemetry services, or error reporting tools.</p>
-        </section>
-
-        <section>
-          <h2>Information We Share With Third Parties</h2>
-
-          <h3>Google (Flow APIs)</h3>
-          <p>When you submit a generation task, the extension sends your prompt, project ID, and generation settings to Google's Flow API using your existing Google session. Google also receives standard reCAPTCHA tokens for fraud prevention.</p>
-
-          <h3>Supabase</h3>
-          <p>We use Supabase for authentication and subscription management. Your email, user identifier, subscription tier, and daily usage count are stored there. Your actual prompts are not sent to Supabase.</p>
-
-          <h3>Paddle</h3>
-          <p>Payments are processed entirely by Paddle. When you upgrade to Pro, a server-side function creates a transaction with Paddle — your email and user identifier are passed for order tracking. The extension itself never handles, sees, or stores your payment card details.</p>
-
-          <div className="legal-highlight">
-            <p><strong>Limited Use Disclosure:</strong> Flow NextGen's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
-          </div>
-        </section>
-
-        <section>
-          <h2>Information We Do Not Collect</h2>
+          <h2>2. Chrome Extension Permissions & Justifications</h2>
+          <p>Our Chrome extension requests specific permissions under Chrome's Manifest V3 to enable workflow automation on Google Labs Flow. We adhere strictly to data minimization principles; every permission is dedicated to a specific user-facing feature:</p>
+          
+          <h3>Core System Permissions</h3>
           <ul>
-            <li><span className="icon-x">&#10007;</span> Browsing history from sites other than labs.google.com</li>
-            <li><span className="icon-x">&#10007;</span> Credit card numbers or payment details</li>
-            <li><span className="icon-x">&#10007;</span> Contacts, bookmarks, or passwords</li>
-            <li><span className="icon-x">&#10007;</span> Location data</li>
-            <li><span className="icon-x">&#10007;</span> Usage statistics or analytics</li>
-            <li><span className="icon-x">&#10007;</span> Error reports or crash logs</li>
-            <li><span className="icon-x">&#10007;</span> Communications or messages</li>
-            <li><span className="icon-x">&#10007;</span> Health information</li>
+            <li><strong>Debugger (`debugger`):</strong> Highly sensitive. Used exclusively to attach the Chrome DevTools Protocol (CDP) to the active <code>labs.google.com</code> tab. This allows the extension's background worker to trace generation network requests, manage token cache states, and bypass service workers during critical session crashes to recover frozen queues. No user browsing outside of Google Labs Flow is ever captured or debugged.</li>
+            <li><strong>Storage & Unlimited Storage (`storage`, `unlimitedStorage`):</strong> Enables the extension to save your preferences, queue configuration templates, generation logs, and output metadata locally. Unlimited storage is requested to prevent data loss when handling deep historical generation galleries.</li>
+            <li><strong>Scripting (`scripting`) & Content Scripts:</strong> Used to inject the automation overlay panel and helper page hooks directly into the context of Google Labs Flow pages to coordinate button clicks and form inputs.</li>
+            <li><strong>Cookies (`cookies`):</strong> Used to monitor and manage session state for <code>labs.google.com</code>. This helps clear corrupted local cached tokens that cause generation failures during queue orchestrations.</li>
+            <li><strong>Browsing Data (`browsingData`):</strong> Restricts clearing of cache and local website state specifically for Google Labs domains to assist in session recovery cycles.</li>
+            <li><strong>Downloads (`downloads`):</strong> Power the auto-download feature, saving completed generations directly to your browser's default downloads directory utilizing custom metadata-based filenames.</li>
+            <li><strong>Tabs & Active Tab (`tabs`, `activeTab`):</strong> Used to track tab loading states and determine when a user is navigating Google Labs Flow tabs so automation scripting is safely initialized.</li>
+            <li><strong>Side Panel (`sidePanel`):</strong> Provides a persistent sidepanel UI to monitor batch queues and review generation history side-by-side with the active creation canvas.</li>
+            <li><strong>Alarms (`alarms`):</strong> Schedules recurring background worker wake-ups to check queue progress and retry failed generations.</li>
+            <li><strong>Identity (`identity`):</strong> Used for optional extension configuration sync features across chrome profiles.</li>
+          </ul>
+
+          <h3>Host Permissions & Domains Accessed</h3>
+          <p>We declare and limit host access to the following domains:</p>
+          <ul>
+            <li><code>https://labs.google/*</code> and subdomains: To run automation control scripts and read generation UI states.</li>
+            <li><code>https://aisandbox-pa.googleapis.com/*</code>: Google's backend API endpoints for generating and retrieving assets.</li>
+            <li><code>https://*.supabase.co/*</code>: Secure communication with our user subscription and log-in infrastructure.</li>
           </ul>
         </section>
 
         <section>
-          <h2>Data Retention</h2>
-          <p>Your account information stays in Supabase until you delete your account. Extension data stays in your browser's local storage until you uninstall. Queue history and diagnostic records are automatically pruned.</p>
-          <p>If you cancel your Pro subscription, your account reverts to the free tier. No data is deleted unless you request it.</p>
+          <h2>3. Account & Subscription Data</h2>
+          <h3>Email & Authentication</h3>
+          <p>You sign in using a passwordless one-time code emailed to you. Your email address and unique user identifier are stored in our secure database hosted by Supabase. This is processed solely to verify your membership credentials and tier limits.</p>
+
+          <h3>Billing & Payment Data</h3>
+          <p>We do not collect, process, or store financial credentials. All subscription purchases are conducted through our online reseller and Merchant of Record, Paddle.com. Credit card numbers, billing addresses, and payment details are processed directly by Paddle under their own privacy policy.</p>
         </section>
 
         <section>
-          <h2>Your Rights</h2>
-          <p>Depending on your jurisdiction, you may have the right to access, correct, delete, or export the information we hold about you. Contact us at the email below. We will respond within 30 days.</p>
+          <h2>4. Google API Services Limited Use Disclosure</h2>
+          <p>Flow NextGen's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements:</p>
+          <div className="legal-highlight">
+            <ul>
+              <li><strong>User-Facing Features:</strong> Data access is strictly limited to providing and improving the core prompt automation, queue management, and media export controls visible in the user interface.</li>
+              <li><strong>No Data Transfers:</strong> We do not sell, rent, or transfer user data to third parties, advertising networks, or analytics brokers. Transfers only occur for security compliance, legal mandates, or business acquisitions.</li>
+              <li><strong>Advertising Prohibition:</strong> Your user data is never used, transferred, or analyzed to serve advertisements, profile demographics, or target promotional materials.</li>
+              <li><strong>Human Reading Ban:</strong> No human supervisor reads or monitors your prompts, cookies, or page content except in rare cases where you grant explicit consent for debugging support, or under strict security investigations.</li>
+            </ul>
+          </div>
         </section>
 
         <section>
-          <h2>Contact</h2>
+          <h2>5. GDPR and CCPA Disclosures</h2>
+          <h3>European Union GDPR Rights</h3>
+          <p>If you reside in the EEA/UK, under the General Data Protection Regulation you have the right to request access to, correction of, or erasure of your email data stored in Supabase. You are also entitled to object to data processing or withdraw your consent. All requests can be sent to our support email.</p>
+
+          <h3>California CCPA Compliance</h3>
+          <p>We do not "sell" or "share" personal information as defined by the California Consumer Privacy Act. We solely collect your email for account delivery and subscription status management (Service Provider model).</p>
+        </section>
+
+        <section>
+          <h2>6. Data Security & Retention</h2>
+          <p>We implement encryption in transit (HTTPS/TLS) for all web communications and rely on industry-standard hosting security provided by Supabase. Your email records are retained until you delete your account. Local extension data (diagnostics, templates, queue history) stays on your machine and is deleted when you uninstall the extension or clear browser storage.</p>
+        </section>
+
+        <section>
+          <h2>7. Contact Support</h2>
+          <p>For inquiries, deletion requests, or technical support, please contact us at:</p>
           <p><strong>support.flownextgen@gmail.com</strong></p>
         </section>
 

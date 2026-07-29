@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async'
 
-const BASE_URL = 'https://flow-nextgen.com'
+const BASE_URL = 'https://flownextgen.netlify.app'
 
 /**
  * SoftwareApplication schema — primary schema for the Chrome extension

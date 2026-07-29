@@ -15,77 +15,71 @@ export function Terms() {
         <p className="legal-date">Last updated: July 26, 2026</p>
 
         <section>
-          <h2>1. What This Is</h2>
-          <p>Flow NextGen is a Chrome extension that automates Google Labs Flow. It queues prompts, manages batches, auto-downloads media, and keeps your characters consistent across sessions. By installing the extension, you agree to these terms.</p>
+          <h2>1. Introduction & Acceptance</h2>
+          <p>Flow NextGen is a browser extension and software service designed to automate user workflows on Google Labs Flow. By installing the extension or using this website, you agree to comply with and be bound by these Terms of Service. If you do not agree to these terms, do not install or use our software.</p>
         </section>
 
         <section>
-          <h2>2. Two Separate Accounts</h2>
-          <p>Flow NextGen uses two completely separate authentication systems:</p>
+          <h2>2. Description of Service & Account Tiers</h2>
           <ul>
-            <li><strong>Flow NextGen account (Supabase):</strong> Sign in with your email via a one-time code. Used for subscription management and free-tier tracking.</li>
-            <li><strong>Your Google account:</strong> The extension works with whatever Google account you're already signed into on labs.google.com. Your Google credentials never touch our servers.</li>
+            <li><strong>Free Tier:</strong> Provides basic DOM simulation generation automation. Free tier usage is capped at a daily quota (e.g. 30 prompts per 6-hour window). Bypassing this quota through multiple account registrations or script injections is prohibited.</li>
+            <li><strong>Pro Tier:</strong> Unlocks advanced API-based automation, auto-download naming, unlimited batch queues, 4K rendering tools, and custom metadata templates. Pro features are subject to monthly or annual subscription fees.</li>
           </ul>
         </section>
 
         <section>
-          <h2>3. Free vs Pro</h2>
+          <h2>3. Merchant of Record Reseller Clause</h2>
+          <p>Our billing, order processes, and checkout operations are conducted exclusively by our online reseller and Merchant of Record, <strong>Paddle.com</strong>. Paddle is the legal seller of record for all our digital product sales. By subscribing to our Pro services, you acknowledge that transactions are subject to Paddle's own Buyer Terms and Conditions, and you agree to their payment, tax compliance, and processing guidelines.</p>
+        </section>
+
+        <section>
+          <h2>4. Google Labs Flow Dependency & Risks</h2>
+          <div className="legal-highlight">
+            <p><strong>CRITICAL NOTICE ON THIRD-PARTY COMPATIBILITY:</strong></p>
+            <p>Flow NextGen is an independent automation tool and is not affiliated, endorsed, or partnered with Google LLC or Google Labs Flow. The software operates strictly by interfacing with the current layout, APIs, and state mechanisms of the Google Labs Flow platform (<code>labs.google.com</code>).</p>
+            <p>You acknowledge and agree to the following conditions:</p>
+            <ul>
+              <li><strong>Breaking Changes:</strong> Google may modify its web dashboard, HTML selectors, endpoint structures, authentication protocols, or APIs at any time without notice. Such changes can cause Flow NextGen to stop working temporarily or permanently. We will attempt to release compatibility patches but cannot guarantee restoration of service.</li>
+              <li><strong>Service Obsolescence:</strong> If Google deprecates or locks the Google Labs Flow project, our extension may become obsolete. We are not liable to issue refunds or chargebacks for downtime caused by Google's updates or platform choices.</li>
+              <li><strong>Account Risks:</strong> Google's program guidelines may restrict or prohibit the use of automation scripts, macros, or DOM simulators. By using Flow NextGen, you assume all risks related to your Google account, including rate limits, flags, suspension, or termination. We are not liable for any actions Google takes against your Google account.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section>
+          <h2>5. Subscription Renewals & Cancellations</h2>
+          <p>Subscriptions renew automatically each month at our published rates. You can cancel your subscription at any time through our Merchant of Record portal (Paddle) or by contacting our team. Cancellations will deactivate future billing blocks; you will keep full Pro access until the end of your prepaid period, after which your account will revert to the Free tier.</p>
+        </section>
+
+        <section>
+          <h2>6. Acceptable Use Rules</h2>
+          <p>You agree not to:</p>
           <ul>
-            <li><strong>Free:</strong> Core automation features with a daily usage limit (30 prompts/day).</li>
-            <li><strong>Pro:</strong> Unlimited usage, priority queue, and advanced features. Requires subscription.</li>
-          </ul>
-          <p>The free tier is not a trial — it works indefinitely at the free level.</p>
-        </section>
-
-        <section>
-          <h2>4. Accounts</h2>
-          <p>You sign in with your email via a one-time code. You're responsible for keeping your email secure.</p>
-        </section>
-
-        <section>
-          <h2>5. Subscriptions</h2>
-          <p>Pro subscriptions are billed monthly through Paddle. Prices are listed on our site. Paddle handles all payment processing — we never see your card details.</p>
-          <p>Subscriptions renew automatically each month unless cancelled. You can cancel anytime — you keep Pro access until the end of your current billing period, then revert to free.</p>
-        </section>
-
-        <section>
-          <h2>6. Refunds</h2>
-          <p>See our <Link to="/refund">Refund Policy</Link>. Short version: 14-day window for first-time subscribers, no refunds after that unless required by law.</p>
-        </section>
-
-        <section>
-          <h2>7. Acceptable Use</h2>
-          <ul>
-            <li>No reverse engineering or copying the extension</li>
-            <li>No breaking Google Labs Flow's terms of service</li>
-            <li>No reselling or redistributing Pro access</li>
-            <li>No use for spam, fraud, or illegal activity</li>
-            <li>No bypassing usage limits or access controls</li>
+            <li>Reverse engineer, decompile, or harvest source code from the Chrome extension or our website assets.</li>
+            <li>Resell, sublicense, or share your Pro authentication email or account access with third parties.</li>
+            <li>Use the software's queue mechanics to submit illegal, abusive, harmful, or copyright-violating generation requests that breach Google's Acceptable Use policies.</li>
+            <li>Deploy bot farms or script wrappers on top of our extension to bypass payment barriers or license restrictions.</li>
           </ul>
         </section>
 
         <section>
-          <h2>8. Your Content</h2>
-          <p>Your prompts, settings, and generated media belong to you. We don't claim ownership and don't look at your prompts — they're sent directly to Google's API on your behalf.</p>
+          <h2>7. Disclaimer of Warranties</h2>
+          <p>FLOW NEXTGEN IS PROVIDED "AS IS" AND "AS AVAILABLE". WE EXPRESSLY DISCLAIM ALL WARRANTIES OF ANY KIND, WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO MERCHANTIBILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT. WE DO NOT WARRANT THAT THE SERVICE WILL BE UNINTERRUPTED, SECURE, BUGS-FREE, OR ERROR-FREE.</p>
         </section>
 
         <section>
-          <h2>9. Disclaimer</h2>
-          <p>The extension is provided "as is." We're not liable for lost generation credits due to bugs, changes to Flow that break the extension, or indirect damages.</p>
+          <h2>8. Limitation of Liability</h2>
+          <p>IN NO EVENT SHALL FLOW NEXTGEN, ITS DEVELOPERS, OR AFFILIATES BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING BUT NOT LIMITED TO LOSS OF DATA, LOSS OF GOOGLE SERVICES ACCESS, LOST PROFITS, OR TRANSACTION FAILURES, IN EXCESS OF THE TOTAL AMOUNT COMPENSATED BY YOU TO DISCLOSED PAYMENT SERVICES DURING THE THREE (3) MONTHS PRIOR TO THE CLAIM.</p>
         </section>
 
         <section>
-          <h2>10. Termination</h2>
-          <p>We can suspend your access for violating these terms. We'll email you before doing so unless it's an emergency.</p>
+          <h2>9. Governing Law & Dispute Resolution</h2>
+          <p>These Terms shall be governed by and construed in accordance with the laws of the jurisdiction in which the principal developer operates, without regard to its conflict of law provisions. Any legal disputes, claims, or arbitrations arising from our software must be brought exclusively in the courts of this jurisdiction.</p>
         </section>
 
         <section>
-          <h2>11. Changes</h2>
-          <p>We may update these terms. Material changes will be notified via email or the extension.</p>
-        </section>
-
-        <section>
-          <h2>12. Contact</h2>
+          <h2>10. Contact Information</h2>
+          <p>For terms inquiries or account policy questions, contact us via email at:</p>
           <p><strong>support.flownextgen@gmail.com</strong></p>
         </section>
 

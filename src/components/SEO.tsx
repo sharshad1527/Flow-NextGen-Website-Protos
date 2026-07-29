@@ -8,7 +8,7 @@ interface SEOProps {
 }
 
 const SITE_NAME = 'Flow NextGen'
-const BASE_URL = 'https://flow-nextgen.com'
+const BASE_URL = 'https://flownextgen.netlify.app'
 const DEFAULT_OG_IMAGE = `${BASE_URL}/og-image.webp`
 
 export function SEO({ title, description, ogImage, canonicalPath }: SEOProps) {
