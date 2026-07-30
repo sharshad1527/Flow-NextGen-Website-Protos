@@ -6,13 +6,28 @@ export function ScrollToTop() {
 
   useEffect(() => {
     if (hash) {
-      const timer = setTimeout(() => {
-        const element = document.querySelector(hash);
-        if (element) {
-          element.scrollIntoView({ behavior: "smooth" });
+      let attempts = 0;
+      const maxAttempts = 30; // 3 seconds max timeout
+      const interval = setInterval(() => {
+        try {
+          const element = document.querySelector(hash);
+          if (element) {
+            clearInterval(interval);
+            // Height verification helper: give layout/animations a tiny window to settle
+            setTimeout(() => {
+              element.scrollIntoView({ behavior: "smooth" });
+            }, 100);
+          }
+        } catch (e) {
+          // Prevent infinite loops if querySelector throws on malformed CSS selectors
+          clearInterval(interval);
         }
-      }, 0);
-      return () => clearTimeout(timer);
+        attempts++;
+        if (attempts >= maxAttempts) {
+          clearInterval(interval);
+        }
+      }, 100);
+      return () => clearInterval(interval);
     } else {
       window.scrollTo(0, 0);
     }

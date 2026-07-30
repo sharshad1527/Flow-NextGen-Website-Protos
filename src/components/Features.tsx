@@ -119,10 +119,10 @@ export function Features() {
                       </div>
                       <span className="prompt-text-flow">{prompt.text}</span>
                       <div className="reorder-actions">
-                        <button onClick={() => movePrompt(index, "up")} disabled={index === 0} className="reorder-btn">
+                        <button onClick={() => movePrompt(index, "up")} disabled={index === 0} className="reorder-btn" aria-label="Move queue item up">
                           <ChevronUp size={14} />
                         </button>
-                        <button onClick={() => movePrompt(index, "down")} disabled={index === prompts.length - 1} className="reorder-btn">
+                        <button onClick={() => movePrompt(index, "down")} disabled={index === prompts.length - 1} className="reorder-btn" aria-label="Move queue item down">
                           <ChevronDown size={14} />
                         </button>
                       </div>

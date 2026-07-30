@@ -58,6 +58,23 @@ test.describe('Flow NextGen Website', () => {
     await page.goto('/');
     // Verify key navigation links exist
     await expect(page.locator('a[href="/"]').first()).toBeVisible();
-    await expect(page.locator('a[href="/pricing"], nav:has(a[href*="pricing"])')).toBeVisible();
+    await expect(page.locator('a[href="/pricing"]').first()).toBeVisible();
+  });
+
+  test('pay page loads with query parameters and does not hit 404 SPA route fallback', async ({ page }) => {
+    await page.goto('/pay.html?email=test%40example.com&_ptxn=txn_test');
+    // Ensure we do not display the 404 custom React Page (NotFound component)
+    await expect(page.locator('text=404')).not.toBeVisible();
+    await expect(page.locator('text=Page Not Found')).not.toBeVisible();
+    
+    // Check for pay.html elements: "Subscribe to FLOWNextGen" header
+    await expect(page.locator('.brand-name')).toBeVisible();
+  });
+
+  test('direct hash entry /#features loads home page without error', async ({ page }) => {
+    await page.goto('/#features');
+    await expect(page).toHaveTitle(/Flow NextGen/);
+    // Home page main components should render
+    await expect(page.locator('#features')).toBeVisible();
   });
 });
