@@ -293,6 +293,7 @@
         if (transactionId) {
             const cleanUrl = new URL(window.location.href);
             cleanUrl.searchParams.delete('_ptxn');
+            cleanUrl.searchParams.delete('email');
             window.history.replaceState({}, document.title, cleanUrl.toString());
         }
 
