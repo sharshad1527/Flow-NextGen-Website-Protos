@@ -13,6 +13,9 @@
   font-family: "Inter", "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   color: #F5F5F5;
   text-align: left;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 /* --- Utilities & Colors --- */
