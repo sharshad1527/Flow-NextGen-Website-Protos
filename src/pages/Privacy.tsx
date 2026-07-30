@@ -16,7 +16,7 @@ export function Privacy() {
 
         <section>
           <h2>1. Data Controller</h2>
-          <p>Flow NextGen ("we", "us", or "our") operates the Flow NextGen Chrome extension and website. We are committed to protecting your privacy. For any data protection inquiries, contact us at <strong>support.flownextgen@gmail.com</strong>.</p>
+          <p>Flow NextGen ("we", "us", or "our") operates the Flow NextGen Chrome extension and website. We are committed to protecting your privacy. For any data protection inquiries, contact us at <strong>flownextgen-support@googlegroups.com</strong>.</p>
         </section>
 
         <section>
@@ -85,7 +85,7 @@ export function Privacy() {
         <section>
           <h2>7. Contact Support</h2>
           <p>For inquiries, deletion requests, or technical support, please contact us at:</p>
-          <p><strong>support.flownextgen@gmail.com</strong></p>
+          <p><strong>flownextgen-support@googlegroups.com</strong></p>
         </section>
 
         <div className="legal-nav-links">

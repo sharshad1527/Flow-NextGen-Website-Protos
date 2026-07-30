@@ -52,7 +52,7 @@ export function Refund() {
           <p>To request a refund, follow one of these paths:</p>
           <ul>
             <li><strong>Via Paddle Invoice:</strong> Open your original Paddle email receipt, click on the "View Receipt" link, scroll to the bottom page, and select "Request Refund" or chat with the Paddle virtual assistant.</li>
-            <li><strong>Via Support Email:</strong> Contact us at <strong>support.flownextgen@gmail.com</strong> with your registered account email, Paddle transaction reference ID, and a brief description of why you want a refund. We will review your request within 2 business days.</li>
+            <li><strong>Via Support Email:</strong> Contact us at <strong>flownextgen-support@googlegroups.com</strong> with your registered account email, Paddle transaction reference ID, and a brief description of why you want a refund. We will review your request within 2 business days.</li>
           </ul>
         </section>
 

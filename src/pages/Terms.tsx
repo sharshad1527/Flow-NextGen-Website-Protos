@@ -80,7 +80,7 @@ export function Terms() {
         <section>
           <h2>10. Contact Information</h2>
           <p>For terms inquiries or account policy questions, contact us via email at:</p>
-          <p><strong>support.flownextgen@gmail.com</strong></p>
+          <p><strong>flownextgen-support@googlegroups.com</strong></p>
         </section>
 
         <div className="legal-nav-links">
