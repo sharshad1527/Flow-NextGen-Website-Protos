@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /bg-playground
 
 Sitemap: https://flow-nextgen.com/sitemap.xml

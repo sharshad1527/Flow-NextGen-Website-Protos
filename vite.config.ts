@@ -13,14 +13,12 @@ export default defineConfig({
     Sitemap({
       hostname: 'https://flownextgen.netlify.app',
       dynamicRoutes,
-      exclude: ['/bg-playground'],
       changefreq: 'weekly',
       priority: 0.7,
       robots: [
         {
           userAgent: '*',
           allow: '/',
-          disallow: '/bg-playground',
         },
       ],
     }),

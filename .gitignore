@@ -33,4 +33,10 @@ graphify-out
 skills-lock.json
 docs/
 
+# Playwright
+test-results/
+playwright-report/
+blob-report/
+playwright/.cache/
+
 
