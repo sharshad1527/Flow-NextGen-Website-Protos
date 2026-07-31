@@ -77,4 +77,18 @@ test.describe('Flow NextGen Website', () => {
     // Home page main components should render
     await expect(page.locator('#features')).toBeVisible();
   });
+
+  test('sitemap.xml and robots.txt are served directly and do not hit 404 SPA fallback', async ({ page }) => {
+    const sitemapRes = await page.goto('/sitemap.xml');
+    expect(sitemapRes?.status()).toBe(200);
+    await expect(page.locator('text=404')).not.toBeVisible();
+    await expect(page.locator('text=Page Not Found')).not.toBeVisible();
+
+    const robotsRes = await page.goto('/robots.txt');
+    expect(robotsRes?.status()).toBe(200);
+    await expect(page.locator('text=404')).not.toBeVisible();
+    await expect(page.locator('text=Page Not Found')).not.toBeVisible();
+    const content = await robotsRes?.text();
+    expect(content).toContain('User-agent: *');
+  });
 });
