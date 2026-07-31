@@ -33,6 +33,10 @@ graphify-out
 skills-lock.json
 docs/
 
+# Obsidian & Local Wiki ignores
+wiki/.obsidian/
+wiki/graphify-out/
+
 # Playwright
 test-results/
 playwright-report/
