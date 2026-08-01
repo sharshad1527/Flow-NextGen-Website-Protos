@@ -3,21 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upgrade Complete | Flow NextGen</title>
+    <title>Upgrade Status | Flow NextGen</title>
     <link rel="stylesheet" href="styles.css">
     <style>
         .icon-container {
             width: 80px;
             height: 80px;
             margin: 0 auto 32px;
-            background: rgba(16, 185, 129, 0.1);
-            border: 1px solid rgba(16, 185, 129, 0.3);
             border-radius: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
+        }
+        .icon-success {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
             color: var(--emerald);
             box-shadow: 0 0 30px rgba(16, 185, 129, 0.15);
+        }
+        .icon-failure {
+            background: rgba(255, 68, 68, 0.1);
+            border: 1px solid rgba(255, 68, 68, 0.3);
+            color: #ff4444;
+            box-shadow: 0 0 30px rgba(255, 68, 68, 0.15);
         }
         .pro-badge {
             background: #ff6b00;
@@ -39,16 +47,16 @@
         <div class="glow-orb" style="width: 500px; height: 500px; top: 10%; right: 10%; background: var(--emerald); opacity: 0.1;"></div>
     </div>
 
-    <div class="glass-card" style="border-color: rgba(16, 185, 129, 0.2); text-align: center;">
+    <div id="success-view" class="glass-card" style="border-color: rgba(16, 185, 129, 0.2); text-align: center; display: none;">
         <div class="pro-badge">Pro Membership</div>
-        <div class="icon-container">
+        <div class="icon-container icon-success">
             <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="20 6 9 17 4 12"></polyline>
             </svg>
         </div>
         <h1>Upgrade Complete</h1>
         <p style="color: var(--steel); font-size: 14px; line-height: 1.6; max-width: 320px; margin: 0 auto 24px;">Your Pro membership is now active. You can start using your <strong>Pro plan</strong> immediately.</p>
-        
+
         <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-top: 8px;">
             <p style="font-size: 11px; color: var(--steel); line-height: 1.5; margin: 0;">
                 Please <strong>close this tab</strong> and return to the extension. <br/>
@@ -56,5 +64,46 @@
             </p>
         </div>
     </div>
+
+    <div id="failed-view" class="glass-card" style="border-color: rgba(255, 68, 68, 0.2); text-align: center; display: none;">
+        <div class="pro-badge" style="background: #ff4444;">Payment Failed</div>
+        <div class="icon-container icon-failure">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+        </div>
+        <h1>Payment Not Completed</h1>
+        <p style="color: var(--steel); font-size: 14px; line-height: 1.6; max-width: 320px; margin: 0 auto 24px;">Your payment did not complete. No charges were made.</p>
+
+        <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 12px; padding: 16px; margin-top: 8px;">
+            <p style="font-size: 11px; color: var(--steel); line-height: 1.5; margin: 0;">
+                You can close this tab and try upgrading again from the extension.
+            </p>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const params = new URLSearchParams(window.location.search);
+            const status = params.get('status');
+
+            if (status === 'failed') {
+                document.getElementById('failed-view').style.display = 'block';
+                document.title = 'Payment Failed | Flow NextGen';
+            } else {
+                // Default: show success (backwards compatible)
+                const view = document.getElementById('success-view');
+                view.style.display = 'block';
+                if (!status) {
+                    // No status param — append sync hint
+                    const hint = document.createElement('p');
+                    hint.style.cssText = 'font-size: 10px; color: var(--steel); opacity: 0.5; margin-top: 16px; line-height: 1.5;';
+                    hint.innerHTML = 'If your status hasn\'t updated, click <strong>Sync Subscription</strong> in your extension settings.';
+                    view.appendChild(hint);
+                }
+            }
+        })();
+    </script>
 </body>
 </html>
