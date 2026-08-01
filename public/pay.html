@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Subscribe | Flow NextGen</title>
     <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.paddle.com/paddle/v2/paddle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dodopayments-checkout@latest/dist/index.js"></script>
     <style>
         .split-layout {
             display: flex;
@@ -195,7 +195,7 @@
 
         .checkout-frame {
             width: 100%;
-            min-height: 340px;
+            min-height: 480px;
         }
     </style>
 </head>
@@ -214,7 +214,7 @@
                     <path d="M 35 45 L 65 30 L 65 45 L 35 60 Z" fill="#FFFFFF" />
                 </svg>
             </div>
-            
+
             <h1 class="brand-name">
                 <span class="brand-prefix" style="color: rgba(255, 255, 255, 0.6) !important;">Subscribe to</span>
                 <span><span class="brand-white" style="color: #ffffff !important;">FLOW</span><span class="brand-orange" style="color: #ff6b00 !important;">NextGen</span></span>
@@ -264,7 +264,7 @@
             <div class="trust-section">
                 <div class="trust-badge">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                    Secure Checkout &bull; Powered by Paddle
+                    Secure Checkout &bull; Powered by Dodo Payments
                 </div>
 
                 <div class="legal-footer">
@@ -274,7 +274,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="split-right">
             <div class="checkout-frame" id="checkout-frame">
                 <div class="loader-wrap" id="checkout-loader">
@@ -287,17 +287,15 @@
 
     <script>
         const urlParams = new URLSearchParams(window.location.search);
-        const email = urlParams.get('email');
-        const transactionId = urlParams.get('_ptxn');
+        const checkoutUrl = urlParams.get('checkout_url');
 
-        if (transactionId) {
+        if (checkoutUrl) {
             const cleanUrl = new URL(window.location.href);
-            cleanUrl.searchParams.delete('_ptxn');
-            cleanUrl.searchParams.delete('email');
+            cleanUrl.searchParams.delete('checkout_url');
             window.history.replaceState({}, document.title, cleanUrl.toString());
         }
 
-        if (!transactionId) {
+        if (!checkoutUrl) {
             document.body.innerHTML = `
                 <div style="display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center; color: #ff4444;">
                     <div>
@@ -308,63 +306,49 @@
             `;
         } else {
             try {
-                Paddle.Environment.set('sandbox'); 
-                
-                Paddle.Initialize({ 
-                    token: 'test_642b6f7a9376de533fddfde430b',
-                    checkout: {
-                        settings: {
-                            displayMode: "inline",
-                            frameTarget: "checkout-frame",
-                            frameInitialHeight: 340,
-                            frameStyle: "width: 100%; min-width: 312px; background-color: transparent; border: none;",
-                            theme: "dark",
-                            allowLogout: false
-                        }
-                    },
-                    eventCallback: function(event) {
-                        if (event.name === 'checkout.loaded' || event.name === 'checkout.updated') {
-                            document.getElementById('checkout-loader').style.display = 'none';
-                            
-                            const data = event.data;
-                            if (data && data.totals) {
-                                const totals = data.totals;
-                                const currency = data.currency_code === 'USD' ? '$' : (data.currency_code || '$');
-                                
-                                const subtotal = parseFloat(totals.subtotal).toFixed(2);
-                                const tax = parseFloat(totals.tax).toFixed(2);
-                                const total = parseFloat(totals.total).toFixed(2);
+                const Dodo = DodoPaymentsCheckout.DodoPayments;
 
-                                document.getElementById('dynamic-subtotal').innerText = currency + subtotal;
-                                document.getElementById('dynamic-tax').innerText = currency + tax;
-                                document.getElementById('dynamic-total').innerText = currency + total;
-                            }
+                Dodo.Initialize({
+                    mode: 'test',
+                    displayType: 'inline',
+                    onEvent: (event) => {
+                        if (event.event_type === 'checkout.form_ready' || event.event_type === 'checkout.opened') {
+                            document.getElementById('checkout-loader').style.display = 'none';
                         }
-                        if (event.name === 'checkout.completed') {
-                            window.location.href = 'success.html';
+                        if (event.event_type === 'checkout.breakdown') {
+                            const msg = event.data?.message || {};
+                            const currency = msg.finalTotalCurrency || msg.currency || 'USD';
+                            const symbol = currency === 'USD' ? '$' : (currency + ' ');
+                            const fmt = (cents) => (cents != null ? symbol + (cents / 100).toFixed(2) : '--');
+
+                            const subtotal = msg.subTotal != null ? fmt(msg.subTotal) : '--';
+                            const tax = msg.tax != null ? fmt(msg.tax) : '--';
+                            const total = msg.finalTotal != null ? fmt(msg.finalTotal) : (msg.total != null ? fmt(msg.total) : '--');
+
+                            document.getElementById('dynamic-subtotal').innerText = subtotal;
+                            document.getElementById('dynamic-tax').innerText = tax;
+                            document.getElementById('dynamic-total').innerText = total;
                         }
-                        if (event.name === 'checkout.closed') {
-                            document.body.innerHTML = `
-                                <div style="display: flex; align-items: center; justify-content: center; height: 100vh; text-align: center;">
-                                    <div>
-                                        <h2 style="margin-bottom: 16px;">Checkout Canceled</h2>
-                                        <p style="color: var(--steel); font-size: 14px; margin-bottom: 24px;">The transaction was closed. You can safely close this tab.</p>
-                                        <button onclick="window.close()" class="btn" style="max-width: 200px;">Close Window</button>
-                                    </div>
-                                </div>
-                            `;
+                        if (event.event_type === 'checkout.error') {
+                            console.error('Checkout error:', event.data?.message);
                         }
                     }
                 });
 
-                 Paddle.Checkout.open({
-                    transactionId: transactionId,
-                    customer: {
-                        email: email
+                Dodo.Checkout.open({
+                    checkoutUrl: checkoutUrl,
+                    elementId: 'checkout-frame',
+                    options: {
+                        showTimer: true,
+                        showSecurityBadge: false,
+                        payButtonText: 'Upgrade to Pro'
                     }
                 });
             } catch (err) {
-                console.error("Initialization Error:", err);
+                console.error('Dodo Initialization Error:', err);
+                document.getElementById('checkout-loader').style.display = 'none';
+                const el = document.getElementById('checkout-frame');
+                el.innerHTML = '<div style="padding: 2rem; text-align: center; color: #ff4444; font-size: 14px;">Checkout failed to load. Please close and retry from the extension.</div>';
             }
         }
     </script>
