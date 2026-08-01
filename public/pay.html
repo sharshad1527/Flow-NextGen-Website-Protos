@@ -291,6 +291,8 @@
     <script>
         const urlParams = new URLSearchParams(window.location.search);
         const checkoutUrl = urlParams.get('checkout_url');
+        // Server controls mode via query param — append '&mode=live' from create-dodo-checkout when DODO_ENVIRONMENT is live_mode
+        const mode = urlParams.get('mode') === 'live' ? 'live' : 'test';
 
         if (checkoutUrl) {
             const cleanUrl = new URL(window.location.href);
@@ -312,7 +314,7 @@
                 const Dodo = DodoPaymentsCheckout.DodoPayments;
 
                 Dodo.Initialize({
-                    mode: 'test',
+                    mode: mode,
                     displayType: 'inline',
                     onEvent: (event) => {
                         if (event.event_type === 'checkout.form_ready' || event.event_type === 'checkout.opened') {
