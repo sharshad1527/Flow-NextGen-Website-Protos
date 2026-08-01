@@ -88,6 +88,13 @@
             const params = new URLSearchParams(window.location.search);
             const status = params.get('status');
 
+            // Strip sensitive query params from the address bar after reading them
+            const cleanUrl = new URL(window.location.href);
+            for (const key of ['subscription_id', 'status', 'email', 'session_id', 'customer_id']) {
+              cleanUrl.searchParams.delete(key);
+            }
+            window.history.replaceState({}, document.title, cleanUrl.toString());
+
             if (status === 'failed') {
                 document.getElementById('failed-view').style.display = 'block';
                 document.title = 'Payment Failed | Flow NextGen';
