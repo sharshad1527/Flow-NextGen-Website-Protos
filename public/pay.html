@@ -324,7 +324,7 @@
                             document.getElementById('checkout-loader').style.display = 'none';
                         }
                         if (event.event_type === 'checkout.breakdown') {
-                            const msg = event.data?.message || {};
+                            const msg = event.data || {};
                             const currency = msg.finalTotalCurrency || msg.currency || 'USD';
                             const symbol = currency === 'USD' ? '$' : (currency + ' ');
                             const fmt = (cents) => (cents != null ? symbol + (cents / 100).toFixed(2) : '--');
