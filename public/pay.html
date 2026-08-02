@@ -247,19 +247,19 @@
                 <div class="features-grid">
                     <div class="feature-item">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                        API Mode & Fallback
+                    </div>
+                    <div class="feature-item">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
                         Unlimited Queue
                     </div>
                     <div class="feature-item">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Batch 4K DL
+                        Auto-Download & Naming
                     </div>
                     <div class="feature-item">
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Character Pro
-                    </div>
-                    <div class="feature-item">
-                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-                        Priority Flow
+                        2K/4K Upscale & DL
                     </div>
                 </div>
             </div>
@@ -324,14 +324,29 @@
                             document.getElementById('checkout-loader').style.display = 'none';
                         }
                         if (event.event_type === 'checkout.breakdown') {
-                            const msg = event.data || {};
-                            const currency = msg.finalTotalCurrency || msg.currency || 'USD';
-                            const symbol = currency === 'USD' ? '$' : (currency + ' ');
+                            const getSymbol = (curr) => {
+                                switch (String(curr).toUpperCase()) {
+                                    case 'USD': return '$';
+                                    case 'INR': return '₹';
+                                    case 'EUR': return '€';
+                                    case 'GBP': return '£';
+                                    case 'JPY': return '¥';
+                                    default: return curr ? curr + ' ' : '';
+                                }
+                            };
+
+                            const msg = event.data?.message || event.data || {};
+                            const currency = msg.currency || msg.finalTotalCurrency || 'USD';
+                            const symbol = getSymbol(currency);
                             const fmt = (cents) => (cents != null ? symbol + (cents / 100).toFixed(2) : '--');
 
-                            const subtotal = msg.subTotal != null ? fmt(msg.subTotal) : '--';
-                            const tax = msg.tax != null ? fmt(msg.tax) : '--';
-                            const total = msg.finalTotal != null ? fmt(msg.finalTotal) : (msg.total != null ? fmt(msg.total) : '--');
+                            const subtotalVal = msg.subTotal !== undefined ? msg.subTotal : (msg.subtotal !== undefined ? msg.subtotal : null);
+                            const taxVal = msg.tax !== undefined ? msg.tax : null;
+                            const totalVal = msg.finalTotal !== undefined ? msg.finalTotal : (msg.total !== undefined ? msg.total : (msg.total_amount !== undefined ? msg.total_amount : null));
+
+                            const subtotal = subtotalVal != null ? fmt(subtotalVal) : '--';
+                            const tax = taxVal != null ? fmt(taxVal) : '--';
+                            const total = totalVal != null ? fmt(totalVal) : '--';
 
                             document.getElementById('dynamic-subtotal').innerText = subtotal;
                             document.getElementById('dynamic-tax').innerText = tax;
