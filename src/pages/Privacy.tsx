@@ -12,11 +12,13 @@ export function Privacy() {
       />
       <div className="legal-container">
         <h1>Privacy Policy</h1>
-        <p className="legal-date">Last updated: July 26, 2026</p>
+        <p className="legal-date">Last updated: August 2, 2026</p>
 
         <section>
-          <h2>1. Data Controller</h2>
-          <p>Flow NextGen ("we", "us", or "our") operates the Flow NextGen Chrome extension and website. We are committed to protecting your privacy. For any data protection inquiries, contact us at <strong>flownextgen-support@googlegroups.com</strong>.</p>
+          <h2>1. Information We Collect</h2>
+          <p><strong>Account Information:</strong> When you sign in to Flow NextGen, we collect your email address via our authentication provider (Supabase). This is used to identify your account, sync your subscription tier, and manage your Pro access.</p>
+          <p><strong>Usage Data:</strong> We store your queue settings, prompt history, download preferences, and usage counters (e.g., prompts used per day) locally in your browser and synced to your account to enforce fair-use quotas and provide the Pro features you paid for.</p>
+          <p><strong>Payment Information:</strong> We do <strong>not</strong> collect, process, or store credit card numbers, billing addresses, or any financial credentials. All subscription purchases are conducted through our Merchant of Record, Dodo Payments (dodopayments.com).</p>
         </section>
 
         <section>
@@ -25,16 +27,16 @@ export function Privacy() {
           
           <h3>Core System Permissions</h3>
           <ul>
-            <li><strong>Debugger (`debugger`):</strong> Highly sensitive. Used exclusively to attach the Chrome DevTools Protocol (CDP) to the active <code>labs.google.com</code> tab. This allows the extension's background worker to trace generation network requests, manage token cache states, and bypass service workers during critical session crashes to recover frozen queues. No user browsing outside of Google Labs Flow is ever captured or debugged.</li>
-            <li><strong>Storage & Unlimited Storage (`storage`, `unlimitedStorage`):</strong> Enables the extension to save your preferences, queue configuration templates, generation logs, and output metadata locally. Unlimited storage is requested to prevent data loss when handling deep historical generation galleries.</li>
-            <li><strong>Scripting (`scripting`) & Content Scripts:</strong> Used to inject the automation overlay panel and helper page hooks directly into the context of Google Labs Flow pages to coordinate button clicks and form inputs.</li>
-            <li><strong>Cookies (`cookies`):</strong> Used to monitor and manage session state for <code>labs.google.com</code>. This helps clear corrupted local cached tokens that cause generation failures during queue orchestrations.</li>
-            <li><strong>Browsing Data (`browsingData`):</strong> Restricts clearing of cache and local website state specifically for Google Labs domains to assist in session recovery cycles.</li>
-            <li><strong>Downloads (`downloads`):</strong> Power the auto-download feature, saving completed generations directly to your browser's default downloads directory utilizing custom metadata-based filenames.</li>
-            <li><strong>Tabs & Active Tab (`tabs`, `activeTab`):</strong> Used to track tab loading states and determine when a user is navigating Google Labs Flow tabs so automation scripting is safely initialized.</li>
-            <li><strong>Side Panel (`sidePanel`):</strong> Provides a persistent sidepanel UI to monitor batch queues and review generation history side-by-side with the active creation canvas.</li>
-            <li><strong>Alarms (`alarms`):</strong> Schedules recurring background worker wake-ups to check queue progress and retry failed generations.</li>
-            <li><strong>Identity (`identity`):</strong> Used for optional extension configuration sync features across chrome profiles.</li>
+            <li><strong>Debugger (<code>debugger</code>):</strong> Highly sensitive. Used exclusively to attach the Chrome DevTools Protocol (CDP) to the active <code>labs.google.com</code> tab. This allows the extension's background worker to trace generation network requests, manage token cache states, and bypass service workers during critical session crashes to recover frozen queues. No user browsing outside of Google Labs Flow is ever captured or debugged.</li>
+            <li><strong>Storage & Unlimited Storage (<code>storage</code>, <code>unlimitedStorage</code>):</strong> Enables the extension to save your preferences, queue configuration templates, generation logs, and output metadata locally. Unlimited storage is requested to prevent data loss when handling deep historical generation galleries.</li>
+            <li><strong>Scripting (<code>scripting</code>) & Content Scripts:</strong> Used to inject the automation overlay panel and helper page hooks directly into the context of Google Labs Flow pages to coordinate button clicks and form inputs.</li>
+            <li><strong>Cookies (<code>cookies</code>):</strong> Used to monitor and manage session state for <code>labs.google.com</code>. This helps clear corrupted local cached tokens that cause generation failures during queue orchestrations.</li>
+            <li><strong>Browsing Data (<code>browsingData</code>):</strong> Restricts clearing of cache and local website state specifically for Google Labs domains to assist in session recovery cycles.</li>
+            <li><strong>Downloads (<code>downloads</code>):</strong> Power the auto-download feature, saving completed generations directly to your browser's default downloads directory utilizing custom metadata-based filenames.</li>
+            <li><strong>Tabs & Active Tab (<code>tabs</code>, <code>activeTab</code>):</strong> Used to track tab loading states and determine when a user is navigating Google Labs Flow tabs so automation scripting is safely initialized.</li>
+            <li><strong>Side Panel (<code>sidePanel</code>):</strong> Provides a persistent sidepanel UI to monitor batch queues and review generation history side-by-side with the active creation canvas.</li>
+            <li><strong>Alarms (<code>alarms</code>):</strong> Schedules recurring background worker wake-ups to check queue progress and retry failed generations.</li>
+            <li><strong>Identity (<code>identity</code>):</strong> Used for optional extension configuration sync features across chrome profiles.</li>
           </ul>
 
           <h3>Host Permissions & Domains Accessed</h3>
@@ -47,16 +49,23 @@ export function Privacy() {
         </section>
 
         <section>
-          <h2>3. Account & Subscription Data</h2>
-          <h3>Email & Authentication</h3>
-          <p>You sign in using a passwordless one-time code emailed to you. Your email address and unique user identifier are stored in our secure database hosted by Supabase. This is processed solely to verify your membership credentials and tier limits.</p>
-
-          <h3>Billing & Payment Data</h3>
-          <p>We do not collect, process, or store financial credentials. All subscription purchases are conducted through our online reseller and Merchant of Record, Paddle.com. Credit card numbers, billing addresses, and payment details are processed directly by Paddle under their own privacy policy.</p>
+          <h2>3. How Payment Data Is Handled</h2>
+          <p>All subscription purchases and payment processing are handled by <strong>Dodo Payments</strong> (dodopayments.com), our online reseller and Merchant of Record. When you subscribe, your payment details are provided directly to Dodo Payments, which processes them under its own privacy policy. We never see or store your full card number, CVV, or billing address.</p>
+          <p>Dodo Payments' privacy policy applies to the payment data you provide them: <a href="https://dodopayments.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer">https://dodopayments.com/legal/privacy-policy</a></p>
         </section>
 
         <section>
-          <h2>4. Google API Services Limited Use Disclosure</h2>
+          <h2>4. How We Use Your Information</h2>
+          <ul>
+            <li>To provide, maintain, and improve the Flow NextGen extension and website</li>
+            <li>To authenticate your account and sync your Free/Pro tier status</li>
+            <li>To enforce fair-use quotas (e.g., 30 prompts per 6-hour window on Free)</li>
+            <li>To communicate with you about your subscription, billing, or support requests</li>
+          </ul>
+        </section>
+
+        <section>
+          <h2>5. Google API Services Limited Use Disclosure</h2>
           <p>Flow NextGen's use and transfer to any other app of information received from Google APIs will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy" target="_blank" rel="noopener noreferrer">Google API Services User Data Policy</a>, including the Limited Use requirements:</p>
           <div className="legal-highlight">
             <ul>
@@ -69,23 +78,27 @@ export function Privacy() {
         </section>
 
         <section>
-          <h2>5. GDPR and CCPA Disclosures</h2>
-          <h3>European Union GDPR Rights</h3>
-          <p>If you reside in the EEA/UK, under the General Data Protection Regulation you have the right to request access to, correction of, or erasure of your email data stored in Supabase. You are also entitled to object to data processing or withdraw your consent. All requests can be sent to our support email.</p>
-
-          <h3>California CCPA Compliance</h3>
-          <p>We do not "sell" or "share" personal information as defined by the California Consumer Privacy Act. We solely collect your email for account delivery and subscription status management (Service Provider model).</p>
+          <h2>6. Data Sharing</h2>
+          <p>We do not sell your personal data. We share data only with the service providers required to operate the product:</p>
+          <ul>
+            <li><strong>Supabase</strong> — account authentication, profile storage, and subscription state</li>
+            <li><strong>Dodo Payments</strong> — payment processing, subscription billing, refunds (as Merchant of Record)</li>
+          </ul>
         </section>
 
         <section>
-          <h2>6. Data Security & Retention</h2>
-          <p>We implement encryption in transit (HTTPS/TLS) for all web communications and rely on industry-standard hosting security provided by Supabase. Your email records are retained until you delete your account. Local extension data (diagnostics, templates, queue history) stays on your machine and is deleted when you uninstall the extension or clear browser storage.</p>
+          <h2>7. Data Retention & Deletion</h2>
+          <p>We retain your account data while your account is active. You may request deletion of your account and associated data at any time by contacting us at <strong>flownextgen-support@googlegroups.com</strong>. Payment records are retained by Dodo Payments as required by applicable tax and financial regulations.</p>
         </section>
 
         <section>
-          <h2>7. Contact Support</h2>
-          <p>For inquiries, deletion requests, or technical support, please contact us at:</p>
-          <p><strong>flownextgen-support@googlegroups.com</strong></p>
+          <h2>8. Your Rights</h2>
+          <p>Depending on your jurisdiction (including GDPR in the EEA/UK), you may have rights to access, correct, export, or delete your personal data. To exercise these rights, contact us at <strong>flownextgen-support@googlegroups.com</strong>.</p>
+        </section>
+
+        <section>
+          <h2>9. Contact</h2>
+          <p>For privacy questions, contact us at <strong>flownextgen-support@googlegroups.com</strong>.</p>
         </section>
 
         <div className="legal-nav-links">

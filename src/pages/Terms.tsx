@@ -12,7 +12,7 @@ export function Terms() {
       />
       <div className="legal-container">
         <h1>Terms of Service</h1>
-        <p className="legal-date">Last updated: July 26, 2026</p>
+        <p className="legal-date">Last updated: August 2, 2026</p>
 
         <section>
           <h2>1. Introduction & Acceptance</h2>
@@ -29,7 +29,8 @@ export function Terms() {
 
         <section>
           <h2>3. Merchant of Record Reseller Clause</h2>
-          <p>Our billing, order processes, and checkout operations are conducted exclusively by our online reseller and Merchant of Record, <strong>Paddle.com</strong>. Paddle is the legal seller of record for all our digital product sales. By subscribing to our Pro services, you acknowledge that transactions are subject to Paddle's own Buyer Terms and Conditions, and you agree to their payment, tax compliance, and processing guidelines.</p>
+          <p>Our billing, order processes, and checkout operations are conducted exclusively by our online reseller and Merchant of Record, <strong>Dodo Payments</strong> (dodopayments.com). Dodo Payments is the legal seller of record for all our digital product sales. By subscribing to our Pro services, you acknowledge that transactions are subject to Dodo Payments' own Buyer Terms and Conditions, and you agree to their payment, tax compliance, and processing guidelines.</p>
+          <p>Dodo Payments' Buyer Terms: <a href="https://dodopayments.com/legal/buyer-terms" target="_blank" rel="noopener noreferrer">https://dodopayments.com/legal/buyer-terms</a></p>
         </section>
 
         <section>
@@ -48,7 +49,8 @@ export function Terms() {
 
         <section>
           <h2>5. Subscription Renewals & Cancellations</h2>
-          <p>Subscriptions renew automatically each month at our published rates. You can cancel your subscription at any time through our Merchant of Record portal (Paddle) or by contacting our team. Cancellations will deactivate future billing blocks; you will keep full Pro access until the end of your prepaid period, after which your account will revert to the Free tier.</p>
+          <p>Subscriptions renew automatically each month at our published rate ($9.99/month). You can cancel your subscription at any time through the Dodo Payments customer portal (the "Manage Subscription" option in your extension settings) or by contacting our team. Cancellations will deactivate future billing; you will keep full Pro access until the end of your prepaid period, after which your account will revert to the Free tier.</p>
+          <p>Taxes (including GST/VAT where applicable) are calculated, collected, and remitted by Dodo Payments as our Merchant of Record. The price you see at checkout is inclusive of applicable taxes unless stated otherwise.</p>
         </section>
 
         <section>

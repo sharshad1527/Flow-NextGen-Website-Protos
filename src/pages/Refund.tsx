@@ -12,7 +12,7 @@ export function Refund() {
       />
       <div className="legal-container">
         <h1>Refund Policy</h1>
-        <p className="legal-date">Last updated: July 26, 2026</p>
+        <p className="legal-date">Last updated: August 2, 2026</p>
 
         <section>
           <h2>Try the Free Tier First</h2>
@@ -34,7 +34,8 @@ export function Refund() {
 
         <section>
           <h2>3. Merchant of Record & Processing</h2>
-          <p>All subscription payments, checkouts, and refunds are managed by our Merchant of Record, <strong>Paddle.com</strong>. Since Paddle processes the payments and handles tax filings, refund requests must be routed through Paddle. Once a refund is approved by our team or Paddle support, it will be credited back to your original payment method. Processing timelines vary: debit/credit card refunds take 3-5 business days; PayPal transactions typically post within 48 hours.</p>
+          <p>All subscription payments, checkouts, and refunds are managed by our Merchant of Record, <strong>Dodo Payments</strong> (dodopayments.com). Since Dodo Payments processes the payments and handles tax filings, refund requests are processed through Dodo Payments. Once a refund is approved by our team or Dodo Payments, it is credited back to your original payment method. Refund processing typically takes 3-5 business days depending on your bank or payment method.</p>
+          <p>We offer <strong>full refunds</strong> for eligible requests within the 14-day window, and <strong>partial refunds</strong> at our discretion (for example, where only part of a charge warrants a refund). Dodo Payments enforces a 30-day platform limit for initiating refunds on any successful payment.</p>
         </section>
 
         <section>
@@ -51,9 +52,10 @@ export function Refund() {
           <h2>6. How to Request a Refund</h2>
           <p>To request a refund, follow one of these paths:</p>
           <ul>
-            <li><strong>Via Paddle Invoice:</strong> Open your original Paddle email receipt, click on the "View Receipt" link, scroll to the bottom page, and select "Request Refund" or chat with the Paddle virtual assistant.</li>
-            <li><strong>Via Support Email:</strong> Contact us at <strong>flownextgen-support@googlegroups.com</strong> with your registered account email, Paddle transaction reference ID, and a brief description of why you want a refund. We will review your request within 2 business days.</li>
+            <li><strong>Via the Dodo Payments customer portal:</strong> Open the "Manage Subscription" option in your extension settings, sign in to the Dodo Payments customer portal, and view your transaction history. Refund requests can be initiated from the payment details view.</li>
+            <li><strong>Via Support Email:</strong> Contact us at <strong>flownextgen-support@googlegroups.com</strong> with your registered account email and a brief description of why you want a refund. We will review your request within 2 business days and process approved refunds through Dodo Payments.</li>
           </ul>
+          <p><strong>Chargebacks:</strong> If you dispute a charge through your bank or card network instead of requesting a refund directly, the chargeback will be handled through Dodo Payments as our Merchant of Record. Dodo Payments will manage the dispute process on our behalf.</p>
         </section>
 
         <div className="legal-nav-links">
