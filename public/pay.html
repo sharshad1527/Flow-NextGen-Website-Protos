@@ -342,7 +342,13 @@
 
                             const subtotalVal = msg.subTotal !== undefined ? msg.subTotal : (msg.subtotal !== undefined ? msg.subtotal : null);
                             const taxVal = msg.tax !== undefined ? msg.tax : null;
-                            const totalVal = msg.finalTotal !== undefined ? msg.finalTotal : (msg.total !== undefined ? msg.total : (msg.total_amount !== undefined ? msg.total_amount : null));
+                            const discountVal = msg.discount !== undefined ? msg.discount : 0;
+                            let totalVal = msg.finalTotal !== undefined ? msg.finalTotal : (msg.total !== undefined ? msg.total : (msg.total_amount !== undefined ? msg.total_amount : null));
+
+                            // Fallback calculation if total is omitted from payload
+                            if (totalVal === null && subtotalVal !== null) {
+                                totalVal = subtotalVal + (taxVal || 0) - (discountVal || 0);
+                            }
 
                             const subtotal = subtotalVal != null ? fmt(subtotalVal) : '--';
                             const tax = taxVal != null ? fmt(taxVal) : '--';
