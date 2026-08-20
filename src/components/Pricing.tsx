@@ -71,6 +71,7 @@ export function Pricing() {
             <ul className="feature-list">
               <li><Check size={16} className="success-text" /> API Mode + DOM auto-fallback</li>
               <li><Check size={16} className="success-text" /> Unlimited Queue</li>
+              <li><Check size={16} className="success-text" /> Native Character Consistency & Flow Packets</li>
               <li><Check size={16} className="success-text" /> Auto-Download & Smart Naming</li>
               <li><Check size={16} className="success-text" /> 2K/4K Upscale & Downloads</li>
               <li><Check size={16} className="success-text" /> Advanced Gallery & Metadata</li>

@@ -10,7 +10,15 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Is it free?",
-    answer: "Yes, there is a free tier that gives you 30 prompts per 6 hours with DOM simulation mode. The Pro tier at $9.99/month unlocks unlimited generation, API-first mode, auto-download, 4K upscaling, and priority features."
+    answer: "Yes, there is a free tier that gives you 30 prompts per 6 hours with DOM simulation mode. The Pro tier at $9.99/month unlocks unlimited generation, API-first mode, auto-download, 4K upscaling, native character consistency, and priority features."
+  },
+  {
+    question: "How does Native Character Consistency work?",
+    answer: "Flow NextGen parses @handle definitions in your prompts and automatically binds them to Google Flow's native character entities (chips). If native chip verification degrades, the engine seamlessly falls back to prompt text expansion so your characters remain consistent across generations."
+  },
+  {
+    question: "What are Flow Packets?",
+    answer: "Flow Packets are shareable JSON or TXT bundles containing your prompt suites, generation mode settings, and @handle character mappings. You can export your configuration in one click or import external packets to instantly populate your queue."
   },
   {
     question: "What models does it support?",

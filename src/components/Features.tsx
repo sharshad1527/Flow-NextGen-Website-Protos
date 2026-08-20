@@ -11,7 +11,9 @@ import {
   ChevronDown,
   FileVideo,
   FileImage,
-  RefreshCw
+  RefreshCw,
+  Users,
+  Package
 } from "lucide-react";
 import "./Features.css";
 
@@ -315,6 +317,39 @@ export function Features() {
             <div className="bento-content">
               <h3><FolderDown size={20} className="accent-text" /> Auto-Download & Clean Renaming</h3>
               <p>Eliminate download exhaustion. Finished media is downloaded instantly and renamed using custom naming templates - prefix, date, index, or slug - keeping your output directory perfectly structured.</p>
+            </div>
+          </motion.div>
+
+          {/* Tile 5: Native Characters & Flow Packets */}
+          <motion.div 
+            className="bento-item bento-characters glass-card"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.4 }}
+          >
+            <div className="bento-visual centered-visual">
+              <div className="interactive-mode-container">
+                <span className="visual-badge">Character & Packet Engine</span>
+                <div className="mode-simulation-screen glass-panel" style={{ minHeight: "130px", justifyContent: "center" }}>
+                  <div className="downloaded-items-list" style={{ gap: "8px" }}>
+                    <div className="downloaded-file-item glass-card" style={{ borderLeft: "3px solid var(--accent-color)" }}>
+                      <Users size={14} className="accent-text" />
+                      <span className="file-name-text">@maya Cyberpunk Navigator</span>
+                      <span className="visual-badge" style={{ fontSize: "0.65rem", padding: "2px 6px" }}>CHIP BOUND</span>
+                    </div>
+                    <div className="downloaded-file-item glass-card" style={{ borderLeft: "3px solid #10b981" }}>
+                      <Package size={14} className="success-text" />
+                      <span className="file-name-text">cyberpunk_story_suite.json</span>
+                      <span className="visual-badge" style={{ fontSize: "0.65rem", padding: "2px 6px", background: "rgba(16, 185, 129, 0.15)", color: "#10b981" }}>PACKET EXPORTED</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="bento-content">
+              <h3><Users size={20} className="accent-text" /> Native Character Consistency & Flow Packets</h3>
+              <p>Bind @handle definitions to Google Flow's native character chips with intelligent fallback. Export or import full prompt suites and character definitions with 1-click Flow Packets.</p>
             </div>
           </motion.div>
         </div>

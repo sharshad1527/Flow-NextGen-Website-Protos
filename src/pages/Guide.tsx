@@ -12,7 +12,7 @@ export function Guide() {
       />
       <div className="guide-container">
         <h1>Flow NextGen Guide</h1>
-        <p className="guide-subtitle">Based on source code analysis of Version 24.13.37 (July 2026).</p>
+        <p className="guide-subtitle">Based on source code analysis of Version 26.36.39 (August 2026).</p>
 
         <hr className="guide-divider" />
 
@@ -30,6 +30,8 @@ export function Guide() {
                 <li><a href="#ingredients">Ingredients to Video</a></li>
               </ol>
             </li>
+            <li><a href="#characters">Native Characters &amp; Consistency</a></li>
+            <li><a href="#flow-packets">Flow Packets (Import &amp; Export)</a></li>
             <li><a href="#autopilot">Autopilot T2I→F2V</a></li>
             <li><a href="#queue">Queue System</a></li>
             <li><a href="#gallery">Gallery</a></li>
@@ -265,9 +267,69 @@ export function Guide() {
 
         <hr className="guide-divider" />
 
+        {/* ============================================ CHARACTERS ============================================ */}
+        <section id="characters">
+          <h2>4. Native Characters &amp; Consistency</h2>
+          <p>
+            Flow NextGen includes a hybrid <strong>Character Consistency Engine</strong> that connects <code>@handle</code> definitions in your prompt text directly to Google Flow's native character entities.
+          </p>
+
+          <h3>Defining Characters with @handle</h3>
+          <p>You can define character profiles in your prompt input using the <code>@handle</code> syntax:</p>
+          <pre style={{ background: "rgba(0,0,0,0.4)", padding: "12px", borderRadius: "8px", color: "var(--accent-color)" }}>
+            <code>@maya Futuristic cyber pilot in leather jacket [||| voice: Maya ||| info: brown eyes, silver hair]</code>
+          </pre>
+
+          <h3>How Native Chip Binding Works</h3>
+          <ol>
+            <li><strong>Backend Entity Scan:</strong> When you open a project, Flow NextGen scans Google Flow's initial data to find existing character entities.</li>
+            <li><strong>Chip Replay:</strong> During prompt dispatch, the extension replaces <code>@handle</code> references with Google Flow's native <code>AT_TAG</code> character chips (<code>characterServerId</code>).</li>
+            <li><strong>Intelligent Fallback:</strong> If native chip verification is unavailable or fails, the engine gracefully degrades to prompt text expansion—ensuring generation never fails silently.</li>
+          </ol>
+
+          <h3>Reference Trays</h3>
+          <div className="guide-table-wrapper">
+            <table>
+              <thead>
+                <tr><th>Tray</th><th>Source</th><th>Usage</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Device References</strong></td><td>Uploaded from local disk</td><td>Use for general reference images, start/end frames, and ingredients.</td></tr>
+                <tr><td><strong>Project Character References</strong></td><td>Live Google Flow backend scan</td><td>Shows active character entities tied to the current project and active prompt session.</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <hr className="guide-divider" />
+
+        {/* ============================================ FLOW PACKETS ============================================ */}
+        <section id="flow-packets">
+          <h2>5. Flow Packets (Import &amp; Export)</h2>
+          <p>
+            <strong>Flow Packets</strong> are structured bundles containing your prompt suites, generation mode settings, and <code>@handle</code> character definitions in a single shareable format (<code>.json</code> or <code>.txt</code>).
+          </p>
+
+          <h3>Importing a Flow Packet</h3>
+          <ol>
+            <li>In Step 1 (Prompts), click <strong>Import Packet</strong> or paste the packet JSON directly into the prompt text area.</li>
+            <li>The extension automatically parses the packet sections (<code># CHARACTER PROMPTS</code>, <code># VIDEO PROMPTS</code>, <code># NOTES</code>).</li>
+            <li>Mode, aspect ratio, models, and reference assignments are pre-populated instantly.</li>
+          </ol>
+
+          <h3>Exporting a Flow Packet</h3>
+          <ol>
+            <li>Configure your prompts and character mappings in the Control tab.</li>
+            <li>Click <strong>Export Packet</strong> from the top action toolbar.</li>
+            <li>Save the generated <code>.json</code> packet to share with team members or store for future runs.</li>
+          </ol>
+        </section>
+
+        <hr className="guide-divider" />
+
         {/* ============================================ AUTOPILOT ============================================ */}
         <section id="autopilot">
-          <h2>4. Autopilot (T2I→F2V)</h2>
+          <h2>6. Autopilot (T2I→F2V)</h2>
           <p>
             Autopilot automatically chains <strong>Text to Image</strong> outputs into <strong>Image to Video</strong> (Frame to Video) follow-ups.
           </p>
@@ -301,7 +363,7 @@ export function Guide() {
 
         {/* ============================================ QUEUE ============================================ */}
         <section id="queue">
-          <h2>5. Queue System</h2>
+          <h2>7. Queue System</h2>
           <p>The <strong>Queue</strong> tab (<code>/queue</code>) shows all generation tasks grouped by launch.</p>
 
           <h3>How to Queue Prompts</h3>
@@ -374,7 +436,7 @@ export function Guide() {
 
         {/* ============================================ GALLERY ============================================ */}
         <section id="gallery">
-          <h2>6. Gallery</h2>
+          <h2>8. Gallery</h2>
           <p>The <strong>Gallery</strong> tab (<code>/gallery</code>) shows all media generated in your Flow project.</p>
 
           <h3>How to Find Generated Media</h3>
@@ -451,7 +513,7 @@ export function Guide() {
 
         {/* ============================================ SETTINGS ============================================ */}
         <section id="settings">
-          <h2>7. Settings</h2>
+          <h2>9. Settings</h2>
           <p>The <strong>Settings</strong> tab has <strong>5 sub-tabs</strong>: Account, Compiler, Downloads, System, Debugger.</p>
 
           <h3>Account Tab</h3>
@@ -463,11 +525,11 @@ export function Guide() {
                 <tr><td><strong>OTP input</strong></td><td>6-digit verification code sent to your email</td><td></td></tr>
                 <tr><td><strong>Authorize Session</strong></td><td>Sends OTP or verifies code</td><td></td></tr>
                 <tr><td><strong>Resend Code</strong></td><td>Re-send OTP (60s cooldown)</td><td></td></tr>
-                <tr><td><strong>Upgrade to Pro</strong></td><td>Opens Paddle checkout to purchase Pro</td><td></td></tr>
-                <tr><td><strong>Manage Subscription</strong></td><td>Opens Paddle customer portal (Pro users)</td><td></td></tr>
-                <tr><td><strong>Sync Subscription</strong></td><td>Force sync tier from Paddle/Supabase</td><td></td></tr>
+                <tr><td><strong>Upgrade to Pro</strong></td><td>Opens Dodo Payments checkout to purchase Pro</td><td></td></tr>
+                <tr><td><strong>Manage Subscription</strong></td><td>Opens Dodo Payments customer portal (Pro users)</td><td></td></tr>
+                <tr><td><strong>Sync Subscription</strong></td><td>Force sync tier from Dodo/Supabase</td><td></td></tr>
                 <tr><td><strong>Refresh Session</strong></td><td>Re-fetch profile from Supabase</td><td></td></tr>
-                <tr><td><strong>Re-sync Subscription</strong></td><td>Full Paddle sync</td><td></td></tr>
+                <tr><td><strong>Re-sync Subscription</strong></td><td>Full subscription status resync</td><td></td></tr>
                 <tr><td><strong>Reset Auth State</strong></td><td>Clear local session data</td><td></td></tr>
                 <tr><td><strong>Sign Out</strong></td><td>End session</td><td></td></tr>
               </tbody>
@@ -510,7 +572,7 @@ export function Guide() {
 
         {/* ============================================ BILLING ============================================ */}
         <section id="billing">
-          <h2>8. Billing &amp; Tiers</h2>
+          <h2>10. Billing &amp; Tiers</h2>
           <p><strong>Free Tier:</strong></p>
           <ul>
             <li>30 generations per day (resets at 06:00 UTC)</li>

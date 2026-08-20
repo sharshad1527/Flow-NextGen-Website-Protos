@@ -22,11 +22,11 @@ export function HowItWorks() {
       icon: <ListChecks size={24} />,
       title: "1. Paste Your Prompts",
       subtitle: "Plain Text or Scene Builder",
-      description: "Open the side panel on any Google Flow page. Paste your prompts - one per line or paragraph-separated. The engine auto-detects each block as a separate generation task.",
+      description: "Open the side panel on any Google Flow page. Paste your prompts, define @handle character rules, or import a 1-click Flow Packet. The engine auto-detects each block as a separate generation task.",
       colorClass: "accent-text",
       detailsList: [
-        "Plain text paste - one prompt per line",
-        "Auto-detects paragraph-separated prompts",
+        "Plain text paste or 1-click Flow Packet import",
+        "@handle character syntax support",
         "Engine model selector per mode"
       ]
     },
