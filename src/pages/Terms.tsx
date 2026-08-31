@@ -49,7 +49,7 @@ export function Terms() {
 
         <section>
           <h2>5. Subscription Renewals & Cancellations</h2>
-          <p>Subscriptions renew automatically each month at our published rate ($9.99/month). You can cancel your subscription at any time through the Dodo Payments customer portal (the "Manage Subscription" option in your extension settings) or by contacting our team. Cancellations will deactivate future billing; you will keep full Pro access until the end of your prepaid period, after which your account will revert to the Free tier.</p>
+          <p>Subscriptions renew automatically each month at our published rate ($5.99/month). You can cancel your subscription at any time through the Dodo Payments customer portal (the "Manage Subscription" option in your extension settings) or by contacting our team. Cancellations will deactivate future billing; you will keep full Pro access until the end of your prepaid period, after which your account will revert to the Free tier.</p>
           <p>Taxes (including GST/VAT where applicable) are calculated, collected, and remitted by Dodo Payments as our Merchant of Record. The price you see at checkout is inclusive of applicable taxes unless stated otherwise.</p>
         </section>
 

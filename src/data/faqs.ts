@@ -10,7 +10,7 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Is it free?",
-    answer: "Yes, there is a free tier that gives you 30 prompts per 6 hours with DOM simulation mode. The Pro tier at $9.99/month unlocks unlimited generation, API-first mode, auto-download, 4K upscaling, native character consistency, and priority features."
+    answer: "Yes, there is a free tier that gives you 30 prompts per 6 hours with DOM simulation mode. The Pro tier at $5.99/month unlocks unlimited generation, API-first mode, auto-download, 4K upscaling, native character consistency, and priority features."
   },
   {
     question: "How does Native Character Consistency work?",
@@ -38,6 +38,6 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Is Flow NextGen affiliated with Google?",
-    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $9.99/month Pro subscription covers this extension's automation features only, you still need your own Google account and access to labs.google/fx/tools/flow. Google Flow's own Pro/Ultra tiers are completely separate."
+    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $5.99/month Pro subscription covers this extension's automation features only, you still need your own Google account and access to labs.google/fx/tools/flow. Google Flow's own Pro/Ultra tiers are completely separate."
   }
 ];

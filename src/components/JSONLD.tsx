@@ -27,7 +27,7 @@ export function SoftwareApplicationSchema() {
       {
         "@type": "Offer",
         "name": "Pro",
-        "price": "9.99",
+        "price": "5.99",
         "priceCurrency": "USD",
         "description":
           "Unlimited generations, priority queue, bulk mode, autopilot",

@@ -579,7 +579,7 @@ export function Guide() {
             <li>Core automation features</li>
             <li>Standard download resolution</li>
           </ul>
-          <p><strong>Pro Tier ($9.99/month):</strong></p>
+          <p><strong>Pro Tier ($5.99/month):</strong></p>
           <ul>
             <li>Unlimited generation</li>
             <li>Priority queue scheduling</li>
