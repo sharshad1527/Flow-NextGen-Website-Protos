@@ -98,7 +98,7 @@ export function Header() {
             Guide
           </Link>
           <a
-            href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond/reviews"
+            href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp/reviews"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -189,10 +189,10 @@ export function Header() {
           Guide
         </Link>
         <a
-          href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond/reviews"
+          href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp/reviews"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={() => setMobileMenuOpen(false)}
+          className="text-xs font-semibold text-slate-400 hover:text-white transition-colors"
         >
           Review
         </a>

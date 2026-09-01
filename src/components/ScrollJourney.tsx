@@ -501,7 +501,7 @@ export function ScrollJourney() {
               </div>
               <div className="hero-cta-row">
                 <a
-                  href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond"
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="button-primary shiny-button-lg"
@@ -527,7 +527,7 @@ export function ScrollJourney() {
                   Install Extension - Free
                 </a>
                 <a
-                  href="#"
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp/reviews"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="button-secondary review-btn"
@@ -688,7 +688,7 @@ export function ScrollJourney() {
 
               <motion.div className="hero-cta-row" variants={itemVariants}>
                 <a
-                  href="https://chromewebstore.google.com/detail/flow-nextgen/opobokhfcoacjegnhjmkncbabpdlgond"
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="button-primary shiny-button-lg"
@@ -723,7 +723,7 @@ export function ScrollJourney() {
                   Install Extension - Free
                 </a>
                 <a
-                  href="#"
+                  href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp/reviews"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="button-secondary review-btn"
