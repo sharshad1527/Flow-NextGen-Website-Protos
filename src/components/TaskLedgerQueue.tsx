@@ -40,7 +40,7 @@ export function TaskLedgerQueue() {
     }
   ]);
   const [logs, setLogs] = useState<string[]>([
-    "[23:25:01] Flow NextGen 26.36.39 initialized.",
+    "[23:25:01] Flow NextGen 26.36.40 initialized.",
     "[23:25:05] Synced with Flow NextGen Engine.",
     "[23:26:23] Scheduler picked up pending task [task_04]. Dispatching..."
   ]);
@@ -123,7 +123,7 @@ export function TaskLedgerQueue() {
           <List className="queue-title-icon" size={16} />
           <div className="queue-title-text-group">
             <h3 className="queue-main-header">TASK LEDGER QUEUE</h3>
-            <span className="queue-subheader">FLOW NEXTGEN 26.36.39</span>
+            <span className="queue-subheader">FLOW NEXTGEN 26.36.40</span>
           </div>
         </div>
         <div className="queue-live-badge">

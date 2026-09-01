@@ -12,7 +12,7 @@ export function Guide() {
       />
       <div className="guide-container">
         <h1>Flow NextGen Guide</h1>
-        <p className="guide-subtitle">Based on source code analysis of Version 26.36.39 (August 2026).</p>
+        <p className="guide-subtitle">Based on source code analysis of Version 26.36.40 (September 2026).</p>
 
         <hr className="guide-divider" />
 

@@ -12,7 +12,7 @@ export function Refund() {
       />
       <div className="legal-container">
         <h1>Refund Policy</h1>
-        <p className="legal-date">Last updated: August 2, 2026</p>
+        <p className="legal-date">Last updated: September 1, 2026</p>
 
         <section>
           <h2>Try the Free Tier First</h2>
