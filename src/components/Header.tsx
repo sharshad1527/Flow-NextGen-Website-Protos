@@ -131,7 +131,15 @@ export function Header() {
             </svg>
             Discord
           </a>
-          <button className="button-primary island-btn">Get Extension</button>
+          <a
+            href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="button-primary island-btn"
+            style={{ textDecoration: 'none' }}
+          >
+            Get Extension
+          </a>
           <button
             className="mobile-menu-toggle"
             onClick={() => setMobileMenuOpen((v) => !v)}

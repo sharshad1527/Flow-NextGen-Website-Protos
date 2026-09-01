@@ -487,6 +487,8 @@ export function ScrollJourney() {
               <p className="hero-subtext">
                 Every prompt you run manually is time you&apos;re not creating.
               </p>
+              {/* ---- HIDDEN: SOCIAL PROOF UNTIL STORE REVIEWS ACCUMULATE ---- */}
+              {/*
               <div className="hero-social-proof">
                 <div className="stars-row">
                   {[1, 2, 3, 4, 5].map((s) => (
@@ -499,6 +501,7 @@ export function ScrollJourney() {
                 <span className="rating-divider">·</span>
                 <span className="rating-users">1,000+ users</span>
               </div>
+              */}
               <div className="hero-cta-row">
                 <a
                   href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp"
@@ -664,7 +667,8 @@ export function ScrollJourney() {
                 <strong> Flow NextGen takes over your entire queue</strong> while you sleep, work, or just live your life.
               </motion.p>
 
-              {/* ---- SOCIAL PROOF ---- */}
+              {/* ---- HIDDEN: SOCIAL PROOF UNTIL STORE REVIEWS ACCUMULATE ---- */}
+              {/*
               <motion.div className="hero-social-proof" variants={itemVariants}>
                 <svg width="0" height="0" style={{ position: 'absolute' }}>
                   <defs>
@@ -685,6 +689,7 @@ export function ScrollJourney() {
                 <span className="rating-divider">·</span>
                 <span className="rating-users">1,000+ users</span>
               </motion.div>
+              */}
 
               <motion.div className="hero-cta-row" variants={itemVariants}>
                 <a
