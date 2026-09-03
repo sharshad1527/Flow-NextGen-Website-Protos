@@ -65,6 +65,11 @@ export function Guide() {
             </table>
           </div>
 
+          <figure className="guide-figure">
+            <img src="/images/guide/01-nav-tabs.png" alt="Flow NextGen Bottom Navigation Tabs" className="guide-img" style={{ maxWidth: '425px' }} />
+            <figcaption className="guide-caption">Bottom navigation bar: Quick access to Control, Gallery, Queue, and Settings</figcaption>
+          </figure>
+
           <p>Queue and Gallery tabs are locked for unsigned-in users. You'll see a sign-in prompt.</p>
         </section>
 
@@ -85,6 +90,11 @@ export function Guide() {
           <blockquote>
             <p><strong>Note:</strong> You also need to be signed into Google Labs Flow (<code>labs.google/fx/tools/flow</code>) in a Chrome tab. The extension communicates with Flow through a bridge that runs in that tab.</p>
           </blockquote>
+
+          <figure className="guide-figure">
+            <img src="/images/guide/02-auth-signin.png" alt="Account Sign In and Quota Management" className="guide-img" />
+            <figcaption className="guide-caption">Account authorization, Pro status, and generation quota in the Settings tab</figcaption>
+          </figure>
         </section>
 
         <hr className="guide-divider" />
@@ -205,9 +215,10 @@ export function Guide() {
             <li>Supports reference images (up to 10) via Shared, Batch, or Auto Match mode</li>
             <li>Autopilot allows automatic text-to-video chaining (see below)</li>
           </ul>
-          <div className="guide-screenshot">
-            <strong>SCREENSHOT SUGGESTIONS:</strong> Mode selector with "Create Image" selected · Engine Model dropdown showing Nano Banana Pro · Prompt textarea with example prompts · Reference assignment grid (Shared/Batch/Auto Match/Repeat) · Launch step with parameters
-          </div>
+          <figure className="guide-figure">
+            <img src="/images/guide/03-mode-t2i.png" alt="Text to Image Generation Mode" className="guide-img" />
+            <figcaption className="guide-caption">Text to Image (T2I) mode: Model selection, multi-line prompt list, and reference matching</figcaption>
+          </figure>
 
           {/* --- T2V --- */}
           <h3 id="t2v">Text to Video (T2V)</h3>
@@ -226,9 +237,10 @@ export function Guide() {
             <li>Silent video toggle available</li>
             <li>Downloads use video resolution options (270p → 4K)</li>
           </ul>
-          <div className="guide-screenshot">
-            <strong>SCREENSHOT SUGGESTIONS:</strong> Mode selector with "Text to Video" selected · Model dropdown showing Veo 3.1 Lite, Omni Flash, etc. · Video Length selector (shown when Omni Flash is selected) · Silent Video toggle
-          </div>
+          <figure className="guide-figure">
+            <img src="/images/guide/04-mode-t2v.png" alt="Text to Video Generation Mode" className="guide-img" />
+            <figcaption className="guide-caption">Text to Video (T2V) mode: Veo 3.1 & Omni Flash models, duration selector, and silent video toggle</figcaption>
+          </figure>
 
           {/* --- I2V --- */}
           <h3 id="i2v">Frame to Video (I2V)</h3>
@@ -246,9 +258,10 @@ export function Guide() {
             <li>Tap a device reference to cycle through slot assignment.</li>
             <li>Drop zones show a visual highlight when dragging over them.</li>
           </ul>
-          <div className="guide-screenshot">
-            <strong>SCREENSHOT SUGGESTIONS:</strong> Mode selector with "Frame to Video" selected · Start Frame and End Frame drop zones with images assigned · Reference trays showing available images
-          </div>
+          <figure className="guide-figure">
+            <img src="/images/guide/05-mode-i2v.png" alt="Frame to Video Generation Mode" className="guide-img" />
+            <figcaption className="guide-caption">Frame to Video (I2V / F2V) mode: Start Frame and End Frame assignment</figcaption>
+          </figure>
 
           {/* --- Ingredients --- */}
           <h3 id="ingredients">Ingredients to Video</h3>
@@ -260,9 +273,10 @@ export function Guide() {
             <li>Write a text prompt describing the scene.</li>
             <li>The model combines the visual elements from your references into a single video.</li>
           </ol>
-          <div className="guide-screenshot">
-            <strong>SCREENSHOT SUGGESTIONS:</strong> Mode selector with "Ingredients" selected · Reference selection with up to 3 images · Model dropdown (note Omni Flash is default)
-          </div>
+          <figure className="guide-figure">
+            <img src="/images/guide/06-mode-ingredients.png" alt="Ingredients to Video Generation Mode" className="guide-img" />
+            <figcaption className="guide-caption">Ingredients to Video mode: Blending up to 3 visual elements with prompt guidance</figcaption>
+          </figure>
         </section>
 
         <hr className="guide-divider" />
@@ -299,6 +313,11 @@ export function Guide() {
               </tbody>
             </table>
           </div>
+
+          <figure className="guide-figure">
+            <img src="/images/guide/07-characters-tray.png" alt="Native Character Consistency and References" className="guide-img" />
+            <figcaption className="guide-caption">Character Consistency Engine: @handle prompt binding and Project Character References tray</figcaption>
+          </figure>
         </section>
 
         <hr className="guide-divider" />
@@ -406,6 +425,11 @@ export function Guide() {
           </ul>
           <p>Click a task to expand more details including error messages and event logs.</p>
 
+          <figure className="guide-figure">
+            <img src="/images/guide/09-queue-ledger.png" alt="Queue Task Ledger and Progress" className="guide-img" />
+            <figcaption className="guide-caption">Queue Task Ledger: Live generation progress, batch status, pause/resume, and retry controls</figcaption>
+          </figure>
+
           <h3>Scheduler Debug Log</h3>
           <p>At the bottom of the Queue view, a terminal-like log shows real-time events:</p>
           <ul>
@@ -477,6 +501,11 @@ export function Guide() {
             </table>
           </div>
 
+          <figure className="guide-figure">
+            <img src="/images/guide/10-gallery-grid.png" alt="Media Gallery" className="guide-img" />
+            <figcaption className="guide-caption">Media Gallery: Generated assets with resolution tags, hover actions, and batch downloads</figcaption>
+          </figure>
+
           <h3>Batch Operations</h3>
           <ul>
             <li>Tap the selection checkbox on multiple items.</li>
@@ -528,10 +557,7 @@ export function Guide() {
                 <tr><td><strong>Upgrade to Pro</strong></td><td>Opens Dodo Payments checkout to purchase Pro</td><td></td></tr>
                 <tr><td><strong>Manage Subscription</strong></td><td>Opens Dodo Payments customer portal (Pro users)</td><td></td></tr>
                 <tr><td><strong>Sync Subscription</strong></td><td>Force sync tier from Dodo/Supabase</td><td></td></tr>
-                <tr><td><strong>Refresh Session</strong></td><td>Re-fetch profile from Supabase</td><td></td></tr>
-                <tr><td><strong>Re-sync Subscription</strong></td><td>Full subscription status resync</td><td></td></tr>
-                <tr><td><strong>Reset Auth State</strong></td><td>Clear local session data</td><td></td></tr>
-                <tr><td><strong>Sign Out</strong></td><td>End session</td><td></td></tr>
+                <tr><td><strong>Sign Out</strong></td><td>End session and clear auth cache</td><td></td></tr>
               </tbody>
             </table>
           </div>
@@ -566,6 +592,11 @@ export function Guide() {
               </tbody>
             </table>
           </div>
+
+          <figure className="guide-figure">
+            <img src="/images/guide/11-settings-compiler.png" alt="Settings Compiler Presets" className="guide-img" />
+            <figcaption className="guide-caption">Settings tab: Compiler presets, submit path preference, and generation defaults</figcaption>
+          </figure>
         </section>
 
         <hr className="guide-divider" />

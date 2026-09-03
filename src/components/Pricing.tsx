@@ -46,7 +46,15 @@ export function Pricing() {
               <li className="disabled-feature"><X size={16} /> 4K Upscale & Downloads</li>
             </ul>
 
-            <button className="button-secondary full-width">Get Started Free</button>
+            <a 
+              href="https://chromewebstore.google.com/detail/flow-nextgen/jolnapkhihjecpgideikgpkhgfkbeagp" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="button-secondary full-width"
+              style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center' }}
+            >
+              Get Started Free
+            </a>
           </motion.div>
 
           {/* Pro Tier */}

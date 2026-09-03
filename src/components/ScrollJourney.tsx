@@ -371,12 +371,8 @@ export function ScrollJourney() {
     window.scrollTo(0, 0);
   }, []);
 
-  // Logo intro overlay — dismisses after the canvas animation finishes (~2.2s)
-  const [showIntro, setShowIntro] = useState(true);
-  useEffect(() => {
-    const t = setTimeout(() => setShowIntro(false), 2200);
-    return () => clearTimeout(t);
-  }, []);
+  // Logo intro overlay — disabled blocking intro overlay for instant interaction
+  const showIntro = false;
 
   // ---- SCENE TIMELINE (400vh — logo removed, 3 scenes) ----
   // 0.00–0.22  Scene 1: STATIC HERO 1 — hero text visible, Flow UI sits on the right tilt
@@ -647,9 +643,7 @@ export function ScrollJourney() {
             <div className="hero-ambient-glow" />
 
             <div 
-              className="hero-text-frame glass-panel" 
-              onClick={() => window.scrollTo({ top: window.innerHeight * 2.7, behavior: 'smooth' })}
-              style={{ cursor: 'pointer' }}
+              className="hero-text-frame glass-panel"
             >
               <motion.div className="hero-eyebrow" variants={itemVariants} style={{ opacity: 1 }}>
                 <span className="hero-eyebrow-dot" />
