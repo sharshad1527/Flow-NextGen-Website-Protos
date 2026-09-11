@@ -42,9 +42,9 @@ export function Privacy() {
           <h3>Host Permissions & Domains Accessed</h3>
           <p>We declare and limit host access to the following domains:</p>
           <ul>
-            <li><code>https://flow.google.com/*</code>, <code>https://*.flow.google.com/*</code>, and <code>https://*.flow.google/*</code>: To run automation control scripts and read generation UI states on Google Flow.</li>
-            <li><code>https://labs.google/*</code> and subdomains: For backward compatibility with legacy Google Labs Flow entry points.</li>
-            <li><code>https://aisandbox-pa.googleapis.com/*</code>: Google's backend API endpoints for generating and retrieving assets.</li>
+            <li><code>https://flow.google.com/*</code>, <code>https://*.flow.google.com/*</code>, and <code>https://*.flow.google/*</code>: Primary operational domains for running queue automation scripts, reading generation canvas states, and executing <code>AiSandboxAngularFrontend/data/batchexecute</code> Boq RPC calls.</li>
+            <li><code>https://*.flow-content.google/*</code> and <code>https://lh3.googleusercontent.com/*</code>: Google Flow CDN endpoints used for retrieving high-resolution generated images and video streams.</li>
+            <li><code>https://aisandbox-pa.googleapis.com/*</code> and <code>https://labs.google/*</code>: Legacy Google Labs asset infrastructure and entry points maintained for backward compatibility.</li>
             <li><code>https://*.supabase.co/*</code>: Secure communication with our user subscription and log-in infrastructure.</li>
           </ul>
         </section>
