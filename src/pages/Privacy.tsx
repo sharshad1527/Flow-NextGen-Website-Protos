@@ -27,13 +27,13 @@ export function Privacy() {
           
           <h3>Core System Permissions</h3>
           <ul>
-            <li><strong>Debugger (<code>debugger</code>):</strong> Highly sensitive. Used exclusively to attach the Chrome DevTools Protocol (CDP) to the active <code>labs.google.com</code> tab. This allows the extension's background worker to trace generation network requests, manage token cache states, and bypass service workers during critical session crashes to recover frozen queues. No user browsing outside of Google Labs Flow is ever captured or debugged.</li>
+            <li><strong>Debugger (<code>debugger</code>):</strong> Highly sensitive. Used exclusively to attach the Chrome DevTools Protocol (CDP) to the active <code>flow.google.com</code> or <code>labs.google.com</code> tab. This allows the extension's background worker to trace generation network requests, manage token cache states, and bypass service workers during critical session crashes to recover frozen queues. No user browsing outside of Google Flow is ever captured or debugged.</li>
             <li><strong>Storage & Unlimited Storage (<code>storage</code>, <code>unlimitedStorage</code>):</strong> Enables the extension to save your preferences, queue configuration templates, generation logs, and output metadata locally. Unlimited storage is requested to prevent data loss when handling deep historical generation galleries.</li>
-            <li><strong>Scripting (<code>scripting</code>) & Content Scripts:</strong> Used to inject the automation overlay panel and helper page hooks directly into the context of Google Labs Flow pages to coordinate button clicks and form inputs.</li>
-            <li><strong>Cookies (<code>cookies</code>):</strong> Used to monitor and manage session state for <code>labs.google.com</code>. This helps clear corrupted local cached tokens that cause generation failures during queue orchestrations.</li>
-            <li><strong>Browsing Data (<code>browsingData</code>):</strong> Restricts clearing of cache and local website state specifically for Google Labs domains to assist in session recovery cycles.</li>
+            <li><strong>Scripting (<code>scripting</code>) & Content Scripts:</strong> Used to inject the automation overlay panel and helper page hooks directly into the context of Google Flow pages to coordinate button clicks and form inputs.</li>
+            <li><strong>Cookies (<code>cookies</code>):</strong> Used to monitor and manage session state for <code>flow.google.com</code> and <code>labs.google.com</code>. This helps clear corrupted local cached tokens that cause generation failures during queue orchestrations.</li>
+            <li><strong>Browsing Data (<code>browsingData</code>):</strong> Restricts clearing of cache and local website state specifically for Google Flow domains to assist in session recovery cycles.</li>
             <li><strong>Downloads (<code>downloads</code>):</strong> Power the auto-download feature, saving completed generations directly to your browser's default downloads directory utilizing custom metadata-based filenames.</li>
-            <li><strong>Tabs & Active Tab (<code>tabs</code>, <code>activeTab</code>):</strong> Used to track tab loading states and determine when a user is navigating Google Labs Flow tabs so automation scripting is safely initialized.</li>
+            <li><strong>Tabs & Active Tab (<code>tabs</code>, <code>activeTab</code>):</strong> Used to track tab loading states and determine when a user is navigating Google Flow tabs so automation scripting is safely initialized.</li>
             <li><strong>Side Panel (<code>sidePanel</code>):</strong> Provides a persistent sidepanel UI to monitor batch queues and review generation history side-by-side with the active creation canvas.</li>
             <li><strong>Alarms (<code>alarms</code>):</strong> Schedules recurring background worker wake-ups to check queue progress and retry failed generations.</li>
             <li><strong>Identity (<code>identity</code>):</strong> Used for optional extension configuration sync features across chrome profiles.</li>
@@ -42,7 +42,8 @@ export function Privacy() {
           <h3>Host Permissions & Domains Accessed</h3>
           <p>We declare and limit host access to the following domains:</p>
           <ul>
-            <li><code>https://labs.google/*</code> and subdomains: To run automation control scripts and read generation UI states.</li>
+            <li><code>https://flow.google.com/*</code>, <code>https://*.flow.google.com/*</code>, and <code>https://*.flow.google/*</code>: To run automation control scripts and read generation UI states on Google Flow.</li>
+            <li><code>https://labs.google/*</code> and subdomains: For backward compatibility with legacy Google Labs Flow entry points.</li>
             <li><code>https://aisandbox-pa.googleapis.com/*</code>: Google's backend API endpoints for generating and retrieving assets.</li>
             <li><code>https://*.supabase.co/*</code>: Secure communication with our user subscription and log-in infrastructure.</li>
           </ul>

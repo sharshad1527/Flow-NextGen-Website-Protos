@@ -38,6 +38,6 @@ export const faqs: FaqItem[] = [
   },
   {
     question: "Is Flow NextGen affiliated with Google?",
-    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $5.99/month Pro subscription covers this extension's automation features only, you still need your own Google account and access to labs.google/fx/tools/flow. Google Flow's own Pro/Ultra tiers are completely separate."
+    answer: "No. Flow NextGen is an independent Chrome extension built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google or Google Flow. The $5.99/month Pro subscription covers this extension's automation features only, you still need your own Google account and access to flow.google.com (or labs.google/fx/tools/flow). Google Flow's own Pro/Ultra tiers are completely separate."
   }
 ];

@@ -103,7 +103,7 @@ export function Pricing() {
             built by a third-party developer. We are not endorsed by, affiliated with, or sponsored by Google
             or Google Flow. Your $5.99/month Pro subscription <strong>only covers this extension's automation
             features</strong>, you still need your own Google account and access to{" "}
-            <code>labs.google/fx/tools/flow</code> for actual generation. Google Flow's own Pro/Ultra tiers
+            <code>flow.google.com</code> (or <code>labs.google/fx/tools/flow</code>) for actual generation. Google Flow's own Pro/Ultra tiers
             are separate and unaffected by this purchase.
           </div>
         </motion.div>

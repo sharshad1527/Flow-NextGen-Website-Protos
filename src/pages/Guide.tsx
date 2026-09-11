@@ -44,8 +44,8 @@ export function Guide() {
         <section id="overview">
           <h2>1. Overview</h2>
           <p>
-            Flow NextGen is a Chrome extension that works alongside <strong>Google Labs Flow</strong> (at{" "}
-            <code>labs.google/fx/tools/flow</code>). It automates image and video generation by sending prompts
+            Flow NextGen is a Chrome extension that works alongside <strong>Google Flow</strong> (at{" "}
+            <code>flow.google.com</code> or <code>labs.google/fx/tools/flow</code>). It automates image and video generation by sending prompts
             to Google's backend through either the <strong>API (Direct Fetch)</strong> route or the{" "}
             <strong>DOM (Simulated Clicks)</strong> route.
           </p>
